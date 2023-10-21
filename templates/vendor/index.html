@@ -1,0 +1,169 @@
+
+{% extends 'vendor/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- start: page toolbar -->
+    <div class="page-toolbar px-xl-4 px-sm-2 px-0 py-3">
+      <div class="container-fluid">
+        <div class="row g-3 mb-3 align-items-center">
+
+        </div> <!-- .row end -->
+        <div class="row align-items-center">
+          <div class="col">
+            <h1 class="fs-5 color-900 mt-1 mb-0">Welcome back, Allie!</h1>
+          </div>
+
+        </div> <!-- .row end -->
+      </div>
+    </div>
+    <!-- start: page body -->
+    <div class="page-body px-xl-4 px-sm-2 px-0 py-lg-2 py-1 mt-0 mt-lg-3">
+      <div class="container-fluid">
+        <div class="row g-3 row-deck">
+          <div class="">
+            <div class="row g-3">
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="avatar lg rounded-circle no-thumbnail"><i class="bi bi-people"></i></div>
+                    <div class="flex-fill ms-3 text-truncate">
+                      <div class="text-muted">People</div>
+                      <h5 class="mb-0">$6,549</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="avatar lg rounded-circle no-thumbnail"><i class="bi bi-calendar-event"></i></div>
+                    <div class="flex-fill ms-3 text-truncate">
+                      <div class="text-muted">Events</div>
+                      <h5 class="mb-0">$2,649</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="avatar lg rounded-circle no-thumbnail"><i class="bi bi-wallet"></i></div>
+                    <div class="flex-fill ms-3 text-truncate">
+                      <div class="text-muted">Panding Payment</div>
+                      <h5 class="mb-0">$4,095</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h6 class="card-title mb-0">Recent Sells</h6>
+                <div class="dropdown morphing scale-left">
+                  <a href="#" class="card-fullscreen" data-bs-toggle="tooltip" title="Card Full-Screen"><i class="icon-size-fullscreen"></i></a>
+                </div>
+              </div>
+              <table id="myDataTable_no_filter" class="table align-middle mb-0 card-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Peoples</th>
+                    <th>Event</th>
+                    <th>Payment</th>
+                    <th>Edit or Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>A0098</td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                        <div class="ms-2 mb-0">Marshall Nichols</div>
+                      </div>
+                    </td>
+                    <td>123 6th St. Melbourne, FL 32904</td>
+                    <td>X1</td>
+                    <td>
+                      <a href=""><span class="bi bi-pencil m-3" title="Edit"  data-bs-toggle="tooltip" data-bs-placement="top"></span></a>
+                      <a href=""><span class="bi bi-trash" title="Delete"  data-bs-toggle="tooltip" data-bs-placement="top"></span></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>A0088</td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img src="{% static 'vendor/assets/img/xs/avatar2.jpg' %}" class="rounded-circle sm avatar" alt="">
+                        <div class="ms-2 mb-0">Nellie Maxwell</div>
+                      </div>
+                    </td>
+                    <td>4 Shirley Ave. West Chicago, IL 60185</td>
+                    <td>X1</td>
+                    <td>
+                      <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Video"><i class="fa fa-envelope"></i></button>
+                      <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Download"><i class="fa fa-download"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>A0067</td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img src="{% static 'vendor/assets/img/xs/avatar3.jpg' %}" class="rounded-circle sm avatar" alt="">
+                        <div class="ms-2 mb-0">Chris Fox</div>
+                      </div>
+                    </td>
+                    <td>70 Bowman St. South Windsor, CT 06074</td>
+                    <td>X2</td>
+                    <td>
+                      <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Video"><i class="fa fa-envelope"></i></button>
+                      <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Download"><i class="fa fa-download"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>A0045</td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img src="{% static 'vendor/assets/img/xs/avatar1.jpg' %}" class="rounded-circle sm avatar" alt="">
+                        <div class="ms-2 mb-0">Marshall Nichols</div>
+                      </div>
+                    </td>
+                    <td>123 6th St. Melbourne, FL 32904</td>
+                    <td>X1</td>
+                    <td>
+                      <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Video"><i class="fa fa-envelope"></i></button>
+                      <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Download"><i class="fa fa-download"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>A0067</td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img src="{% static 'vendor/assets/img/xs/avatar8.jpg' %}" class="rounded-circle sm avatar" alt="">
+                        <div class="ms-2 mb-0">Chris Fox</div>
+                      </div>
+                    </td>
+                    <td>70 Bowman St. South Windsor, CT 06074</td>
+                    <td>X2</td>
+                    <td>
+                      <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Send Video"><i class="fa fa-envelope"></i></button>
+                      <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Download"><i class="fa fa-download"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> <!-- .card end -->
+          </div>
+        </div> <!-- .row end -->
+      </div>
+    </div>
+
+  </div>
+
+  {% endblock content %}

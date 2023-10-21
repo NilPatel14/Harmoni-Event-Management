@@ -1,0 +1,271 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block title %}Add-Event{% endblock title %}Add-Event
+{% block content %}
+<!-- breadcrumb-section - start
+		================================================== -->
+		<section id="breadcrumb-section" class="breadcrumb-section clearfix">
+			<div class="jarallax" style="background-image: url('{% static 'assets/images/breadcrumb/0.breadcrumb-bg.jpg' %}');">
+				<div class="overlay-black">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-lg-6 col-md-12 col-sm-12">
+
+								<!-- breadcrumb-title - start -->
+								<div class="breadcrumb-title text-center mb-50">
+									<span class="sub-title">{{user.username}} Company</span>
+									<h2 class="big-title">Make <strong>An Event</strong></h2>
+								</div>
+								<!-- breadcrumb-title - end -->
+
+								<!-- breadcrumb-list - start -->
+								<div class="breadcrumb-list">
+									<ul>
+										<li class="breadcrumb-item"><a href="index-1.html" class="breadcrumb-link">Home</a></li>
+										<li class="breadcrumb-item active" aria-current="page">contact us</li>
+									</ul>
+								</div>
+								<!-- breadcrumb-list - end -->
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+<!-- breadcrumb-section - end
+================================================== -->
+
+<!-- contact-section - start
+		================================================== -->
+		<section id="contact-section" class="contact-section sec-ptb-100 clearfix">
+			<div class="container">
+
+				<!-- section-title - start -->
+				<div class="section-title mb-50">
+					<small class="sub-title">contact us</small>
+					<h2 class="big-title">Add <strong>Your Event</strong></h2>
+				</div>
+				<!-- section-title - end -->
+
+				<!-- contact-form - start -->
+				<div class="contact-form form-wrapper text-center">
+					<form action="{% url 'addevent' %}" method="post">
+                        {% csrf_token %}
+						<div class="row">
+                        
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="">
+                                  <select name="" id="type_of_workhands" class="form-item " style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
+                                      <option value="" disable selected>Event Category</option>
+                                      <option value="">Ahmedabad</option>
+                                      <option value="">Surat</option>
+                                  </select>
+                                </div>
+                             </div>
+
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<div class="form-item">
+									<input name="event_name" type="text" placeholder="Event Name" required>
+								</div>
+							</div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6" id="" style="">
+                                <div class="form-item">
+                                  <label for="file">Starting Date & Time : </label>
+                                  <input class="p-2" name="start_datetime" type="datetime-local" id="birthdaytime" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6 col-md-6 col-sm-6" id="" style="">
+                                <div class="form-item">
+                                  <label for="file">Ending Date & Time : </label>
+                                  <input class="p-2" name="end_datetime" type="datetime-local" id="birthdaytime" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="">
+                                  <select name="city" id="person-type-select" class="form-item" onchange="toggleAdditionalNeededField()" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
+                                      <option  disable selected>Type of workhand</option>
+                                      {% for d in data %}
+                                      <option value="{{d.id}}">{{d.workhand_category}}</option>
+                                      {% endfor %}
+                                  </select>
+                                </div>
+                            </div>
+                            
+                             <div class="col-lg-12 col-md-12 col-sm-12" id = "boysfield" style = "display: none;">
+                                <div class="form-item">
+                                  <input type="number" name="only_boy" placeholder="Enter Number of workhands">
+                                </div>
+                            </div>
+
+                            {% comment %} <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="">
+                                  <select id="person-type-select" onchange="toggleAdditionalNeededField()" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
+                                      <option value="" disable selected>Type of person needed</option>
+                                      <option value="boy">Only boys</option>
+                                      <option value="girl">Only girls</option>
+                                      <option value="boy_girl">Both boys and girls</option>
+                                      <option value="any"> Any </option>
+                                  </select>
+                                </div>
+                            </div> 
+
+                            <div class="col-lg-12 col-md-12 col-sm-12" id = "boysfield" style = "display: none;">
+                                <div class="form-item">
+                                  <input type="number" name="only_boy" placeholder="Enter Boys">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12" id = "girls" style = "display: none;">
+                                <div class="form-item">
+                                  <input type="number" name="only_girl" placeholder="Enter Girls">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12" id = "select-person" style = "display: none;">
+                                <div class="form-item">
+                                  <input type="number" name="boy_and_girl" placeholder="Enter persons">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6" id = "both_boys" style = "display: none;">
+                                <div class="form-item">
+                                  <input type="number" name="boy" placeholder="Enter Boys">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6" id = "both_girls" style = "display: none;">
+                                <div class="form-item">
+                                  <input type="number" name="girl" placeholder="Enter Girls">
+                                </div>
+                            </div>{% endcomment %}
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-item">
+                                  <input type="number" name="any" placeholder="Amount in rupees" step="any">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-item">
+                                  <input type="text" name="street_address" placeholder="Street Address" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="">
+                                  <select name="city" id="" class="form-item " style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
+                                      <option value="" disable selected>City</option>
+                                      <option value="">Ahmedabad</option>
+                                      <option value="">Surat</option>
+                                  </select>
+                                </div>
+                             </div>
+                        
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-item">
+                                    <select name="state" id="" class="form-item " style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
+                                        <option value="" disable selected>State</option>
+                                        <option value="">Gujrat</option>
+                                        <option value="">Pune</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+								<div class="form-item">
+									<textarea name="description" placeholder="Event Description" required></textarea>
+								</div>
+							</div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <button type="button" id="button" class="custom-btn" data-toggle="modal" data-target="#exampleModalCenter">Make An Event</button>
+                            </div>
+						</div>
+
+                        <!-- Confirm to add button -->
+                        <div class="modal fade"  tabindex="-1" role="dialog" id="exampleModalCenter" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to confirm add this event</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                            <strong class="title">Once you created event then you can only edit not delete.</strong>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add Event</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</form>
+				</div>
+				<!-- contact-form - end -->
+
+                {% comment %} <script>
+                    function toggleAdditionalNeededField() {
+                        var person_type = document.getElementById("person-type-select");
+                        var onlyboys = document.getElementById("boysfield");
+                        var onlygirls = document.getElementById("girls");
+                        var both_boys_girl1 = document.getElementById("both_boys");
+                        var both_boys_girl2 = document.getElementById("both_girls");
+                        var select_person = document.getElementById("select-person");
+
+                        if(person_type.value === "boy") {
+                            onlyboys.style.display = "block";
+                        } else {
+                            onlyboys.style.display = "none";
+                        }
+
+                        if(person_type.value === "girl") {
+                            onlygirls.style.display = "block";
+                        }else {
+                            onlygirls.style.display = "none";
+                        }
+
+                        if(person_type.value === "boy_girl") {
+                            both_boys_girl1.style.display = "block";
+                            both_boys_girl2.style.display = "block";
+                        }else {
+                            both_boys_girl2.style.display = "none";
+                            both_boys_girl1.style.display = "none";
+                        }
+
+                        if(person_type.value === "any") {
+                            select_person.style.display = "block";
+                        }else {
+                            select_person.style.display = "none";
+                        }
+
+                        
+                    }
+                </script> {% endcomment %}
+
+                <script>
+                    function toggleAdditionalNeededField() {
+                        var person_type = document.getElementById("person-type-select");
+                        var onlyboys = document.getElementById("boysfield");
+
+                        if(person_type.value){
+                            onlyboys.style.display = "block";
+                        } else {
+                            onlyboys.style.display = "none";
+                        }
+                    }
+                </script>
+			</div>
+		</section>
+<!-- contact-section - end
+================================================== -->
+
+{% endblock content %}
