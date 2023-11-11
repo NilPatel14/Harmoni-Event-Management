@@ -12,100 +12,125 @@ class profile(models.Model):
     def __str__(self):
         return f'{self.User.username} profile'
 
-class Workhand_category(models.Model):
-    workhand_category = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.workhand_category    
-
 class Workhand(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField()
-    contact = models.CharField(max_length=10)
+    contact_number = models.CharField(max_length=12)
     street_address = models.CharField(max_length=100)
-    city = models.CharField(max_length=65)
-    state = models.CharField(max_length=65)
-    profile_img = models.ImageField(upload_to = 'user_profile_img/' , default = None)
-    special_skill = models.CharField(max_length=50 , default=None)
-    User = models.ForeignKey('auth.User', null=True , on_delete=models.CASCADE)
+    city_id = models.ForeignKey('City', on_delete=models.CASCADE)
+    state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
+    profilePic_path = models.ImageField(upload_to = 'user_profile_img/' , default = None)
+    Workhand_category_id = models.ForeignKey('Workhand_category' , on_delete=models.CASCADE)
+    User_id = models.ForeignKey('auth.User',  on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name
     
 
-class company(models.Model):
+class Company(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
-    contact = models.CharField(max_length=10)
+    contact_number = models.CharField(max_length=12)
     street_address = models.CharField(max_length=100)
-    city = models.CharField(max_length=65)
-    state = models.CharField(max_length=65)
-    image = models.ImageField(upload_to='vendor_img/' , default=None)
-    User = models.ForeignKey('auth.User', blank=True , null=True , on_delete=models.CASCADE)
+    city_id = models.ForeignKey('City', on_delete=models.CASCADE)
+    state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
+    companyLogo_path = models.ImageField(upload_to='vendor_img/' , default=None)
+    User_id = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
     
 
-class Events(models.Model):
-    name = models.CharField(max_length=255)
+class Event(models.Model):
+    event_name = models.CharField(max_length=255)
     description = models.TextField()
     start_datetime = models.DateTimeField(default = datetime.now)
     end_datetime = models.DateTimeField(default=datetime.now)
-    type_of_workhand = models.ManyToManyField(Workhand_category)
-    workers_needed = models.IntegerField(default=1) 
-    payment = models.DecimalField(max_digits=10, decimal_places=2)
-    address = models.ForeignKey('Address',on_delete=models.CASCADE,default=False)
-    category = models.ForeignKey('Event_category',on_delete=models.CASCADE,default=False)
-    company = models.ForeignKey('company',on_delete=models.CASCADE,default=False)
+    total_workhand = models.IntegerField(default=11) 
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    street_address = models.CharField(max_length=250)
+    city_id = models.ForeignKey('City', on_delete=models.CASCADE)
+    state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
+    event_category_id = models.ForeignKey('Event_category',on_delete=models.CASCADE,default=False)
+    company_id = models.ForeignKey('company',on_delete=models.CASCADE,default=False)
 
     def __str__(self):
-        return self.name
+        return self.event_name
 
-class feedback(models.Model):
-    feedback = models.TextField()
-    company = models.ForeignKey('company',on_delete=models.CASCADE,default=False)
-    event = models.ForeignKey('Events', on_delete=models.CASCADE)
-    workhand = models.ForeignKey('Workhand', on_delete=models.CASCADE)
-    
-
-class Address(models.Model):
-    street_address = models.CharField(max_length=100)
-    city = models.ForeignKey('City',on_delete=models.CASCADE,default=False)
-    state = models.ForeignKey('State',on_delete=models.CASCADE,default=False)
-    pin_code = models.CharField(max_length=10)
+class Event_workhand(models.Model):
+    Workhand_category_id = models.ForeignKey('Workhand_category' , on_delete=models.CASCADE)
+    number_of_workhand = models.IntegerField(default=11)
+    event_id = models.ForeignKey('Event' , on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{street_address},{city},{state} - {pin_code}"
+        return self.Workhand_category_id.workhand_category_name
     
-class Registrations(models.Model):
-    workhand = models.ForeignKey('Workhand', on_delete=models.CASCADE)
-    event = models.ForeignKey('Events', on_delete=models.CASCADE)
-    company = models.ForeignKey('company',on_delete=models.CASCADE,default=False)
-    registration_date = models.DateTimeField(default=datetime.now)
-    payment_status = models.BooleanField(default=False)
+
+class Event_Registrations(models.Model):
+    registration_date = models.DateField(default=datetime.now)
+    workhand_id = models.ForeignKey('Workhand',on_delete=models.CASCADE)
+    registration_status = models.BooleanField(default=False)
+    event_id = models.ForeignKey('Event' , on_delete=models.CASCADE)
+    company_id = models.ForeignKey('Company' , on_delete=models.CASCADE)
+    
 
     def __str__(self):
-        return f"Attendee : {self.attendee.name} --> Event : {self.event.name} --> Vendor : {self.event.company.name}"
-    
+        return self.event_id.event_name    
+
+
+class Workhand_category(models.Model):
+    workhand_category_name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.workhand_category_name   
+
+
 class City(models.Model):
-    name = models.CharField(max_length=255)
-    
+    city_name = models.CharField(max_length=255)
+    state_id = models.ForeignKey('State' ,  on_delete=models.CASCADE)
+
     def __str__(self):
-        return self.name
+        return self.city_name
             
 class State(models.Model):
-    name = models.CharField(max_length=255)
+    state_name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return self.state_name
     
-        
+
 class Event_Category(models.Model):
-    event_category = models.CharField(max_length=20)
+    event_category = models.CharField(max_length=100)
 
     def __str__(self):
         return self.event_category 
 
+class Event_subcategory(models.Model):
+    Event_subcategory_name = models.CharField(max_length=100)
+    Event_Category_id = models.ForeignKey('Event_Category' , on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.Event_subcategory_name
     
+
+class Feedback(models.Model):
+    feedback = models.TextField()
+    feedback_date = models.DateField(default=datetime.now)
+    event_id = models.ForeignKey('Event', on_delete=models.CASCADE)
+    workhand_id = models.ForeignKey('Workhand', on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.workhand_id.first_name} ---> {self.event_id.event_name}"
+    
+
+class Payment(models.Model):
+    workhand_id = models.ForeignKey('Workhand' , on_delete=models.CASCADE)
+    event_id = models.ForeignKey('Event' , on_delete=models.CASCADE)
+    company_id = models.ForeignKey('Company' , on_delete=models.CASCADE)
+    payment_status = models.BooleanField(default=False)
+    payment_date = models.DateField(default=datetime.now)
+
+    
+        
+
