@@ -26,3 +26,13 @@ function toggleAdditionalImagesField() {
         last_name.style.display = "block";
     }
 }
+
+$(document).ready(function() {
+    $("#state").change(function() {
+        var state_id = $(this).val();
+        var url = "/get-city/?state_id="+state_id;
+        $.get(url, function(data,status){
+            $("#city").html(data);
+        });
+    });
+});

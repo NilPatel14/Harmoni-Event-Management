@@ -43,7 +43,7 @@ def contact(request):
     return render(request , 'user/contact.html',contaxt)
 
 def register(request):
-    if request.method == "POST":
+    '''if request.method == "POST":
         role = request.POST.get("role")
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -106,9 +106,21 @@ def register(request):
 
             #user login and redirect
             auth_login(request,user)
-            return redirect('index')
+            return redirect('index')'''
 
-    return render(request , 'login/register.html')
+    States = State.objects.all().order_by('-state_name')
+    context = {
+        'State' : States
+    }
+    return render(request , 'login/register.html' , locals())
+
+def get_city(request):
+    state_id = request.GET['state_id']
+    get_state = State.objects.get(id=state_id)
+    city = City.objects.filter(state_id=get_state)
+    return render(request , 'login/get-city.html',locals())
+    
+
 
 def logIn(request):
     if request.method == "POST":

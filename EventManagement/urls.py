@@ -34,6 +34,7 @@ urlpatterns = [
 
     #--Login & Logout--#
     path('register/',views.register, name="register"),
+    path('get-city/',views.get_city , name = "get_city"),
     path('login/',views.logIn,name="login"),
     path('logout/',views.logout,name="logout"),
     #------------------------------------#
