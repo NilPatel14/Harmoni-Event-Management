@@ -67,7 +67,7 @@
 							<div class="">
 							  <select id="event-category-select" name="role" onchange="toggleAdditionalImagesField()" class="form-item p-lg-2" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px; ">
 								  <option value="" disable selected>Select Role</option>
-								  <option value="user">Service Provider</option>
+								  <option value="user">Workhand</option>
 								  <option value="vendor">Company</option>
 							  </select>
 							</div>
@@ -180,37 +180,6 @@
 					  </div>
 					</form>
 				  </div>
-				  
-				  <script>
-					function toggleAdditionalImagesField() {
-					  var eventCategorySelect = document.getElementById("event-category-select");
-					  var additionalImagesField = document.getElementById("additional-images-field");
-					  var specialskillfield = document.getElementById("special-skill");
-					  var user_profile_pic = document.getElementById("user_profile_pic")
-					  var Discriotionfield = document.getElementById("Discriotion-field");
-					  var company_name = document.getElementById("company-name");
-					  var first_name =  document.getElementById("first_name");
-					  var last_name = document.getElementById("last_name");
-				  
-						if (eventCategorySelect.value === "vendor") {
-							Discriotionfield.style.display = "block";
-							additionalImagesField.style.display = "block";
-							company_name.style.display = "block";
-							specialskillfield.style.display = "none";
-							user_profile_pic.style.display = "none";
-							first_name.style.display = "none";
-							last_name.style.display = "none";
-						} else {
-							Discriotionfield.style.display = "none"
-							additionalImagesField.style.display = "none";
-							company_name.style.display = "none";
-							specialskillfield.style.display = "block";
-							user_profile_pic.style.display = "block";
-							first_name.style.display = "block";
-							last_name.style.display = "block";
-						}
-					}
-				  </script>
 				<!-- contact-form - end -->
 
 			</div>
