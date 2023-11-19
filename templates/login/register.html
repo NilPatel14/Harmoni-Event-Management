@@ -67,7 +67,7 @@
 							<div class="">
 							  <select id="event-category-select" name="role" onchange="toggleAdditionalImagesField()" class="form-item p-lg-2" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px; ">
 								  <option value="" disable selected>Select Role</option>
-								  <option value="user">Workhand</option>
+								  <option value="workhand">Workhand</option>
 								  <option value="vendor">Company</option>
 							  </select>
 							</div>
@@ -117,7 +117,7 @@
 				  
 						<div class="col-lg-6 col-md-6 col-sm-12">
 						  <div class="form-item">
-							<input type="tel" class="no-arrow" name="number" pattern="[0-9]{10}" placeholder="Phone number" required>
+							<input type="tel" class="no-arrow" name="contact_number" pattern="[0-9]{10}" placeholder="Phone number" required>
 						  </div>
 						</div>
 				  
@@ -147,9 +147,14 @@
 						</div>
 				  
 						<div class="col-lg-12 col-md-12 col-sm-12" id = "special-skill" style = "display: block;">
-							<div class="form-item">
-							  <input type="text" name="special_skill"  placeholder="Any Special Skill">
-							</div>
+							<div class="">
+								<select name="workhand_category" id="workhand_category" class="form-item p-2" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ">
+								  {% for i in Workhand_category %}
+									  <option value="{{i.id}}" selected>{{i.workhand_category_name}}</option>
+								  {% endfor %}
+								  <option disable selected>Choose Your Special Category</option>
+								</select>
+							  </div>
 						</div>
 
 						<div class="col-lg-12 col-md-12 col-sm-12" id="user_profile_pic" style = "display: block;">
@@ -168,7 +173,7 @@
 						<div class="col-lg-12 col-md-12 col-sm-12" id="additional-images-field" style="display: none;">
 						  <div class="form-item">
 							<label for="file">Upload Your Company Logo</label>
-							<input class="p-2" type="file" id="additional-images" name="company_logo">
+							<input class="p-2" type="file" id="additional-images" name="company_logo" accept="image/png, image/jpeg">
 						  </div>
 						</div>
 
