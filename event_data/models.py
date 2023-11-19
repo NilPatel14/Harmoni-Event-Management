@@ -36,6 +36,7 @@ class Company(models.Model):
     city_id = models.ForeignKey('City', on_delete=models.CASCADE)
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
     companyLogo_path = models.ImageField(upload_to='vendor_img/' , default=None)
+    description = models.TextField(default=None)
     User_id = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):

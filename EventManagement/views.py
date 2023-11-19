@@ -43,76 +43,101 @@ def contact(request):
     return render(request , 'user/contact.html',contaxt)
 
 def register(request):
-    '''if request.method == "POST":
-        role = request.POST.get("role")
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        email = request.POST.get('email')
-        confirm_password = request.POST.get('confirm_password')
+    if request.method == "POST":
+        role = request.POST.get('role')
 
-        if password and confirm_password:
-            if password != confirm_password:
-                messages.error(request , "Password doen's match")
-                return redirect('register')
-        
-            
-
-        if role == "user":
+        if role == "workhand":
+            username = request.POST.get('username')
             first_name = request.POST.get('first_name')
             last_name = request.POST.get('last_name')
-            number = request.POST.get('number')
+            password = request.POST.get('password')
+            confirm_password = request.POST.get('confirm_password')
+            email = request.POST.get('email')
+            contact_number = request.POST.get('contact_number')
             street_address = request.POST.get('street_address')
-            city = request.POST.get('city')
             state = request.POST.get('state')
-            special_skill = request.POST.get('special_skill')
+            city = request.POST.get('city')
+            workhand_category = request.POST.get('workhand_category')
             profile_image = request.FILES.get('profile_image')
             
-            # Save in default user table 
-            user = User.objects.create_user(username = username , first_name = first_name , last_name = last_name ,password = password , email = email)
-            user.save()
+            #Object Instances--->
+            city_obj = City.objects.get(id=city)
+            state_obj = State.objects.get(id=state)
+            workhand_category_obj = Workhand_category.objects.get(id=workhand_category)
+            # ------------------>
 
-            # Save in Workhand table 
-            service_provider_info = Workhand(first_name = first_name , last_name = last_name , email = email , contact = number  , street_address = street_address , city = city , state = state , special_skill = special_skill ,profile_img = profile_image , User = user)
-            service_provider_info.save()
+            if password and confirm_password:
+                if password != confirm_password:
+                    messages.error(request , "Password doen's match")
+                    return redirect('register')
+                else:
+                    #save user model
+                    user_info = User.objects.create_user(username = username , first_name = first_name , last_name = last_name ,password = password , email = email)
+                    user_info.save()
 
-            # Save in profile table
-            user_profile = profile(User=user , image = profile_image)
-            user_profile.save()
+                    #save workhand model
+                    Workhand_info = Workhand(first_name=first_name , last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state_obj , city_id=city_obj , profilePic_path=profile_image , Workhand_category_id=workhand_category_obj , User_id=user_info)
+                    Workhand_info.save()
 
-            #user login and redirect
-            auth_login(request,user)
-            return redirect('index')
+                    #save in Porfile model
+                    user_profile = profile(User=user_info , image = profile_image)
+                    user_profile.save()
 
-        if role == "vendor":
+                    #user login and redirect
+                    auth_login(request,user_info)
+                    return redirect('index')
+
+        elif role == "vendor":
+            username = request.POST.get('username')
             company_name = request.POST.get('company_name')
-            number = request.POST.get('number')
+            password = request.POST.get('password')
+            confirm_password = request.POST.get('confirm_password')
+            email = request.POST.get('email')
+            contact_number = request.POST.get('contact_number')
             street_address = request.POST.get('street_address')
-            city = request.POST.get('city')
             state = request.POST.get('state')
+            city = request.POST.get('city')
             discription = request.POST.get('discription')
             company_logo = request.FILES.get('company_logo')
 
-            # Save in default user table 
-            user = User.objects.create_user(username = username , password = password , email = email , is_staff = True)
-            user.save()
+            #Object Instances--->
+            city_obj = City.objects.get(id=city)
+            state_obj = State.objects.get(id=state)
+            # ------------------>
 
-            # Save in Company table 
-            Company_info = company(name = company_name , email=email , contact=number , street_address= street_address , city = city , state = state , image = company_logo , User = user)
-            Company_info.save()
+            if password and confirm_password:
+                if password != confirm_password:
+                    messages.error(request , "Password doen's match")
+                    return redirect('register')
+                else:
+                    #save user model
+                    user_info = User.objects.create_user(username = username , first_name = company_name ,password = password , email = email ,is_staff = True)
+                    user_info.save()
 
-            # Save in profile table
-            user_profile = profile(User=user , image = company_logo)
-            user_profile.save()
+                    #save company model
+                    Company_info = Company(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city_obj , state_id=state_obj , companyLogo_path = company_logo, description=discription ,User_id=user_info)
+                    Company_info.save()
+                    
+                    # Save in profile table
+                    user_profile = profile(User=user_info , image = company_logo)
+                    user_profile.save()
 
-            #user login and redirect
-            auth_login(request,user)
-            return redirect('index')'''
+                    #user login and redirect
+                    auth_login(request,user_info)
+                    return redirect('index')
 
-    States = State.objects.all().order_by('-state_name')
-    context = {
-        'State' : States
-    }
-    return render(request , 'login/register.html' , locals())
+        else:
+            messages.error(request , "Please select role")
+
+
+    else:
+        States = State.objects.all().order_by('-state_name')
+        Workhand_categories = Workhand_category.objects.all().order_by('workhand_category_name')
+        context = {
+            'States' : States,
+            'Workhand_category' : Workhand_categories
+        }
+        return render(request , 'login/register.html' , context)
 
 def get_city(request):
     state_id = request.GET['state_id']
