@@ -86,63 +86,15 @@
                             </div>
 
                             <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="">
-                                  <select name="city" id="person-type-select" class="form-item" onchange="toggleAdditionalNeededField()" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                                      <option  disable selected>Type of workhand</option>
-                                      {% for d in data %}
-                                      <option value="{{d.id}}">{{d.workhand_category}}</option>
-                                      {% endfor %}
-                                  </select>
-                                </div>
-                            </div>
+								<div class="form-item">
+									<input type="number" id="workhand_category" min="1" onchange="createDropdown()" placeholder="How many categories you need in event"required>
+								</div>
+							</div>
+
                             
-                             <div class="col-lg-12 col-md-12 col-sm-12" id = "boysfield" style = "display: none;">
-                                <div class="form-item">
-                                  <input type="number" name="only_boy" placeholder="Enter Number of workhands">
-                                </div>
-                            </div>
+                            <div id="catContainer" class="col-lg-12 col-md-12 col-sm-12"></div>
+                            
 
-                            {% comment %} <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="">
-                                  <select id="person-type-select" onchange="toggleAdditionalNeededField()" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                                      <option value="" disable selected>Type of person needed</option>
-                                      <option value="boy">Only boys</option>
-                                      <option value="girl">Only girls</option>
-                                      <option value="boy_girl">Both boys and girls</option>
-                                      <option value="any"> Any </option>
-                                  </select>
-                                </div>
-                            </div> 
-
-                            <div class="col-lg-12 col-md-12 col-sm-12" id = "boysfield" style = "display: none;">
-                                <div class="form-item">
-                                  <input type="number" name="only_boy" placeholder="Enter Boys">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12 col-md-12 col-sm-12" id = "girls" style = "display: none;">
-                                <div class="form-item">
-                                  <input type="number" name="only_girl" placeholder="Enter Girls">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12 col-md-12 col-sm-12" id = "select-person" style = "display: none;">
-                                <div class="form-item">
-                                  <input type="number" name="boy_and_girl" placeholder="Enter persons">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-6" id = "both_boys" style = "display: none;">
-                                <div class="form-item">
-                                  <input type="number" name="boy" placeholder="Enter Boys">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-6" id = "both_girls" style = "display: none;">
-                                <div class="form-item">
-                                  <input type="number" name="girl" placeholder="Enter Girls">
-                                </div>
-                            </div>{% endcomment %}
 
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="form-item">
@@ -158,22 +110,21 @@
 
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="">
-                                  <select name="city" id="" class="form-item " style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                                      <option value="" disable selected>City</option>
-                                      <option value="">Ahmedabad</option>
-                                      <option value="">Surat</option>
+                                  <select name="state" id="state" class="form-item p-2" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ">
+                                    {% for i in States %}
+                                        <option value="{{i.id}}" selected>{{i.state_name}}</option>
+                                    {% endfor %}
+                                    <option disable selected>Choose State</option>
                                   </select>
                                 </div>
-                             </div>
-                        
+                            </div>
+                            
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="form-item">
-                                    <select name="state" id="" class="form-item " style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                                        <option value="" disable selected>State</option>
-                                        <option value="">Gujrat</option>
-                                        <option value="">Pune</option>
-                                    </select>
-                                </div>
+                              <div class="">
+                                <select name="city" id="city" class="form-item p-2" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ">
+                                    <option value=0>Choose City</option>
+                                </select>
+                              </div>
                             </div>
 
                             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -183,86 +134,74 @@
 							</div>
 
                             <div class="col-lg-12 col-md-12 col-sm-12">
-                                <button type="button" id="button" class="custom-btn" data-toggle="modal" data-target="#exampleModalCenter">Make An Event</button>
+                                <button type="submit" id="button" class="custom-btn" data-toggle="modal" >Make An Event</button>
                             </div>
 						</div>
-
-                        <!-- Confirm to add button -->
-                        <div class="modal fade"  tabindex="-1" role="dialog" id="exampleModalCenter" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to confirm add this event</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="modal-body">
-                                            <strong class="title">Once you created event then you can only edit not delete.</strong>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Add Event</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 					</form>
 				</div>
 				<!-- contact-form - end -->
 
-                {% comment %} <script>
-                    function toggleAdditionalNeededField() {
-                        var person_type = document.getElementById("person-type-select");
-                        var onlyboys = document.getElementById("boysfield");
-                        var onlygirls = document.getElementById("girls");
-                        var both_boys_girl1 = document.getElementById("both_boys");
-                        var both_boys_girl2 = document.getElementById("both_girls");
-                        var select_person = document.getElementById("select-person");
-
-                        if(person_type.value === "boy") {
-                            onlyboys.style.display = "block";
-                        } else {
-                            onlyboys.style.display = "none";
-                        }
-
-                        if(person_type.value === "girl") {
-                            onlygirls.style.display = "block";
-                        }else {
-                            onlygirls.style.display = "none";
-                        }
-
-                        if(person_type.value === "boy_girl") {
-                            both_boys_girl1.style.display = "block";
-                            both_boys_girl2.style.display = "block";
-                        }else {
-                            both_boys_girl2.style.display = "none";
-                            both_boys_girl1.style.display = "none";
-                        }
-
-                        if(person_type.value === "any") {
-                            select_person.style.display = "block";
-                        }else {
-                            select_person.style.display = "none";
-                        }
-
-                        
-                    }
-                </script> {% endcomment %}
-
                 <script>
-                    function toggleAdditionalNeededField() {
-                        var person_type = document.getElementById("person-type-select");
-                        var onlyboys = document.getElementById("boysfield");
-
-                        if(person_type.value){
-                            onlyboys.style.display = "block";
-                        } else {
-                            onlyboys.style.display = "none";
+                    function createDropdown() {
+                        // Get the selected number of cats
+                        var numberOfCats = document.getElementById("workhand_category").value;
+                    
+                        // Get the container div
+                        var catContainer = document.getElementById("catContainer");
+                    
+                        // Clear previous content
+                        catContainer.innerHTML = "";
+                    
+                        // Create dropdowns and input fields
+                        for (var i = 1; i <= numberOfCats; i++) {
+                            // Create a div for each pair
+                            var pairDiv = document.createElement("div");
+                            pairDiv.className = "row mb-2"; // Adjust classes as needed
+                    
+                            var dropdownDiv = document.createElement("div");
+                            dropdownDiv.className = "col-lg-6 col-md-6 col-sm-6"; // Adjust classes as needed
+                    
+                            var dropdown = document.createElement("select");
+                            dropdown.id = "catDropdown" + i;
+                            dropdown.className = "form-item";
+                            dropdown.name = "Workhand_categorie";
+                            dropdown.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ";
+                    
+                            var textboxDiv = document.createElement("div");
+                            textboxDiv.className = "col-lg-6 col-md-6 col-sm-6"; // Adjust classes as needed
+                    
+                            var textbox = document.createElement("input");
+                            textbox.type = "text";
+                            textbox.id = "catTextbox" + i;
+                            textbox.name = "workhand_number";
+                            textbox.className = "form-item";
+                            textbox.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ";
+                            textbox.required = true; // Add the required attribute
+                    
+                            var option = document.createElement("option");
+                            option.value = "";
+                            option.text = "Choose Workhand Category";
+                            dropdown.appendChild(option);
+                    
+                            {% for i in Workhand_category %}
+                                var option = document.createElement("option");
+                                option.value = {{i.id}};
+                                option.text ="{{i.workhand_category_name}}";
+                                dropdown.appendChild(option);
+                            {% endfor %}
+                    
+                            // Append the dropdown and textbox to the div
+                            dropdownDiv.appendChild(dropdown);
+                            textboxDiv.appendChild(textbox);
+                    
+                            // Append the div to the container
+                            pairDiv.appendChild(dropdownDiv);
+                            pairDiv.appendChild(textboxDiv);
+                            catContainer.appendChild(pairDiv);
                         }
                     }
                 </script>
+
 			</div>
 		</section>
 <!-- contact-section - end
