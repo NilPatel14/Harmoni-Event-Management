@@ -6,14 +6,16 @@ from django.contrib.auth.models import User
 
 
 def add_event(request):
-    data = Workhand_category.objects.all()
+    if request.method == "POST":
+        return redirect('register')
+
+
+    States = State.objects.all().order_by('-state_name')
+    Workhand_categories = Workhand_category.objects.all().order_by('workhand_category_name')
     active = "add_event"
     context={
         'active' : active,
-        'data' : data
+        'States' : States,
+        'Workhand_category' : Workhand_categories,
     }
-
-    if request.method == "POST":
-        return redirect('register')
-    
     return render(request , 'vendor/addevent.html',context)
