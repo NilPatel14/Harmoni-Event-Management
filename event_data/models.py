@@ -54,6 +54,7 @@ class Event(models.Model):
     city_id = models.ForeignKey('City', on_delete=models.CASCADE)
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
     event_category_id = models.ForeignKey('Event_category',on_delete=models.CASCADE,default=False)
+    event_subcategory_id = models.ForeignKey('Event_subcategory',on_delete=models.CASCADE,null=True)
     company_id = models.ForeignKey('company',on_delete=models.CASCADE,default=False)
 
     def __str__(self):
