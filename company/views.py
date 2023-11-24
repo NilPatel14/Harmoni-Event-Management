@@ -9,7 +9,7 @@ def add_event(request):
     if request.method == "POST":
         return redirect('register')
 
-
+    Event_category = Event_Category.objects.all()
     States = State.objects.all().order_by('-state_name')
     Workhand_categories = Workhand_category.objects.all().order_by('workhand_category_name')
     active = "add_event"
@@ -17,5 +17,18 @@ def add_event(request):
         'active' : active,
         'States' : States,
         'Workhand_category' : Workhand_categories,
+        'Event_category' : Event_category
     }
     return render(request , 'vendor/addevent.html',context)
+
+
+def get_subcat(request):
+    cat_id = request.GET['cat_id']
+    get_cat = Event_Category.objects.get(id = cat_id)
+    subcat = Event_subcategory.objects.filter(Event_Category_id = get_cat)
+    return render(request , 'vendor/get-subcat.html',locals())
+
+    '''state_id = request.GET['state_id']
+    get_state = State.objects.get(id=state_id)
+    city = City.objects.filter(state_id=get_state)
+    return render(request , 'login/get-city.html',locals())'''
