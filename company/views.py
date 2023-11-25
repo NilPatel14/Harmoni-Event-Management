@@ -27,8 +27,3 @@ def get_subcat(request):
     get_cat = Event_Category.objects.get(id = cat_id)
     subcat = Event_subcategory.objects.filter(Event_Category_id = get_cat)
     return render(request , 'vendor/get-subcat.html',locals())
-
-    '''state_id = request.GET['state_id']
-    get_state = State.objects.get(id=state_id)
-    city = City.objects.filter(state_id=get_state)
-    return render(request , 'login/get-city.html',locals())'''

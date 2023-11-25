@@ -84,14 +84,14 @@
               <div class="col-lg-6 col-md-6 col-sm-6" id="" style="">
                   <div class="form-item">
                     <label for="file">Starting Date & Time : </label>
-                    <input class="p-2" name="start_datetime" type="datetime-local" id="birthdaytime" required>
+                    <input class="p-2" name="start_datetime" type="datetime-local" id="start_datetime" required>
                   </div>
               </div>
               
               <div class="col-lg-6 col-md-6 col-sm-6" id="" style="">
                   <div class="form-item">
                     <label for="file">Ending Date & Time : </label>
-                    <input class="p-2" name="end_datetime" type="datetime-local" id="birthdaytime" required>
+                    <input class="p-2" name="end_datetime" type="datetime-local" id="end_datetime" required>
                   </div>
               </div>
 
@@ -211,6 +211,15 @@
                             catContainer.appendChild(pairDiv);
                         }
                     }
+
+                    document.getElementById("end_datetime").addEventListener("input", function() {
+                      var startDateTime = new Date(document.getElementById("start_datetime").value);
+                      var endDateTime = new Date(this.value);
+                  
+                      if (endDateTime <= startDateTime) {
+                          alert("End datetime should be greater than start datetime");
+                      }
+                  });
                 </script>
 
 			</div>
