@@ -108,7 +108,7 @@
 
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="form-item">
-                                  <input type="number" name="any" placeholder="Amount in rupees" step="any">
+                                  <input type="number" name="price" placeholder="Amount in rupees" step="any">
                                 </div>
                             </div>
 
@@ -182,7 +182,7 @@
                             textboxDiv.className = "col-lg-6 col-md-6 col-sm-6"; // Adjust classes as needed
                     
                             var textbox = document.createElement("input");
-                            textbox.type = "text";
+                            textbox.type = "number";
                             textbox.id = "catTextbox" + i;
                             textbox.name = "workhand_number";
                             textbox.className = "form-item";
@@ -212,6 +212,7 @@
                         }
                     }
 
+                    // JS for datetime field
                     document.getElementById("end_datetime").addEventListener("input", function() {
                       var startDateTime = new Date(document.getElementById("start_datetime").value);
                       var endDateTime = new Date(this.value);
