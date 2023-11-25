@@ -5,6 +5,10 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from event_data.models import *
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMessage
 
 def index(request):
     active = "home"
@@ -85,7 +89,19 @@ def register(request):
 
                     #user login and redirect
                     auth_login(request,user_info)
+
+                    #Email code 
+                    subject = "Sucessfully logedIn!!"
+                    msg = f"<p>Hello {first_name} {last_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                    from_email = settings.EMAIL_HOST_USER
+                    msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+                    msg.content_subtype = 'html'
+                    msg.send()
+                    #--------------------#
+
+                    #redirected on index page
                     return redirect('index')
+                    #--------------------#
 
         elif role == "vendor":
             username = request.POST.get('username')
@@ -124,7 +140,20 @@ def register(request):
 
                     #user login and redirect
                     auth_login(request,user_info)
+
+                    #Email code 
+                    subject = "Sucessfully logedIn!!"
+                    msg = f"<p>Hello {company_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                    from_email = settings.EMAIL_HOST_USER
+                    msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+                    msg.content_subtype = 'html'
+                    msg.send()
+                    #--------------------#
+
+                    #redirected on index page
                     return redirect('index')
+                    #--------------------#
+
 
         else:
             messages.error(request , "Please select role")
