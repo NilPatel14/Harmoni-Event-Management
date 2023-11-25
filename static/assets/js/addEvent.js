@@ -7,3 +7,12 @@ $(document).ready(function() {
         });
     });
 });
+
+document.getElementById("end_datetime").addEventListener("input", function() {
+    var startDateTime = new Date(document.getElementById("start_datetime").value);
+    var endDateTime = new Date(this.value);
+
+    if (endDateTime <= startDateTime) {
+        alert("End datetime should be greater than start datetime");
+    }
+});
