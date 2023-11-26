@@ -202,8 +202,6 @@ def logout(request):
     except e:
         print(e)
 
-def dash(request):
-    return render(request , 'vendor/index.html')
 
-def role(request):
-    return render(request , 'user/role.html')
+def error_404(request):
+    return render(request, 'login/404-error.html')
