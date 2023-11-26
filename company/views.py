@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required , user_passes_test
 from django.contrib.auth.models import User
 # from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
-@login_required(login_url="/login/")
+@login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def add_event(request):
     if request.method == "POST":

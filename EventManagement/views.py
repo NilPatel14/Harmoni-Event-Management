@@ -193,7 +193,7 @@ def logIn(request):
             return redirect('login')
 
 
-    return render(request , 'login/login.html')
+    return render(request , 'accounts/login.html')
 
 def logout(request):
     try:
