@@ -55,7 +55,9 @@
 					<form action="{% url 'addevent' %}" method="post">
            {% csrf_token %}
 						<div class="row">
-                        
+              
+              {% comment %} Choose this color if you want to show dropdown like other input field =   "color: #6c757d;" {% endcomment %}
+
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="">
                   <select name="cat" id="cat" class="form-item " style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
@@ -69,7 +71,7 @@
 
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="">
-                  <select name="subcat" id="subcat" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px; ">
+                  <select name="subcat" id="subcat" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
                     <option value=0>Choose Event Subcategory</option>
                   </select>
                 </div>
@@ -82,16 +84,16 @@
 							</div>
 
               <div class="col-lg-6 col-md-6 col-sm-6" id="" style="">
+                <label for="file">Starting Date & Time : </label>
                   <div class="form-item">
-                    <label for="file">Starting Date & Time : </label>
-                    <input class="p-2" name="start_datetime" type="datetime-local" id="start_datetime" required>
+                    <input class="custom-input" name="start_datetime" type="datetime-local" id="start_datetime" style="padding-left: 25px;" required>
                   </div>
               </div>
               
               <div class="col-lg-6 col-md-6 col-sm-6" id="" style="">
+                <label for="file">Ending Date & Time : </label>
                   <div class="form-item">
-                    <label for="file">Ending Date & Time : </label>
-                    <input class="p-2" name="end_datetime" type="datetime-local" id="end_datetime" required>
+                    <input class="custom-input" name="end_datetime" type="datetime-local" id="end_datetime" style="padding-left: 25px;" required>
                   </div>
               </div>
 
@@ -106,46 +108,46 @@
                             
 
 
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="form-item">
-                                  <input type="number" name="price" placeholder="Amount in rupees" step="any">
-                                </div>
-                            </div>
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="form-item">
+                    <input type="number" name="price" placeholder="Amount in rupees" step="any">
+                  </div>
+              </div>
 
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="form-item">
-                                  <input type="text" name="street_address" placeholder="Street Address" required>
-                                </div>
-                            </div>
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="form-item">
+                    <input type="text" name="street_address" placeholder="Street Address" required>
+                  </div>
+              </div>
 
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="">
-                                  <select name="state" id="state" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                                    {% for i in States %}
-                                        <option value="{{i.id}}" selected>{{i.state_name}}</option>
-                                    {% endfor %}
-                                    <option disable selected>Choose State</option>
-                                  </select>
-                                </div>
-                            </div>
-                            
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                              <div class="">
-                                <select name="city" id="city" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                                    <option value=0>Choose City</option>
-                                </select>
-                              </div>
-                            </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="">
+                    <select name="state" id="state" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
+                      {% for i in States %}
+                          <option value="{{i.id}}" selected>{{i.state_name}}</option>
+                      {% endfor %}
+                      <option disable selected>Choose State</option>
+                    </select>
+                  </div>
+              </div>
+              
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="">
+                  <select name="city" id="city" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
+                      <option value=0>Choose City</option>
+                  </select>
+                </div>
+              </div>
 
-                            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="col-lg-12 col-md-12 col-sm-12">
 								<div class="form-item">
 									<textarea name="description" placeholder="Event Description" required></textarea>
 								</div>
 							</div>
 
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <button type="submit" id="button" class="custom-btn" data-toggle="modal" >Make An Event</button>
-                            </div>
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                  <button type="submit" id="button" class="custom-btn" data-toggle="modal" >Make An Event</button>
+              </div>
 						</div>
 					</form>
 				</div>
