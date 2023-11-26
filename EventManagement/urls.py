@@ -33,10 +33,14 @@ urlpatterns = [
     path('contact-us/',views.contact , name="contact"),
 
     #--Login ,  Logout & js AJAX finctions--#
-    path('register/',views.register, name="register"),
     path('get-city/',views.get_city , name = "get_city"),
-    path('login/',views.logIn,name="login"),
-    path('logout/',views.logout,name="logout"),
+    path('login/',views.logIn,name="handle_login"),
+    #------------------------------------#
+
+    #-----Account purpose---------#
+    path('accounts/register/',views.register, name="register"),
+    path('accounts/logout/',views.logout,name="logout"),
+    path('accounts/', include('django.contrib.auth.urls')),
     #------------------------------------#
 
     #-- 404-Error Page --#
@@ -46,5 +50,6 @@ urlpatterns = [
     #-- Company's Path --#
     path('',include("company.urls")),
     #------------------------------------#
+
 ] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
 
