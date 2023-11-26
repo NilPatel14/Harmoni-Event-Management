@@ -32,11 +32,15 @@ urlpatterns = [
     path('vendor/',views.vendor,name="vendor"),
     path('contact-us/',views.contact , name="contact"),
 
-    #--Login & Logout--#
+    #--Login ,  Logout & js AJAX finctions--#
     path('register/',views.register, name="register"),
     path('get-city/',views.get_city , name = "get_city"),
     path('login/',views.logIn,name="login"),
     path('logout/',views.logout,name="logout"),
+    #------------------------------------#
+
+    #-- 404-Error Page --#
+    path('404-error/',views.error_404, name="error_404"),
     #------------------------------------#
 
     #-- Company's Path --#

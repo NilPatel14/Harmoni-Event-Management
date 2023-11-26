@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
 from event_data.models import *
 from django.conf import settings
-# from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required , user_passes_test
 from django.contrib.auth.models import User
+# from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 
+@user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def add_event(request):
     if request.method == "POST":
         Event_Category_id = request.POST.get('cat')

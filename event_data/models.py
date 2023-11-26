@@ -82,7 +82,7 @@ class Event_Registrations(models.Model):
 
 
 class Workhand_category(models.Model):
-    workhand_category_name = models.CharField(max_length=20)
+    workhand_category_name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.workhand_category_name   
