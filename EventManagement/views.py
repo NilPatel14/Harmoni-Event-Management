@@ -166,7 +166,7 @@ def register(request):
             'States' : States,
             'Workhand_category' : Workhand_categories
         }
-        return render(request , 'login/register.html' , context)
+        return render(request , 'registration/register.html' , context)
 
 def get_city(request):
     state_id = request.GET['state_id']
