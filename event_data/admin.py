@@ -7,7 +7,7 @@ class Event_workhands(admin.TabularInline):
 class Event_admin(admin.ModelAdmin):
     inlines = [Event_workhands]
 
-admin.site.register(profile)
+admin.site.register(profile_pics)
 admin.site.register(Workhand)
 admin.site.register(Company)
 admin.site.register(Event,Event_admin)
