@@ -202,6 +202,9 @@ def logout(request):
     except e:
         print(e)
 
+def profile(request):
+    return render(request , 'user/profile.html')
+
 
 def error_404(request):
     return render(request, 'login/404-error.html')

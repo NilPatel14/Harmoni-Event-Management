@@ -77,6 +77,14 @@
 						<div class="col-lg-6">
 							<div class="basic-contact">
 								<ul>
+									{% if user.is_authenticated %}
+									<li>
+										<a href="#!">
+											<i class="fas fa-envelope"></i>
+											{{user.email}}
+										</a>
+									</li>
+									{% else %}
 									<li>
 										<a href="#!">
 											<i class="fas fa-envelope"></i>
@@ -89,6 +97,7 @@
 											100-2222-9999
 										</a>
 									</li>
+									{% endif %}
 								</ul>
 							</div>
 						</div>

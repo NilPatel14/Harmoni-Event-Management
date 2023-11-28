@@ -38,8 +38,10 @@ urlpatterns = [
     #------------------------------------#
 
     #-----Account purpose---------#
-    path('accounts/register/',views.register, name="register"),
-    path('accounts/logout/',views.logout,name="logout"),
+    path('account/register/',views.register, name="register"),
+    path('account/profile/',views.profile,name="profile"),
+    path('account/logout/',views.logout,name="logout"),
+
     path('accounts/', include('django.contrib.auth.urls')),
     #------------------------------------#
 
