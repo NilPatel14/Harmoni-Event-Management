@@ -84,7 +84,7 @@ def register(request):
                     Workhand_info.save()
 
                     #save in Porfile model
-                    user_profile = profile(User=user_info , image = profile_image)
+                    user_profile = profile_pics(User=user_info , image = profile_image)
                     user_profile.save()
 
                     #user login and redirect
@@ -135,7 +135,7 @@ def register(request):
                     Company_info.save()
                     
                     # Save in profile table
-                    user_profile = profile(User=user_info , image = company_logo)
+                    user_profile = profile_pics(User=user_info , image = company_logo)
                     user_profile.save()
 
                     #user login and redirect
@@ -202,8 +202,81 @@ def logout(request):
     except e:
         print(e)
 
+
+@login_required(login_url="/accounts/login/")
 def profile(request):
-    return render(request , 'user/profile.html')
+    try:
+        if request.user.is_staff:
+            company = Company.objects.get(User_id=request.user)
+            States = State.objects.all().order_by('-state_name')
+            context={
+                'company' : company,
+                'States' : States,
+            }  
+        else:
+            workhand = Workhand.objects.get(User_id=request.user)
+            States = State.objects.all().order_by('-state_name')
+            Workhand_categories = Workhand_category.objects.all().order_by('workhand_category_name')
+            context={
+                'workhand' : workhand,
+                'States' : States,
+                'Workhand_category' : Workhand_categories,
+            }
+        return render(request , 'user/profile.html', context)
+    except:
+        return redirect('index')
+
+def update_profile(request):
+    if request.method == "POST":
+        if request.user.is_staff:
+            company_name = request.POST.get('company_name')
+            email = request.POST.get('email')
+            contact_number = request.POST.get('contact_number')
+            street_address = request.POST.get('street_address')
+            state = request.POST.get('state')
+            city = request.POST.get('city')
+            discription = request.POST.get('discription')
+            company_logo = request.FILES.get('company_logo')
+            company = Company.objects.get(User_id=request.user)
+            profile_id = profile_pics.objects.get(User=request.user)
+
+            if company_logo is None:
+                Company.objects.filter(id=company.id).update(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city , state_id=state ,  description=discription)
+            else:
+                Company.objects.filter(id=company.id).update(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city , state_id=state , companyLogo_path = company_logo, description=discription)
+                profile_pics.objects.filter(User=profile_id.id).update(image=company_logo)
+                
+            messages.success(request , "Profile Successfully Updated")
+            return redirect('profile')
+
+        else:
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            email = request.POST.get('email')
+            contact_number = request.POST.get('contact_number')
+            street_address = request.POST.get('street_address')
+            state = request.POST.get('state')
+            city = request.POST.get('city')
+            workhand_category = request.POST.get('workhand_category')
+            profile_image = request.FILES.get('profile_image')
+            workhand = Workhand.objects.get(User_id=request.user)
+            profile_id = profile_pics.objects.get(User=request.user)
+
+            if profile_image is None:
+                Workhand.objects.filter(id=workhand.id).update(first_name=first_name, last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state , city_id=city , Workhand_category_id=workhand_category)
+            else:
+                Workhand.objects.filter(id=workhand.id).update(first_name=first_name, last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state , city_id=city , Workhand_category_id=workhand_category , profilePic_path=profile_image)
+                profile_id.image = profile_image
+                profile_id.save()
+            messages.success(request , "Profile Successfully Updated")
+            return redirect('profile')
+
+            
+
+
+
+
+
 
 
 def error_404(request):

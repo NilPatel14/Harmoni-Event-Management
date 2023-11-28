@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 
-class profile(models.Model):
+class profile_pics(models.Model):
     User = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to = 'profile_img/')
 
@@ -20,12 +20,12 @@ class Workhand(models.Model):
     street_address = models.CharField(max_length=100)
     city_id = models.ForeignKey('City', on_delete=models.CASCADE)
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
-    profilePic_path = models.ImageField(upload_to = 'user_profile_img/' , default = None)
+    profilePic_path = models.ImageField(upload_to = 'user_profile_img/' , default = None , null=True)
     Workhand_category_id = models.ForeignKey('Workhand_category' , on_delete=models.CASCADE)
     User_id = models.ForeignKey('auth.User',  on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.first_name
+        return self.User_id.username
     
 
 class Company(models.Model):
@@ -35,7 +35,7 @@ class Company(models.Model):
     street_address = models.CharField(max_length=100)
     city_id = models.ForeignKey('City', on_delete=models.CASCADE)
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
-    companyLogo_path = models.ImageField(upload_to='vendor_img/' , default=None)
+    companyLogo_path = models.ImageField(upload_to='vendor_img/' , default=None , null=True)
     description = models.TextField(default=None)
     User_id = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 

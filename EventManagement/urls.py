@@ -39,8 +39,9 @@ urlpatterns = [
 
     #-----Account purpose---------#
     path('account/register/',views.register, name="register"),
-    path('account/profile/',views.profile,name="profile"),
     path('account/logout/',views.logout,name="logout"),
+    path('account/profile/',views.profile,name="profile"),
+    path('account/update_profile',views.update_profile,name="update_profile"),
 
     path('accounts/', include('django.contrib.auth.urls')),
     #------------------------------------#
@@ -49,7 +50,7 @@ urlpatterns = [
     path('404-error/',views.error_404, name="error_404"),
     #------------------------------------#
 
-    #-- Company's Path --#
+    #-- Companu URL Path --#
     path('',include("company.urls")),
     #------------------------------------#
 
