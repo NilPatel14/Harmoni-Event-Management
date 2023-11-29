@@ -20,7 +20,7 @@ class Workhand(models.Model):
     street_address = models.CharField(max_length=100)
     city_id = models.ForeignKey('City', on_delete=models.CASCADE)
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
-    profilePic_path = models.ImageField(upload_to = 'user_profile_img/' , default = None , null=True)
+    profilePic_path = models.ImageField(default = 'default.jpg' , upload_to = 'workhand_img/')
     Workhand_category_id = models.ForeignKey('Workhand_category' , on_delete=models.CASCADE)
     User_id = models.ForeignKey('auth.User',  on_delete=models.CASCADE)
 
@@ -35,7 +35,7 @@ class Company(models.Model):
     street_address = models.CharField(max_length=100)
     city_id = models.ForeignKey('City', on_delete=models.CASCADE)
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
-    companyLogo_path = models.ImageField(upload_to='vendor_img/' , default=None , null=True)
+    companyLogo_path = models.ImageField(default='default.jpg' , upload_to = 'company_img/')
     description = models.TextField(default=None)
     User_id = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 

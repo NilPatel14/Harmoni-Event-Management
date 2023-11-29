@@ -9,6 +9,8 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.core.mail import EmailMessage
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 def index(request):
     active = "home"
@@ -240,13 +242,17 @@ def update_profile(request):
             company = Company.objects.get(User_id=request.user)
             profile_id = profile_pics.objects.get(User=request.user)
 
+            file_path = default_storage.save(f'company_img/{company_logo.name}', ContentFile(company_logo.read()))
+
+
             if company_logo is None:
                 Company.objects.filter(id=company.id).update(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city , state_id=state ,  description=discription)
             else:
-                Company.objects.filter(id=company.id).update(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city , state_id=state , companyLogo_path = company_logo, description=discription)
-                profile_pics.objects.filter(User=profile_id.id).update(image=company_logo)
+                Company.objects.filter(id=company.id).update(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city , state_id=state , companyLogo_path = file_path, description=discription)
+                profile_id.image = company_logo
+                profile_id.save()
                 
-            messages.success(request , "Profile Successfully Updated")
+            messages.success(request , "Profile Successfully Updated!!")
             return redirect('profile')
 
         else:
@@ -262,13 +268,15 @@ def update_profile(request):
             workhand = Workhand.objects.get(User_id=request.user)
             profile_id = profile_pics.objects.get(User=request.user)
 
+            file_path = default_storage.save(f'workhand_img/{profile_image.name}', ContentFile(profile_image.read()))
+
             if profile_image is None:
                 Workhand.objects.filter(id=workhand.id).update(first_name=first_name, last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state , city_id=city , Workhand_category_id=workhand_category)
             else:
-                Workhand.objects.filter(id=workhand.id).update(first_name=first_name, last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state , city_id=city , Workhand_category_id=workhand_category , profilePic_path=profile_image)
+                Workhand.objects.filter(id=workhand.id).update(first_name=first_name, last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state , city_id=city , Workhand_category_id=workhand_category , profilePic_path=file_path)
                 profile_id.image = profile_image
                 profile_id.save()
-            messages.success(request , "Profile Successfully Updated")
+            messages.success(request , "Profile Successfully Updated!!")
             return redirect('profile')
 
             
