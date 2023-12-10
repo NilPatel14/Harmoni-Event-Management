@@ -40,7 +40,7 @@ def vendor(request):
     }
     return render(request , 'user/vendor.html',contaxt)
 
-@login_required(login_url="/login/")
+@login_required(login_url="/accounts/login/")
 def contact(request):
     active="contact"
     contaxt={
@@ -242,12 +242,13 @@ def update_profile(request):
             company = Company.objects.get(User_id=request.user)
             profile_id = profile_pics.objects.get(User=request.user)
 
-            file_path = default_storage.save(f'company_img/{company_logo.name}', ContentFile(company_logo.read()))
+            file_path = None
 
 
             if company_logo is None:
                 Company.objects.filter(id=company.id).update(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city , state_id=state ,  description=discription)
             else:
+                file_path = default_storage.save(f'company_img/{company_logo.name}', ContentFile(company_logo.read()))
                 Company.objects.filter(id=company.id).update(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city , state_id=state , companyLogo_path = file_path, description=discription)
                 profile_id.image = company_logo
                 profile_id.save()
@@ -268,11 +269,12 @@ def update_profile(request):
             workhand = Workhand.objects.get(User_id=request.user)
             profile_id = profile_pics.objects.get(User=request.user)
 
-            file_path = default_storage.save(f'workhand_img/{profile_image.name}', ContentFile(profile_image.read()))
+            file_path = None
 
             if profile_image is None:
                 Workhand.objects.filter(id=workhand.id).update(first_name=first_name, last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state , city_id=city , Workhand_category_id=workhand_category)
             else:
+                file_path = default_storage.save(f'workhand_img/{profile_image.name}', ContentFile(profile_image.read()))
                 Workhand.objects.filter(id=workhand.id).update(first_name=first_name, last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state , city_id=city , Workhand_category_id=workhand_category , profilePic_path=file_path)
                 profile_id.image = profile_image
                 profile_id.save()
