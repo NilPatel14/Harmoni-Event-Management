@@ -108,11 +108,11 @@
                             
 
 
-              <div class="col-lg-12 col-md-12 col-sm-12">
+              {% comment %} <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="form-item">
                     <input type="number" name="price" placeholder="Amount in rupees" step="any">
                   </div>
-              </div>
+              </div> {% endcomment %}
 
               <div class="col-lg-12 col-md-12 col-sm-12">
                   <div class="form-item">
@@ -169,28 +169,41 @@
                         for (var i = 1; i <= numberOfCats; i++) {
                             // Create a div for each pair
                             var pairDiv = document.createElement("div");
-                            pairDiv.className = "row mb-2"; // Adjust classes as needed
+                            pairDiv.className = "row mb-3"; // Adjust classes as needed
                     
                             var dropdownDiv = document.createElement("div");
-                            dropdownDiv.className = "col-lg-6 col-md-6 col-sm-6"; // Adjust classes as needed
+                            dropdownDiv.className = "col-lg-4 col-md-4 col-sm-4"; // Adjust classes as needed
                     
                             var dropdown = document.createElement("select");
                             dropdown.id = "catDropdown" + i;
                             dropdown.className = "form-item";
                             dropdown.name = "Workhand_categorie";
-                            dropdown.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ";
+                            dropdown.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px; ";
                     
                             var textboxDiv = document.createElement("div");
-                            textboxDiv.className = "col-lg-6 col-md-6 col-sm-6"; // Adjust classes as needed
+                            textboxDiv.className = "col-lg-4 col-md-4 col-sm-4"; // Adjust classes as needed
+
+                            var priceBoxDiv = document.createElement("div");
+                            priceBoxDiv.className = "col-lg-4 col-md-4 col-sm-4"; // Adjust classes as needed
                     
                             var textbox = document.createElement("input");
                             textbox.type = "number";
                             textbox.id = "catTextbox" + i;
                             textbox.name = "workhand_number";
+                            textbox.placeholder = "Enter number of workhand";
                             textbox.className = "form-item";
                             textbox.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ";
                             textbox.required = true; // Add the required attribute
-                    
+
+                            var priceBox = document.createElement("input");
+                            priceBox.type = "number";
+                            priceBox.id = "catTextbox" + i;
+                            priceBox.name = "price";
+                            priceBox.placeholder = "Enter Price";
+                            priceBox.className = "form-item";
+                            priceBox.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ";
+                            priceBox.required = true; // Add the required attribute
+                            
                             var option = document.createElement("option");
                             option.value = "";
                             option.text = "Choose Workhand Category";
@@ -206,10 +219,12 @@
                             // Append the dropdown and textbox to the div
                             dropdownDiv.appendChild(dropdown);
                             textboxDiv.appendChild(textbox);
+                            priceBoxDiv.appendChild(priceBox);
                     
                             // Append the div to the container
                             pairDiv.appendChild(dropdownDiv);
                             pairDiv.appendChild(textboxDiv);
+                            pairDiv.appendChild(priceBoxDiv);
                             catContainer.appendChild(pairDiv);
                         }
                     }
