@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from event_data.models import *
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required , user_passes_test
 from django.contrib.auth.models import User
 # from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -44,7 +45,11 @@ def add_event(request):
                 Event_workhand_info = Event_workhand(Workhand_category_id = Workhand_category_obj , number_of_workhand=numbers_of_workhand , price = workhand_price , event_id=Event_info )
                 Event_workhand_info.save()
 
-        return redirect('register')
+            messages.success(request , "Event Successfully Added!!")
+            return redirect('addevent')
+        
+        messages.error(request , "Something Went Wrong!!")
+        return redirect('addevent')
 
     else:
         Event_category = Event_Category.objects.all()
