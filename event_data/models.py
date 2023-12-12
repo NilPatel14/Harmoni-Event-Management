@@ -49,7 +49,6 @@ class Event(models.Model):
     start_datetime = models.DateTimeField(default = datetime.now)
     end_datetime = models.DateTimeField(default=datetime.now)
     total_workhand = models.IntegerField(default=11) 
-    price = models.DecimalField(max_digits=10, decimal_places=2)
     street_address = models.CharField(max_length=250)
     city_id = models.ForeignKey('City', on_delete=models.CASCADE)
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
@@ -63,6 +62,7 @@ class Event(models.Model):
 class Event_workhand(models.Model):
     Workhand_category_id = models.ForeignKey('Workhand_category' , on_delete=models.CASCADE)
     number_of_workhand = models.IntegerField(default=11)
+    price = models.DecimalField(max_digits=10, decimal_places=2 , default = None)
     event_id = models.ForeignKey('Event' , on_delete=models.CASCADE)
 
     def __str__(self):
