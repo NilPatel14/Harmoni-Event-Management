@@ -71,6 +71,7 @@ class Event_workhand(models.Model):
 
 class Event_Registrations(models.Model):
     registration_date = models.DateField(default=datetime.now)
+    workhand_categoty_id = models.ForeignKey('Workhand_category' , on_delete=models.CASCADE , default=None)
     workhand_id = models.ForeignKey('Workhand',on_delete=models.CASCADE)
     registration_status = models.BooleanField(default=False)
     event_id = models.ForeignKey('Event' , on_delete=models.CASCADE)
