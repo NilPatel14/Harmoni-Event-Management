@@ -49,6 +49,7 @@ class Event(models.Model):
     start_datetime = models.DateTimeField(default = datetime.now)
     end_datetime = models.DateTimeField(default=datetime.now)
     total_workhand = models.IntegerField(default=11) 
+    total_price = models.IntegerField(null=True)
     street_address = models.CharField(max_length=250)
     city_id = models.ForeignKey('City', on_delete=models.CASCADE)
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)

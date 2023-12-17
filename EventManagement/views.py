@@ -21,8 +21,14 @@ def index(request):
 
 def event(request):
     active = "event"
+    events = Event.objects.all()
+    Event_subcategory_obj = Event_subcategory.objects.all()
+    Event_workhand_obj = Event_workhand.objects.all()
     context={
-        'active' : active
+        'active' : active,
+        'events' : events,
+        'Event_subcategory' : Event_subcategory_obj,
+        'Event_Workhand' : Event_workhand_obj,
     }
     return render(request , 'user/event.html',context)
 
