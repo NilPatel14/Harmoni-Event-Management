@@ -24,6 +24,7 @@ def add_event(request):
         price = request.POST.getlist('price')
         workhand_number = request.POST.getlist('workhand_number')
         total_workhand = sum(map(int ,workhand_number))
+        total_price = sum(map(int , price))
 
         #Object Instances--->
         Event_Category_obj = Event_Category.objects.get(id = Event_Category_id)
@@ -34,7 +35,7 @@ def add_event(request):
         # ------------------>
        
         # Save data in Event Table
-        Event_info = Event(event_name=event_name , description = description , start_datetime = start_datetime , end_datetime = end_datetime , total_workhand = total_workhand ,street_address = street_address , city_id = city_obj , state_id = state_obj , event_category_id = Event_Category_obj , event_subcategory_id = Event_subcategory_obj , company_id = Company_id)
+        Event_info = Event(event_name=event_name , description = description , start_datetime = start_datetime , end_datetime = end_datetime , total_workhand = total_workhand, total_price = total_price ,street_address = street_address , city_id = city_obj , state_id = state_obj , event_category_id = Event_Category_obj , event_subcategory_id = Event_subcategory_obj , company_id = Company_id)
         Event_info.save()
 
         # Save data in Event_workhand Table
