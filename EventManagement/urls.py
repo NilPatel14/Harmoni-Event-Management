@@ -54,4 +54,8 @@ urlpatterns = [
     path('',include("company.urls")),
     #------------------------------------#
 
+    #---- Search Event ----------#
+    path('event/search/',views.search_event,name="search_event"),
+    #------------------------------------#
+
 ] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)

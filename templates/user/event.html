@@ -54,22 +54,22 @@
 					<!-- search-form - start -->
 					<div class="col-lg-8 col-md-12 col-sm-12">
 						<div class="search-form form-wrapper">
-							<form action="#!" method="POST">
+							<form action="{% url 'search_event' %}" method="POST">
 								{% csrf_token %}
 								<ul>
 									<li>
 										<span class="title">event keyword</span>
 										<div class="form-item">
-											<input type="search" placeholder="Event name,location,etc">
+											<input type="search" name="keyword" placeholder="Event name,location,etc">
 										</div>
 									</li>
 									<li>
 										<span class="title">event category</span>
-										<select id="event-category-select">
+										<select id="event-category-select" name="search">
 										{% for i in Event_subcategory %}
 											<option value="{{i.id}}" selected>{{i.Event_subcategory_name}}</option>
 										{% endfor %}
-										<option value="" selected>Choose Category</option>
+										<option value="all" selected>All Events</option>
 										</select>
 									</li>
 									<li>
