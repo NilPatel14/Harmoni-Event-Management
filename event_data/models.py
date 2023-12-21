@@ -4,6 +4,7 @@ from indian_cities.dj_city import cities
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
+from .utils import generate_slug
 
 class profile_pics(models.Model):
     User = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -56,6 +57,11 @@ class Event(models.Model):
     event_category_id = models.ForeignKey('Event_category',on_delete=models.CASCADE,default=False)
     event_subcategory_id = models.ForeignKey('Event_subcategory',on_delete=models.CASCADE,null=True)
     company_id = models.ForeignKey('company',on_delete=models.CASCADE,default=False)
+    slug = models.SlugField(unique = True , null=True) #if any issue with slug try blank=true
+
+    def save(self , *args , **kwargs):
+        self.slug = generate_slug(self.event_name)
+        super(Event , self).save(*args , **kwargs)
 
     def __str__(self):
         return self.event_name
