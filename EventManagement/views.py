@@ -70,6 +70,14 @@ def search_event(request):
         }
         return render(request , 'user/event.html',context)
 
+def event_details(request,slug):
+    if request.method == 'POST':
+        event_details = Event.objects.get(slug=slug)
+        contaxt = {
+            'event' : event_details,
+        }
+        return render(request , 'user/event-details.html',contaxt)
+
 def about(request):
     active = "about"
     context={

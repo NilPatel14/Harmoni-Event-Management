@@ -134,6 +134,8 @@
 								<!-- event-item - start -->
 								{% if events %}
 									{% for i in events %}
+									<form action="/event-details/{{i.slug}}" method='POST'>
+									{% csrf_token %}
 									<div class="event-list-item clearfix1">
 
 										<!-- event-image - start -->
@@ -197,7 +199,7 @@
 														</div>
 													</li>
 													<li>
-														<button href="#!" type="submit" class="tickets-details-btn">
+														<button href="" type="submit" class="tickets-details-btn">
 															Register & details
 														</button>
 													</li>
@@ -207,6 +209,7 @@
 										<!-- event-content - end -->
 
 									</div>
+									</form>
 									<!-- event-item - end -->
 									{% endfor %}
 								{% else %}

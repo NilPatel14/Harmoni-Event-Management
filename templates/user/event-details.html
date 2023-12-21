@@ -1,0 +1,382 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}Event-details{% endblock title %}
+{% block content %}
+    		<!-- breadcrumb-section - start
+		================================================== -->
+		<section id="breadcrumb-section" class="breadcrumb-section clearfix">
+			<div class="jarallax" style="background-image: url({% static 'assets/images/breadcrumb/0.breadcrumb-bg.jpg' %});">
+				<div class="overlay-black">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-lg-6 col-md-12 col-sm-12">
+
+								<!-- breadcrumb-title - start -->
+								<div class="breadcrumb-title text-center mb-50">
+									<span class="sub-title">event single</span>
+									<h2 class="big-title">harmoni <strong>event details</strong></h2>
+								</div>
+								<!-- breadcrumb-title - end -->
+
+								<!-- breadcrumb-list - start -->
+								<div class="breadcrumb-list">
+									<ul>
+										<li class="breadcrumb-item"><a href="index-1.html" class="breadcrumb-link">Home</a></li>
+										<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Events</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Istanbul Wine Party 2018</li>
+									</ul>
+								</div>
+								<!-- breadcrumb-list - end -->
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- breadcrumb-section - end
+		================================================== -->
+
+
+
+
+
+		<!-- event-details-section - start
+		================================================== -->
+		<section id="event-details-section" class="event-details-section sec-ptb-100 clearfix">
+			<div class="container">
+				<div class="row">
+
+					<!-- col - event-details - start -->
+					<div class="col-lg-8 col-md-12 col-sm-12">
+
+						<!-- event-details - start -->
+						<div class="event-details mb-80">
+
+							<div class="event-title mb-30">
+								<span class="tag-item">
+									<i class="fas fa-bookmark"></i>
+									Featured Event
+								</span>
+								<h2 class="event-title">Istanbul <strong>{{event.event_name}}</strong></h2>
+							</div>
+
+							<!-- <div id="event-details-carousel" class="event-details-carousel owl-carousel owl-theme"> -->
+							<div>
+								<div class="item">
+									<img src="{% static 'C:\Users\abhishek\Pictures\Screenshots\Screenshot (1).png' %}" alt="Image_not_found" style="height: 140px; width: 140px" >
+								</div>
+							<!-- </div> -->
+
+							<div class="event-info-list ul-li clearfix mb-50">
+								<ul>
+									<li>
+										<span class="icon">
+											<i class="far fa-calendar"></i>
+										</span>
+										<div class="event-content">
+											<small class="event-title">Event Date</small>
+											<h3 class="event-date">{{event.start_datetime | date}}</h3>
+										</div>
+									</li>
+									<li>
+										<span class="icon">
+											<i class="far fa-clock"></i>
+										</span>
+										<div class="event-content">
+											<small class="event-title">Event Time</small>
+											<h3 class="event-date">{{event.start_datetime | time}} to {{event.end_datetime | time}}</h3>
+										</div>
+									</li>
+									<li>
+										<span class="icon">
+											<i class="fas fa-map-marker-alt"></i>
+										</span>
+										<div class="event-content">
+											<small class="event-title">Event Location</small>
+											<h3 class="event-date">{{event.city_id}}</h3>
+										</div>
+									</li>
+								</ul>
+							</div>
+							</div>
+
+							<p class="black-color mb-30">
+								Lorem ipsum dollor site amet the best  consectuer diam adipiscing elites sed diam nonummy nibh the euismod tincidunt ut laoreet dolore magna aliquam erat volutpat insignia the consectuer adipiscing elit. Lorem ipsum dollor site amet the best  consectuer diam adipiscing elites sed diam nonummy nibh the euismod tincidunt ut laoreet dolore magna aliquam erat volutpat insignia the consectuer adipiscing elit. Lorem ipsum dollor site amet the best  consectuer diam adipiscing elites sed diam nonummy nibh the euismod tincidunt ut laoreet dolore magna aliquam erat volutpat insignia the consectuer adipiscing elit. 
+							</p>
+
+							<p class="black-color m-0">
+								Lorem ipsum dollor site amet the best  consectuer diam adipiscing elites sed diam nonummy nibh the euismod tincidunt ut laoreet dolore magna aliquam erat volutpat insignia the consectuer adipiscing elit. 
+							</p>
+
+						</div>
+						<!-- event-details - end -->
+
+						<!-- reviewer-comment-wrapper - start -->
+						<div class="reviewer-comment-wrapper mb-30 clearfix">
+
+							<div class="section-title text-left mb-50">
+								<h2 class="big-title">Event <strong>reviews</strong></h2>
+							</div>
+
+							<div class="comment-bar clearfix">
+								<div class="admin-image">
+									<img src="{% static 'assets/images/admin.png' %}" alt="Image_not_found">
+								</div>
+								<div class="comment-content">
+									<div class="admin-name mb-15">
+										<div class="rateing-star ul-li clearfix">
+											<ul>
+												<li class="rated"><i class="fas fa-star"></i></li>
+												<li class="rated"><i class="fas fa-star"></i></li>
+												<li class="rated"><i class="fas fa-star"></i></li>
+												<li class="rated"><i class="fas fa-star"></i></li>
+												<li class="rated"><i class="fas fa-star"></i></li>
+											</ul>
+										</div>
+										<div class="name">
+											<a href="#!">john doe</a>
+										</div>
+									</div>
+									<div class="comment-text">
+										<p class="mb-30">
+											Brilliant production.  Enjoyed this as it captured so many emotions and being Irish some bits resonated with Irish families, the craic, singing.  Fantastic acting and so many surprises.
+										</p>
+
+										<div class="meta-wrapper">
+											<div class="btn-group-left float-left">
+												<span class="title"><i class="fas fa-heart"></i> Helpful?</span>
+												<ul>
+													<li><button type="button">Yes</button></li>
+													<li><button type="button">No</button></li>
+												</ul>
+											</div>
+											<div class="btn-group-right float-right">
+												<ul>
+													<li><button type="button"><i class="fas fa-reply-all"></i> Replay</button></li>
+													<li><button type="button"><i class="fas fa-share-square"></i> Share</button></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- reviewer-comment-wrapper - end -->
+
+						<div class="pagination ul-li clearfix mb-80">
+							<ul>
+								<li class="page-item prev-item">
+									<a class="page-link" href="#">Prev</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">01</a></li>
+								<li class="page-item active"><a class="page-link" href="#">02</a></li>
+								<li class="page-item"><a class="page-link" href="#">03</a></li>
+								<li class="page-item"><a class="page-link" href="#">04</a></li>
+								<li class="page-item"><a class="page-link" href="#">05</a></li>
+								<li class="page-item next-item">
+									<a class="page-link" href="#">Next</a>
+								</li>
+							</ul>
+						</div>
+
+						<!-- comment-form - start -->
+						<div class="comment-form clearfix">
+
+							<div class="section-title text-left mb-50">
+								<h2 class="big-title">write a <strong>comment</strong></h2>
+
+								<div class="rateing-star-wrapper">
+									<span class="rating-title float-left">Your Rating:</span>
+									<div class="rateing-star-form float-right">
+										<form action="#">
+
+											<div class="form-check clearfix">
+												<input type="checkbox">
+											</div>
+											<div class="form-check clearfix">
+												<input type="checkbox">
+											</div>
+											<div class="form-check clearfix">
+												<input type="checkbox">
+											</div>
+											<div class="form-check clearfix">
+												<input type="checkbox">
+											</div>
+											<div class="form-check clearfix">
+												<input type="checkbox">
+											</div>
+
+										</form>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="form-wrapper">
+								<form action="https://jthemes.net/themes/html/harmony-event/contact.php">
+									<div class="row">
+
+										<!-- form-item - start -->
+										<div class="col-lg-4 col-md-6 col-sm-12">
+											<div class="form-item mb-30">
+												<input type="text" name="name" placeholder="Your Name" required>
+											</div>
+										</div>
+										<!-- form-item - end -->
+
+										<!-- form-item - start -->
+										<div class="col-lg-4 col-md-6 col-sm-12">
+											<div class="form-item mb-30">
+												<input type="email" name="email" placeholder="Your Email Address" required>
+											</div>
+										</div>
+										<!-- form-item - end -->
+
+										<!-- form-item - start -->
+										<div class="col-lg-4 col-md-12 col-sm-12">
+											<div class="form-item mb-30">
+												<input type="tel" name="phone" placeholder="Your Phone" required>
+											</div>
+										</div>
+										<!-- form-item - end -->
+
+										<!-- form-item - start -->
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="mb-30">
+												<textarea name="message" placeholder="Your Comment" required></textarea>
+											</div>
+											<button type="submit" class="custom-btn">SUBMIT NOW</button>
+										</div>
+										<!-- form-item - end -->
+
+									</div>
+								</form>
+							</div>
+
+						</div>
+						<!-- comment-form - end -->
+
+					</div>
+					<!-- col - event-details - end -->
+
+					<!-- sidebar-section - start -->
+					<div class="col-lg-4 col-md-12 col-sm-12">
+						<div class="sidebar-section">
+
+							<!-- Add to Calendar - start -->
+							<div title="Add to Calendar" class="addeventatc">
+								Add to Calendar
+								<span class="start">06/18/2015 09:00 AM</span>
+								<span class="end">06/18/2015 11:00 AM</span>
+								<span class="timezone">Europe/Paris</span>
+								<span class="title">Summary of the event</span>
+								<span class="description">Description of the event</span>
+								<span class="location">Location of the event</span>
+								<span class="organizer">Organizer</span>
+								<span class="organizer_email">Organizer e-mail</span>
+								<span class="all_day_event">false</span>
+								<span class="date_format">MM/DD/YYYY</span>
+							</div>
+							<!-- Add to Calendar - end -->
+								
+							<!-- location-wrapper - start -->
+							<div class="location-wrapper mb-30">
+								<div class="title-wrapper">
+									<small class="up-arrow-icon">
+										<i class="fas fa-chevron-circle-up"></i>
+									</small>
+									<span class="icon">
+										<i class="fas fa-map-marker-alt"></i>
+									</span>
+									<div class="title-content">
+										<small>event location</small>
+										<h3>vanila hotel</h3>
+									</div>
+								</div>
+							<!-- spacial-event-wrapper - end -->
+
+								<div class="location-info-list ul-li-block clearfix">
+									<span class="area-name">Istanbul Turkey</span>
+									<ul>
+										<li><i class="fas fa-arrow-circle-right"></i> Bayezid II Mosque and Beyazid Square</li>
+										<li><i class="fas fa-arrow-circle-right"></i> Istanbul, IS 240012</li>
+										<li><i class="fas fa-arrow-circle-right"></i> Thursday, December 26, 2018</li>
+										<li><i class="fas fa-arrow-circle-right"></i> From <strong>15.00 PM</strong> to <strong>20.00 PM</strong> (EST)</li>
+									</ul>
+								</div>
+
+								<div class="button">
+									<a href="#!" class="custom-btn">ADD TO MY CALENDAR</a>
+								</div>
+
+								<!-- spacial-event-wrapper - start -->
+							<div class="spacial-event-wrapper text-center" style="background-image: url({% static 'assets/images/spacial-event-bg.jpg' %});">
+								<div class="overlay-black">
+									<p class="sub-title white-color mb-30">26 DECEMBER 2018</p>
+									<h2 class="title-large white-color mb-30">
+										AMSTERDAM
+										<strong class="yellow-color">PHP CONFERENCE</strong>
+									</h2>
+									<a href="#!" class="custom-btn">booking ticket</a>
+								</div>
+							</div>
+
+							<!-- spacial-event-wrapper - end -->
+								<div class="title-wrapper">
+									<small class="up-arrow-icon">
+										<i class="fas fa-chevron-circle-up"></i>
+									</small>
+									<span class="icon">
+										<i class="fas fa-link"></i>
+									</span>
+									<div class="title-content">
+										<small>contact information</small>
+										<h3>harmoni staff</h3>
+									</div>
+								</div>
+								<div class="contact-links ul-li-block clearfix">
+									<p class="black-color mb-30">
+										Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant. Proin gravida nibh vel velit auctor aliquet. sollicitudin, lorem quis more...
+									</p>
+									<ul>
+										<li>
+											<a href="#!" target="_blank">
+												<span class="icon">
+													<i class="fab fa-facebook-f"></i>
+												</span>
+												facebook.com/harmoni
+											</a>
+										</li>
+										<li>
+											<a href="#!" target="_blank">
+												<span class="icon">
+													<i class="fab fa-twitter"></i>
+												</span>
+												twitter.com@harmoni
+											</a>
+										</li>
+										<li>
+											<a href="#!" target="_blank">
+												<span class="icon">
+													<i class="fas fa-link"></i>
+												</span>
+												http://www.harmoni.com
+											</a>
+										</li>
+									</ul>
+									<a href="#!" class="custom-btn">CONTACT US NOW</a>
+								</div>
+							</div>
+							<!-- location-wrapper - end -->
+						</div>
+					</div>
+					<!-- sidebar-section - end -->
+					
+				</div>
+			</div>
+		</section>
+		<!-- event-details-section - end
+		================================================== -->
+{% endblock content %}
