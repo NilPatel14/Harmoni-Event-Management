@@ -21,9 +21,9 @@
 								<!-- breadcrumb-list - start -->
 								<div class="breadcrumb-list">
 									<ul>
-										<li class="breadcrumb-item"><a href="index-1.html" class="breadcrumb-link">Home</a></li>
-										<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Events</a></li>
-										<li class="breadcrumb-item active" aria-current="page">Istanbul Wine Party 2018</li>
+										<li class="breadcrumb-item"><a href="{% url 'index' %}" class="breadcrumb-link">Home</a></li>
+										<li class="breadcrumb-item"><a href="{% url 'event' %}" class="breadcrumb-link">Events</a></li>
+										<li class="breadcrumb-item active" aria-current="page">{{event.event_name|truncatewords:5}}</li>
 									</ul>
 								</div>
 								<!-- breadcrumb-list - end -->
@@ -58,19 +58,19 @@
 									<i class="fas fa-bookmark"></i>
 									Featured Event
 								</span>
-								<h2 class="event-title">Istanbul <strong>{{event.event_name}}</strong></h2>
+								<h2 class="event-title">{{event.company_id.name}}'s <strong>{{event.event_name}}</strong></h2>
 							</div>
 
 							<!-- <div id="event-details-carousel" class="event-details-carousel owl-carousel owl-theme"> -->
 							<div>
-								<div class="item">
-									<img src="{% static 'C:\Users\abhishek\Pictures\Screenshots\Screenshot (1).png' %}" alt="Image_not_found" style="height: 140px; width: 140px" >
+								<div class="item mb-30">
+									<center><img src="{{event.company_id.companyLogo_path.url}}" alt="Image_not_found" style="height: 140px; width: 140px;" /></center>
 								</div>
 							<!-- </div> -->
 
 							<div class="event-info-list ul-li clearfix mb-50">
 								<ul>
-									<li>
+									<li style="height: 94px;">
 										<span class="icon">
 											<i class="far fa-calendar"></i>
 										</span>
@@ -79,7 +79,7 @@
 											<h3 class="event-date">{{event.start_datetime | date}}</h3>
 										</div>
 									</li>
-									<li>
+									<li style="height: 94px;">
 										<span class="icon">
 											<i class="far fa-clock"></i>
 										</span>
@@ -88,12 +88,12 @@
 											<h3 class="event-date">{{event.start_datetime | time}} to {{event.end_datetime | time}}</h3>
 										</div>
 									</li>
-									<li>
+									<li style="height: 94px;">
 										<span class="icon">
 											<i class="fas fa-map-marker-alt"></i>
 										</span>
 										<div class="event-content">
-											<small class="event-title">Event Location</small>
+											<small class="event-title">Event City</small>
 											<h3 class="event-date">{{event.city_id}}</h3>
 										</div>
 									</li>
@@ -102,12 +102,12 @@
 							</div>
 
 							<p class="black-color mb-30">
-								Lorem ipsum dollor site amet the best  consectuer diam adipiscing elites sed diam nonummy nibh the euismod tincidunt ut laoreet dolore magna aliquam erat volutpat insignia the consectuer adipiscing elit. Lorem ipsum dollor site amet the best  consectuer diam adipiscing elites sed diam nonummy nibh the euismod tincidunt ut laoreet dolore magna aliquam erat volutpat insignia the consectuer adipiscing elit. Lorem ipsum dollor site amet the best  consectuer diam adipiscing elites sed diam nonummy nibh the euismod tincidunt ut laoreet dolore magna aliquam erat volutpat insignia the consectuer adipiscing elit. 
+								{{event.description | safe}}
 							</p>
 
-							<p class="black-color m-0">
+							{% comment %} <p class="black-color m-0">
 								Lorem ipsum dollor site amet the best  consectuer diam adipiscing elites sed diam nonummy nibh the euismod tincidunt ut laoreet dolore magna aliquam erat volutpat insignia the consectuer adipiscing elit. 
-							</p>
+							</p> {% endcomment %}
 
 						</div>
 						<!-- event-details - end -->
@@ -264,62 +264,43 @@
 					<!-- sidebar-section - start -->
 					<div class="col-lg-4 col-md-12 col-sm-12">
 						<div class="sidebar-section">
-
-							<!-- Add to Calendar - start -->
-							<div title="Add to Calendar" class="addeventatc">
-								Add to Calendar
-								<span class="start">06/18/2015 09:00 AM</span>
-								<span class="end">06/18/2015 11:00 AM</span>
-								<span class="timezone">Europe/Paris</span>
-								<span class="title">Summary of the event</span>
-								<span class="description">Description of the event</span>
-								<span class="location">Location of the event</span>
-								<span class="organizer">Organizer</span>
-								<span class="organizer_email">Organizer e-mail</span>
-								<span class="all_day_event">false</span>
-								<span class="date_format">MM/DD/YYYY</span>
-							</div>
-							<!-- Add to Calendar - end -->
 								
 							<!-- location-wrapper - start -->
-							<div class="location-wrapper mb-30">
+							<div class="location-wrapper mb-0">
 								<div class="title-wrapper">
-									<small class="up-arrow-icon">
-										<i class="fas fa-chevron-circle-up"></i>
-									</small>
 									<span class="icon">
 										<i class="fas fa-map-marker-alt"></i>
 									</span>
 									<div class="title-content">
-										<small>event location</small>
-										<h3>vanila hotel</h3>
+										<small>Event Location</small>
+										<h5><b>{{event.street_address}}</b>	</h5>
 									</div>
 								</div>
 							<!-- spacial-event-wrapper - end -->
 
 								<div class="location-info-list ul-li-block clearfix">
-									<span class="area-name">Istanbul Turkey</span>
+									<span class="area-name">{{event.city_id}} , {{event.state_id}}</span>
 									<ul>
-										<li><i class="fas fa-arrow-circle-right"></i> Bayezid II Mosque and Beyazid Square</li>
-										<li><i class="fas fa-arrow-circle-right"></i> Istanbul, IS 240012</li>
-										<li><i class="fas fa-arrow-circle-right"></i> Thursday, December 26, 2018</li>
-										<li><i class="fas fa-arrow-circle-right"></i> From <strong>15.00 PM</strong> to <strong>20.00 PM</strong> (EST)</li>
+										<li><i class="fas fa-arrow-circle-right"></i> Category : <strong>{{event.event_subcategory_id}}</strong></li>
+										<li><i class="fas fa-arrow-circle-right"></i> {{event.start_datetime | date}}</li>
+										<li><i class="fas fa-arrow-circle-right"></i> Total Seat : <strong>{{event.total_workhand}}</strong></li>
+										<li><i class="fas fa-arrow-circle-right"></i> From <strong>{{event.start_datetime | time}}</strong> to <strong>{{event.end_datetime | time}}</strong> (IND)</li>
 									</ul>
 								</div>
 
 								<div class="button">
-									<a href="#!" class="custom-btn">ADD TO MY CALENDAR</a>
+									{% comment %} <a href="#!" class="custom-btn">ADD TO MY CALENDAR</a> {% endcomment %}
 								</div>
 
 								<!-- spacial-event-wrapper - start -->
 							<div class="spacial-event-wrapper text-center" style="background-image: url({% static 'assets/images/spacial-event-bg.jpg' %});">
 								<div class="overlay-black">
-									<p class="sub-title white-color mb-30">26 DECEMBER 2018</p>
+									<p class="sub-title white-color mb-30" style="font-size:175%;"><strong>{{event.start_datetime | date}}</strong></p>
 									<h2 class="title-large white-color mb-30">
-										AMSTERDAM
-										<strong class="yellow-color">PHP CONFERENCE</strong>
+										{{event.city_id}}
+										<strong class="yellow-color">{{event.event_subcategory_id}}</strong>
 									</h2>
-									<a href="#!" class="custom-btn">booking ticket</a>
+									<a href="#!" class="custom-btn">Register Now</a>
 								</div>
 							</div>
 
@@ -333,36 +314,38 @@
 									</span>
 									<div class="title-content">
 										<small>contact information</small>
-										<h3>harmoni staff</h3>
+										<h3>{{event.company_id}} staff</h3>
 									</div>
 								</div>
 								<div class="contact-links ul-li-block clearfix">
 									<p class="black-color mb-30">
-										Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant. Proin gravida nibh vel velit auctor aliquet. sollicitudin, lorem quis more...
+										{{event.company_id.description | truncatewords:30}}
 									</p>
 									<ul>
 										<li>
-											<a href="#!" target="_blank">
+											<a target="_blank" disable>
 												<span class="icon">
-													<i class="fab fa-facebook-f"></i>
+													<svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+													<path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+													</svg>
 												</span>
-												facebook.com/harmoni
+												{{event.company_id.contact_number}}
 											</a>
 										</li>
-										<li>
+										{% comment %} <li>
 											<a href="#!" target="_blank">
 												<span class="icon">
 													<i class="fab fa-twitter"></i>
 												</span>
 												twitter.com@harmoni
 											</a>
-										</li>
+										</li> {% endcomment %}
 										<li>
-											<a href="#!" target="_blank">
+											<a>
 												<span class="icon">
 													<i class="fas fa-link"></i>
 												</span>
-												http://www.harmoni.com
+												{{event.company_id.email}}
 											</a>
 										</li>
 									</ul>
