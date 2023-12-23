@@ -62,6 +62,7 @@
 				<div class="contact-form form-wrapper text-center">
 					<form action="{% url 'addevent' %}" method="post">
            {% csrf_token %}
+           {{ form.media }}
 						<div class="row">
               
               {% comment %} Choose this color if you want to show dropdown like other input field =   "color: #6c757d;" {% endcomment %}
@@ -92,14 +93,14 @@
 							</div>
 
               <div class="col-lg-6 col-md-6 col-sm-6" id="" style="">
-                <label for="file">Starting Date & Time : </label>
+                <h6><strong for="file">Starting Date & Time : </strong></h6>
                   <div class="form-item">
                     <input class="custom-input" name="start_datetime" type="datetime-local" id="start_datetime" style="padding-left: 25px;" required>
                   </div>
               </div>
               
               <div class="col-lg-6 col-md-6 col-sm-6" id="" style="">
-                <label for="file">Ending Date & Time : </label>
+                <h6><strong for="file">Ending Date & Time : </strong></h6>
                   <div class="form-item">
                     <input class="custom-input" name="end_datetime" type="datetime-local" id="end_datetime" style="padding-left: 25px;" required>
                   </div>
@@ -148,8 +149,9 @@
               </div>
 
               <div class="col-lg-12 col-md-12 col-sm-12">
+              <h5><strong>Write about event description</strong></h5>
 								<div class="form-item">
-									<textarea name="description" placeholder="Event Description" required></textarea>
+									<textarea name="description" class="ckeditor" placeholder="Enter your description here..." required></textarea>
 								</div>
 							</div>
 
@@ -163,6 +165,7 @@
 
             <!-- java script for workhand dropdown and number_of_workhand field-->
                 <script>
+                    CKEDITOR.replace('id_description');  // Replace 'id_description' with the actual ID of your textarea
                     function createDropdown() {
                         // Get the selected number of cats
                         var numberOfCats = document.getElementById("workhand_category").value;
@@ -200,7 +203,7 @@
                             textbox.name = "workhand_number";
                             textbox.placeholder = "Enter number of workhand";
                             textbox.className = "form-item";
-                            textbox.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ";
+                            textbox.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px; ";
                             textbox.required = true; // Add the required attribute
 
                             var priceBox = document.createElement("input");
@@ -209,7 +212,7 @@
                             priceBox.name = "price";
                             priceBox.placeholder = "Enter Price";
                             priceBox.className = "form-item";
-                            priceBox.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0 ";
+                            priceBox.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px; ";
                             priceBox.required = true; // Add the required attribute
                             
                             var option = document.createElement("option");
@@ -247,8 +250,9 @@
                       }
                   });
                 </script>
-
-			</div>
+                <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+                <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+			</div>  
 		</section>
 <!-- contact-section - end
 ================================================== -->

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 from .utils import generate_slug
+from ckeditor.fields import RichTextField
 
 class profile_pics(models.Model):
     User = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -46,7 +47,7 @@ class Company(models.Model):
 
 class Event(models.Model):
     event_name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = RichTextField(null=True)
     start_datetime = models.DateTimeField(default = datetime.now)
     end_datetime = models.DateTimeField(default=datetime.now)
     total_workhand = models.IntegerField(default=11) 
@@ -57,7 +58,7 @@ class Event(models.Model):
     event_category_id = models.ForeignKey('Event_category',on_delete=models.CASCADE,default=False)
     event_subcategory_id = models.ForeignKey('Event_subcategory',on_delete=models.CASCADE,null=True)
     company_id = models.ForeignKey('company',on_delete=models.CASCADE,default=False)
-    slug = models.SlugField(unique = True , null=True) #if any issue with slug try blank=true
+    slug = models.SlugField(unique = True , null=True , blank=True , max_length=100) #if any issue with slug try blank=true
 
     def save(self , *args , **kwargs):
         self.slug = generate_slug(self.event_name)

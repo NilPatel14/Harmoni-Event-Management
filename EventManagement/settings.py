@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'event_data',
     'company',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
