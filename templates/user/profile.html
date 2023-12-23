@@ -177,7 +177,12 @@
 					</div>
 					</form>
 				</div>
-		</section>``
+		</section>
+		<script>
+			CKEDITOR.replace('id_description');  // Replace 'id_description' with the actual ID of your textarea
+		</script>
+		<script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 
 
 {% endblock content%}

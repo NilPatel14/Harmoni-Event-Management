@@ -100,8 +100,9 @@
 								</ul>
 							</div>
 							</div>
-
-							<p class="black-color mb-30">
+		
+							<hp class="black-color mb-30">
+								<strong>Event Description : </strong><br><br>
 								{{event.description | safe}}
 							</p>
 
@@ -319,7 +320,7 @@
 								</div>
 								<div class="contact-links ul-li-block clearfix">
 									<p class="black-color mb-30">
-										{{event.company_id.description | truncatewords:30}}
+										{{event.company_id.description | truncatewords:30 }}
 									</p>
 									<ul>
 										<li>
@@ -332,20 +333,20 @@
 												{{event.company_id.contact_number}}
 											</a>
 										</li>
-										{% comment %} <li>
-											<a href="#!" target="_blank">
-												<span class="icon">
-													<i class="fab fa-twitter"></i>
-												</span>
-												twitter.com@harmoni
-											</a>
-										</li> {% endcomment %}
 										<li>
 											<a>
 												<span class="icon">
 													<i class="fas fa-link"></i>
 												</span>
 												{{event.company_id.email}}
+											</a>
+										</li>
+										<li>
+											<a href="#!" target="_blank">
+												<span class="icon">
+													<i class="fas fa-map-marker-alt"></i>
+												</span>
+												{{event.company_id.city_id}} , {{event.company_id.state_id}}
 											</a>
 										</li>
 									</ul>
