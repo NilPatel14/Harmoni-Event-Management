@@ -78,6 +78,34 @@ def event_details(request,slug):
         }
         return render(request , 'user/event-details.html',contaxt)
 
+def event_register(request,slug):
+    if request.method == "POST":
+        selected_category = request.POST.get('selected_category')
+
+        if selected_category is not None:
+            Event_detail = Event.objects.get(slug=slug)
+            workhand = Workhand.objects.get(User_id=request.user)
+            workhand_category =  Workhand_category.objects.get(id=selected_category)
+            registration = Event_Registrations(workhand_categoty_id=workhand_category , workhand_id = workhand , event_id = Event_detail , company_id = Event_detail.company_id)
+            registration.save()
+            return redirect('event')
+        else:
+            pass
+
+    event_details = Event.objects.get(slug=slug)
+    event_workhand = Event_workhand.objects.all()
+    workhand = Workhand.objects.get(User_id=request.user)
+    contaxt={
+        'event':event_details,
+        'event_workhand' : event_workhand,
+        'workhand' : workhand,
+    }
+    return render(request , 'user/event-register.html',contaxt)
+
+def event_registered(request):
+    if request.method=="POST":
+        pass
+
 def about(request):
     active = "about"
     context={

@@ -301,7 +301,10 @@
 										{{event.city_id}}
 										<strong class="yellow-color">{{event.event_subcategory_id}}</strong>
 									</h2>
-									<a href="#!" class="custom-btn">Register Now</a>
+									{% if not user.is_staff %}
+										<a href="/event-register/{{event.slug}}" class="custom-btn">Register Now</a>
+									{% endif %}
+									
 								</div>
 							</div>
 
