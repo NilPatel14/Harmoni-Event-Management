@@ -2,7 +2,7 @@ from django.contrib import admin
 from event_data.models import *
 
 class Event_register(admin.ModelAdmin):
-    list_display = ["event_id","workhand_id","workhand_categoty_id","registration_status"]
+    list_display = ["event_id","workhand_id","event_workhand_id","registration_status"]
 
 class Event_workhands(admin.TabularInline):
     model = Event_workhand

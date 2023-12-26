@@ -81,19 +81,19 @@ def event_details(request,slug):
 def event_register(request,slug):
     if request.method == "POST":
         selected_category = request.POST.get('selected_category')
-
+        print(selected_category)
         if selected_category is not None:
             Event_detail = Event.objects.get(slug=slug)
             workhand = Workhand.objects.get(User_id=request.user)
-            workhand_category =  Workhand_category.objects.get(id=selected_category)
-            registration = Event_Registrations(workhand_categoty_id=workhand_category , workhand_id = workhand , event_id = Event_detail , company_id = Event_detail.company_id)
+            event_workhand =  Event_workhand.objects.get(id=selected_category)
+            registration = Event_Registrations(event_workhand_id=event_workhand , workhand_id = workhand , event_id = Event_detail , company_id = Event_detail.company_id)
             registration.save()
             return redirect('event')
         else:
             pass
 
     event_details = Event.objects.get(slug=slug)
-    event_workhand = Event_workhand.objects.all()
+    event_workhand = Event_workhand.objects.all()   
     workhand = Workhand.objects.get(User_id=request.user)
     contaxt={
         'event':event_details,
@@ -173,12 +173,12 @@ def register(request):
                     auth_login(request,user_info)
 
                     #Email code 
-                    subject = "Sucessfully logedIn!!"
-                    msg = f"<p>Hello {first_name} {last_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
-                    from_email = settings.EMAIL_HOST_USER
-                    msg = EmailMultiAlternatives(subject , msg , from_email , [email])
-                    msg.content_subtype = 'html'
-                    msg.send()
+                    # subject = "Sucessfully logedIn!!"
+                    # msg = f"<p>Hello {first_name} {last_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                    # from_email = settings.EMAIL_HOST_USER
+                    # msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+                    # msg.content_subtype = 'html'
+                    # msg.send()
                     #--------------------#
 
                     #redirected on index page
