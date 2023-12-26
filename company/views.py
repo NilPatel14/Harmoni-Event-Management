@@ -65,6 +65,21 @@ def add_event(request):
         }
         return render(request , 'vendor/addevent.html',context)
 
+@login_required(login_url="/accounts/login/")
+@user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
+def event_workhand(request):
+    event = Event.objects.get(id=19)
+    Registered_workhand = Event_Registrations.objects.filter(event_id=19 , registration_status=True)
+    total_price = 0
+    for i in Registered_workhand:
+        total_price += i.event_workhand_id.price
+    context = {
+        'event' : event,
+        'workhands' : Registered_workhand,
+        'total_price' : total_price,
+    }
+    return render(request,'vendor/event_workhand.html',context)
+
 
 def get_subcat(request):
     cat_id = request.GET['cat_id']
