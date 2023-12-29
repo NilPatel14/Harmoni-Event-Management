@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from indian_cities.dj_city import cities
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
@@ -84,6 +83,8 @@ class Event_Registrations(models.Model):
     registration_status = models.BooleanField(default=False)
     event_id = models.ForeignKey('Event' , on_delete=models.CASCADE)
     company_id = models.ForeignKey('Company' , on_delete=models.CASCADE)
+    payment_status = models.BooleanField(default=False)
+    payment_date = models.DateField(default=datetime.now)
     
 
     def __str__(self):
@@ -131,16 +132,17 @@ class Feedback(models.Model):
     event_id = models.ForeignKey('Event', on_delete=models.CASCADE)
     workhand_id = models.ForeignKey('Workhand', on_delete=models.CASCADE)
     
+    
     def __str__(self):
         return f"{self.workhand_id.first_name} ---> {self.event_id.event_name}"
     
 
-class Payment(models.Model):
-    workhand_id = models.ForeignKey('Workhand' , on_delete=models.CASCADE)
-    event_id = models.ForeignKey('Event' , on_delete=models.CASCADE)
-    company_id = models.ForeignKey('Company' , on_delete=models.CASCADE)
-    payment_status = models.BooleanField(default=False)
-    payment_date = models.DateField(default=datetime.now)
+# class Payment(models.Model):
+#     workhand_id = models.ForeignKey('Workhand' , on_delete=models.CASCADE)
+#     event_id = models.ForeignKey('Event' , on_delete=models.CASCADE)
+#     company_id = models.ForeignKey('Company' , on_delete=models.CASCADE)
+#     payment_status = models.BooleanField(default=False)
+#     payment_date = models.DateField(default=datetime.now)
 
     
         

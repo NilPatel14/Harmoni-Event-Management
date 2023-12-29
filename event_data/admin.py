@@ -2,7 +2,7 @@ from django.contrib import admin
 from event_data.models import *
 
 class Event_register(admin.ModelAdmin):
-    list_display = ["event_id","workhand_id","event_workhand_id","registration_status"]
+    list_display = ["event_id","workhand_id","event_workhand_id","registration_status","payment_status"]
 
 class Event_workhands(admin.TabularInline):
     model = Event_workhand
@@ -22,4 +22,4 @@ admin.site.register(State)
 admin.site.register(Event_Category)
 admin.site.register(Event_subcategory)
 admin.site.register(Feedback)
-admin.site.register(Payment)
+# admin.site.register(Payment)
