@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from django.contrib.messages import constants as messages
 import os 
-
+import razorpay
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -152,3 +152,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'projecttime93@gmail.com'
 EMAIL_HOST_PASSWORD = 'heei gddo skyv udvc'
+
+#Razorpay key_id and key_secret
+KEY_ID = 'rzp_test_kt1p83NV4d7VZg'
+KEY_SECRET = 'dq6XDS9bkhnvU5psCTFcooLZ'

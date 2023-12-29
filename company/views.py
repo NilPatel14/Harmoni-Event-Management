@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect
 from event_data.models import *
 from django.conf import settings
+from EventManagement.settings import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required , user_passes_test
 from django.contrib.auth.models import User
+import razorpay
+from django.views.decorators.csrf import csrf_protect
 # from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 @login_required(login_url="/accounts/login/")
@@ -80,9 +83,16 @@ def event_workhand(request):
     }
     return render(request,'vendor/event_workhand.html',context)
 
-
 def get_subcat(request):
     cat_id = request.GET['cat_id']
     get_cat = Event_Category.objects.get(id = cat_id)
     subcat = Event_subcategory.objects.filter(Event_Category_id = get_cat)
     return render(request , 'vendor/get-subcat.html',locals())
+
+
+def success(request):
+    workhand_id = request.GET.get('workhand_id')
+    event_registration_info = Event_Registrations.objects.get(id=workhand_id)
+    event_registration_info.payment_status = True
+    event_registration_info.save()
+    return redirect('event_workhand')

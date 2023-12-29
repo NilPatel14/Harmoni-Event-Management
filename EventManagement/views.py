@@ -11,6 +11,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.mail import EmailMessage
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.utils import timezone
+from company.views import *
 
 def index(request):
     active = "home"
@@ -360,14 +362,6 @@ def update_profile(request):
                 profile_id.save()
             messages.success(request , "Profile Successfully Updated!!")
             return redirect('profile')
-
-            
-
-
-
-
-
-
 
 def error_404(request):
     return render(request, 'login/404-error.html')
