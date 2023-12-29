@@ -1,6 +1,8 @@
 {% extends 'user/base.html' %}
 {% load static %}
 {% block title %}Payment - Status{% endblock title %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% block content %}
 
 <!-- breadcrumb-section - start
@@ -107,28 +109,87 @@
 												<th scope="col">Status</th>
 											</tr>
 										</thead>
-											{% for i in workhands %}
-											
+										<form id="razorpay-form" action="{% url 'event_workhand' %}" method="POST">
+										{% csrf_token %} 
+										<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+										
+											{% for i in workhands %}										
 												<tbody>
 														<tr class="bg-gray-light">
 														<th scope="row">{{i.workhand_id}}</th>
 														<td>{{i.event_workhand_id}}</td>
 														<td>{{i.event_workhand_id.price}}₹</td>
-														<td><a href="#" class="btn btn-success p-0" style="width:50px; height=40px;">Pay</a></td>
-														<td>Pending</td>
+														{% if  i.payment_status %}
+														<td><i class="fa fa-cc-visa" style="font-size:36px"></i></td>
+														{% else %}
+														<td><a id="rzp-button{{i.id}}" class="btn btn-success p-0" style="width:50px; height=40px;">Pay</a></td>
+														{% endif %}
+						
+														{% if  i.payment_status %}
+														<td style="color:green;">Done</td>
+														{% else %}
+														<td style="color:Red">Pending</td>
+														{% endif %}
+														
 														{% comment %} <td>$675.00</td> {% endcomment %}
 														</tr>
+													<script>
+													var options{{i.id}} = {
+														"key": "rzp_test_kt1p83NV4d7VZg", // Enter the Key ID generated from the Dashboard
+														"amount": "{{i.event_workhand_id.price}}"*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+														"currency": "INR",
+														"name": "{{ event.company_id.name}}",
+														"description": "Test Transaction",
+														"image": "{{ event.company_id.companyLogo_path.url}}",
+														"order_id": "{{ event.id.id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
 														
-										{% endfor %}		
+														"handler": function (response){
+
+															window.location.href = 'http://localhost:8000/event-workhand/success/?workhand_id={{i.id}}';
+															alert(response.razorpay_payment_id);
+															alert(response.razorpay_order_id);
+															alert(response.razorpay_signature);
+														},
+														
+														"prefill": {
+															"name": "Gaurav Kumar",
+															"email": "gaurav.kumar@example.com",
+															"contact": "9000090000"
+														},
+														"notes": {
+															"address": "Razorpay Corporate Office"
+														},
+														"theme": {
+															"color": "#3399cc"
+														}
+													};
+													var rzp{{i.id}} = new Razorpay(options{{i.id}});
+													rzp{{i.id}}.on('payment.failed', function (response){
+															alert(response.error.code);
+															alert(response.error.description);
+															alert(response.error.source);
+															alert(response.error.step);
+															alert(response.error.reason);
+															alert(response.error.metadata.order_id);
+															alert(response.error.metadata.payment_id);
+													});
+													document.getElementById('rzp-button{{i.id}}').onclick = function(e){
+														rzp{{i.id}}.open();
+														e.preventDefault();
+													}
+													</script>
+													{% endfor %}
+													</form>
+												
 													<tr class="tfooter">
 														<th class="text-left">Total Payment</th>
 														<td></td>
 														<td>{{total_price}}₹</td>
 														<td></td>
-														<td><a href="#" class="btn btn-success p-0" style="width:95px;">Total Pay</a></td>
+														<td><a href="#" id="rzp-button1" class="btn btn-success p-0" style="width:95px;">Total Pay</a></td>
 													</tr> 
 												</tbody>		
-
+												
 										{% endif %}
 									</table>
 
@@ -432,4 +493,7 @@
 		</section>
 		<!-- booking-section - end
 		================================================== -->
+
+		{% comment %} <button id="rzp-button1">Pay with Razorpay</button> {% endcomment %}
+		
 {% endblock content%}
