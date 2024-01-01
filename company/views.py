@@ -70,7 +70,7 @@ def add_event(request):
 
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
-def event_workhand(request):
+def payment(request):
     event = Event.objects.get(id=19)
     Registered_workhand = Event_Registrations.objects.filter(event_id=19 , registration_status=True)
     total_price = 0
@@ -89,10 +89,11 @@ def get_subcat(request):
     subcat = Event_subcategory.objects.filter(Event_Category_id = get_cat)
     return render(request , 'vendor/get-subcat.html',locals())
 
-
+@login_required(login_url="/accounts/login/")
+@user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def success(request):
     workhand_id = request.GET.get('workhand_id')
     event_registration_info = Event_Registrations.objects.get(id=workhand_id)
     event_registration_info.payment_status = True
     event_registration_info.save()
-    return redirect('event_workhand')
+    return redirect('payment')
