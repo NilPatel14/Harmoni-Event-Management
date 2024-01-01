@@ -80,6 +80,7 @@ def event_details(request,slug):
         }
         return render(request , 'user/event-details.html',contaxt)
 
+@login_required
 def event_register(request,slug):
     if request.method == "POST":
         selected_category = request.POST.get('selected_category')
@@ -310,6 +311,7 @@ def profile(request):
     except:
         return redirect('index')
 
+@login_required
 def update_profile(request):
     if request.method == "POST":
         if request.user.is_staff:
