@@ -68,6 +68,32 @@ def add_event(request):
         }
         return render(request , 'vendor/addevent.html',context)
 
+
+
+@login_required(login_url="/accounts/login/")
+@user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
+def workhand_requests(request):
+    event = Event.objects.get(id=19)
+    workhands_Requests = Event_Registrations.objects.filter(event_id=19)
+    context = {
+        'event' : event,
+        'workhands_Requests' : workhands_Requests,
+    }
+    return render(request,'vendor/request_approve.html',context)
+
+
+
+@login_required(login_url="/accounts/login/")
+@user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
+def request_approve(request):
+    workhand_id = request.GET.get('workhand_id')
+    event_registration_info = Event_Registrations.objects.get(id=workhand_id)
+    event_registration_info.registration_status = True
+    event_registration_info.save()
+    return redirect('workhand_requests')
+
+
+
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def payment(request):
@@ -83,11 +109,8 @@ def payment(request):
     }
     return render(request,'vendor/event_workhand.html',context)
 
-def get_subcat(request):
-    cat_id = request.GET['cat_id']
-    get_cat = Event_Category.objects.get(id = cat_id)
-    subcat = Event_subcategory.objects.filter(Event_Category_id = get_cat)
-    return render(request , 'vendor/get-subcat.html',locals())
+
+
 
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
@@ -97,3 +120,9 @@ def success(request):
     event_registration_info.payment_status = True
     event_registration_info.save()
     return redirect('payment')
+
+def get_subcat(request):
+    cat_id = request.GET['cat_id']
+    get_cat = Event_Category.objects.get(id = cat_id)
+    subcat = Event_subcategory.objects.filter(Event_Category_id = get_cat)
+    return render(request , 'vendor/get-subcat.html',locals())
