@@ -184,8 +184,8 @@
 
 												<!-- Company Purpose -->
 												{% if user.is_staff %}
-													<li class="menu-item-has-children{% if active == 'add_event' %} active{% endif %}">
-														<a href="{% url 'addevent' %}">Add Event</a>
+													<li class="menu-item-has-children{% if active == 'myevent' %} active{% endif %}">
+														<a href="{% url 'myevent' %}">My Events</a>
 													</li>
 												{% endif %} 
 												<!--    -->
