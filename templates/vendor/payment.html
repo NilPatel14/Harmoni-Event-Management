@@ -109,7 +109,7 @@
 												<th scope="col">Status</th>
 											</tr>
 										</thead>
-										<form id="razorpay-form" action="{% url 'payment' %}" method="POST">
+										<form id="razorpay-form" action="{% url 'payment' slug=event.slug %}" method="POST">
 										{% csrf_token %} 
 										<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 										
@@ -120,7 +120,7 @@
 														<td>{{i.event_workhand_id}}</td>
 														<td>{{i.event_workhand_id.price}}₹</td>
 														{% if  i.payment_status %}
-														<td><img src="https://www.chicagocustomlabels.com/wp-content/uploads/2020/03/payment_success.png" alt="" style="max-width:20%;"></td>
+														<td><img src="https://www.chicagocustomlabels.com/wp-content/uploads/2020/03/payment_success.png" alt="" style="max-width:14%;"></td>
 														{% else %}
 														<td><a id="rzp-button{{i.id}}" class="btn btn-success p-0" style="width:50px; height=40px;">Pay</a></td>
 														{% endif %}
@@ -469,7 +469,7 @@
 											</a>
 										</li>
 									</ul>   
-									<a href="#!" class="custom-btn">CONTACT US NOW</a>
+									<a href="{% url 'contact' %}" class="custom-btn">CONTACT US NOW</a>
 								</div>
 							</div>
 							<!-- location-wrapper - end -->

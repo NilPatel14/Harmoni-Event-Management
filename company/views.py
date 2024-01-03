@@ -11,6 +11,21 @@ from django.views.decorators.csrf import csrf_protect
 
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
+def my_event(request):
+    active="myevent"
+    company_id = Company.objects.get(User_id=request.user)
+    Events = Event.objects.filter(company_id=company_id)
+    Event_workhand_obj = Event_workhand.objects.all()
+    contaxt={
+        'active' : active,
+        'events' : Events,
+        'Event_Workhand' : Event_workhand_obj,
+    }
+    return render(request,'vendor/company_event.html',contaxt)
+
+
+@login_required(login_url="/accounts/login/")
+@user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def add_event(request):
     if request.method == "POST":
         Event_Category_id = request.POST.get('cat')
@@ -72,9 +87,9 @@ def add_event(request):
 
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
-def workhand_requests(request):
-    event = Event.objects.get(id=19)
-    workhands_Requests = Event_Registrations.objects.filter(event_id=19)
+def workhand_requests(request,slug):
+    event = Event.objects.get(slug=slug)
+    workhands_Requests = Event_Registrations.objects.filter(event_id=event)
     context = {
         'event' : event,
         'workhands_Requests' : workhands_Requests,
@@ -89,16 +104,17 @@ def request_approve(request):
     workhand_id = request.GET.get('workhand_id')
     event_registration_info = Event_Registrations.objects.get(id=workhand_id)
     event_registration_info.registration_status = True
+    event_slug=event_registration_info.event_id.slug #for getting slug
     event_registration_info.save()
-    return redirect('workhand_requests')
+    return redirect('workhand_requests',slug=event_slug)
 
 
 
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
-def payment(request):
-    event = Event.objects.get(id=19)
-    Registered_workhand = Event_Registrations.objects.filter(event_id=19 , registration_status=True)
+def payment(request,slug):
+    event = Event.objects.get(slug=slug)
+    Registered_workhand = Event_Registrations.objects.filter(event_id=event , registration_status=True)
     total_price = 0
     for i in Registered_workhand:
         total_price += i.event_workhand_id.price
@@ -107,7 +123,7 @@ def payment(request):
         'workhands' : Registered_workhand,
         'total_price' : total_price,
     }
-    return render(request,'vendor/event_workhand.html',context)
+    return render(request,'vendor/payment.html',context)
 
 
 
@@ -118,8 +134,9 @@ def success(request):
     workhand_id = request.GET.get('workhand_id')
     event_registration_info = Event_Registrations.objects.get(id=workhand_id)
     event_registration_info.payment_status = True
+    event_slug=event_registration_info.event_id.slug #for getting slug
     event_registration_info.save()
-    return redirect('payment')
+    return redirect('payment', slug=event_slug)
 
 def get_subcat(request):
     cat_id = request.GET['cat_id']
