@@ -176,12 +176,12 @@ def register(request):
                     auth_login(request,user_info)
 
                     #Email code 
-                    # subject = "Sucessfully logedIn!!"
-                    # msg = f"<p>Hello {first_name} {last_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
-                    # from_email = settings.EMAIL_HOST_USER
-                    # msg = EmailMultiAlternatives(subject , msg , from_email , [email])
-                    # msg.content_subtype = 'html'
-                    # msg.send()
+                    subject = "Sucessfully logedIn!!"
+                    msg = f"<p>Hello {first_name} {last_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                    from_email = settings.EMAIL_HOST_USER
+                    msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+                    msg.content_subtype = 'html'
+                    msg.send()
                     #--------------------#
 
                     #redirected on index page
