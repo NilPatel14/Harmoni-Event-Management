@@ -28,12 +28,13 @@ urlpatterns = [
     #--Header--#
     path('',views.index , name="index"),
     path('event/',views.event , name="event"),
-    path('event-details/<slug>',views.event_details , name="event_details"),
-    path('event-register/<slug>',views.event_register,name="event_register"),
-    # path('event-registered' , views.event_registered , name="event_registered"),
     path('about-us/',views.about , name="about"),
     path('vendor/',views.vendor,name="vendor"),
     path('contact-us/',views.contact , name="contact"),
+    path('event-details/<slug>',views.event_details , name="event_details"),
+    path('event-register/<slug>',views.event_register,name="event_register"),
+    path('register-successful/',views.register_success,name="register_success"),
+    
 
     #--Login ,  Logout & js AJAX finctions--#
     path('get-city/',views.get_city , name = "get_city"),
