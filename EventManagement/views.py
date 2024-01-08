@@ -72,6 +72,7 @@ def search_event(request):
         }
         return render(request , 'user/event.html',context)
 
+@login_required
 def event_details(request,slug):
     if request.method == 'POST':
         event_details = Event.objects.get(slug=slug)
@@ -91,7 +92,7 @@ def event_register(request,slug):
             event_workhand =  Event_workhand.objects.get(id=selected_category)
             registration = Event_Registrations(event_workhand_id=event_workhand , workhand_id = workhand , event_id = Event_detail , company_id = Event_detail.company_id)
             registration.save()
-            return redirect('event')
+            return redirect('register_success')
         else:
             pass
 
@@ -105,9 +106,9 @@ def event_register(request,slug):
     }
     return render(request , 'user/event-register.html',contaxt)
 
-def event_registered(request):
-    if request.method=="POST":
-        pass
+@login_required
+def register_success(request):
+    return render(request,'user/sucessful_register.html')
 
 def about(request):
     active = "about"

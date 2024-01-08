@@ -118,10 +118,10 @@
 											</tr>
 											{% endif %}
 										 {% endfor %}
-								 			<tr class="tfooter">
+								 			{% comment %} <tr class="tfooter">
 												<th colspan="2" class="text-left">Price Pool</th>
 												<td>{{event.total_price}}₹</td>
-											</tr> 
+											</tr>  {% endcomment %}
 										</tbody>
 									</table>
 
@@ -412,7 +412,7 @@
 											</a>
 										</li>
 									</ul>
-									<a href="#!" class="custom-btn">CONTACT US NOW</a>
+									<a href="{% url 'contact' %}" class="custom-btn">CONTACT US NOW</a>
 								</div>
 							</div>
 							<!-- location-wrapper - end -->
