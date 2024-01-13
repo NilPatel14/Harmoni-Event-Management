@@ -187,6 +187,10 @@
 													<li class="menu-item-has-children{% if active == 'myevent' %} active{% endif %}">
 														<a href="{% url 'myevent' %}">My Events</a>
 													</li>
+												{% else %}
+													<li class="menu-item-has-children{% if active == 'history' %} active{% endif %}">
+														<a href="{% url 'history' %}">History</a>
+													</li>
 												{% endif %} 
 												<!--    -->
 											</ul>

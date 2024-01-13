@@ -117,6 +117,19 @@ def about(request):
     }
     return render(request , 'user/about.html',context)
 
+@login_required
+def history(request):
+    active = 'history'
+    workhand = Workhand.objects.get(User_id=request.user)
+    registration = Event_Registrations.objects.filter(registration_status=True , workhand_id=workhand)
+    Event_workhand_obj = Event_workhand.objects.all()
+    context={
+        'active':active,
+        'registration':registration,
+        'Event_Workhand' : Event_workhand_obj
+    }
+    return render(request,'user/history.html',context)
+
 def vendor(request):
     active = "vendor"
     contaxt={
