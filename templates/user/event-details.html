@@ -283,7 +283,8 @@
 									<span class="area-name">{{event.city_id}} , {{event.state_id}}</span>
 									<ul>
 										<li><i class="fas fa-arrow-circle-right"></i> Category : <strong>{{event.event_subcategory_id}}</strong></li>
-										<li><i class="fas fa-arrow-circle-right"></i> {{event.start_datetime | date}}</li>
+										<li><i class="fas fa-arrow-circle-right"></i> Event Start : {{event.start_datetime | date}}</li>
+										<li><i class="fas fa-arrow-circle-right"></i> Event End   : {{event.end_datetime | date}}</li>
 										<li><i class="fas fa-arrow-circle-right"></i> Total Seat : <strong>{{event.total_workhand}}</strong></li>
 										<li><i class="fas fa-arrow-circle-right"></i> From <strong>{{event.start_datetime | time}}</strong> to <strong>{{event.end_datetime | time}}</strong> (IND)</li>
 									</ul>
@@ -301,9 +302,20 @@
 										{{event.city_id}}
 										<strong class="yellow-color">{{event.event_subcategory_id}}</strong>
 									</h2>
+
+									{% now "Y-m-d H:i:s" as today %}
 									{% if not user.is_staff %}
-										<a href="/event-register/{{event.slug}}" class="custom-btn">Register Now</a>
+										{% with event_start_date=event.start_datetime|date:"Y-m-d H:i:s" %}
+											{% if event_start_date > today %}
+												<a href="/event-register/{{event.slug}}" class="custom-btn">Register Now</a>
+											{% elif event_start_date <= today %}
+												<button class="btn btn-secondary" style="color: #FFBE30;" disabled>Registration Ended</button>
+											{% else %}
+												<p>Error: Invalid date comparison</p>
+											{% endif %}
+										{% endwith %}
 									{% endif %}
+
 									
 								</div>
 							</div>

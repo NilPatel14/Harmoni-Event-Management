@@ -266,14 +266,16 @@
 									</div>
 										<div class="form-item">
 											<select class="country-select" name="selected_category" required>
+												<option value="" selected disabled>Select Category</option>
 												{% for i in event_workhand %}
-										 			{% if i.event_id.id == event.id %}
-														<option value="{{i.id}}" selected>{{i.Workhand_category_id}}</option>
+													{% if i.event_id.id == event.id %}
+														<option value="{{ i.id }}">{{ i.Workhand_category_id }}</option>
 													{% endif %}
 												{% endfor %}
-												<option selected="" name="">Select Category</option>
 											</select>
 										</div>
+
+
 										
 						<!-- form-item-group - end -->
 										<div class="form-item">

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from event_data.models import *
 
+# For model Event_Registration--#
 class Event_register(admin.ModelAdmin):
     list_display = ["event_id","workhand_id","event_workhand_id","registration_status","payment_status"]
 
@@ -9,6 +10,8 @@ class Event_workhands(admin.TabularInline):
 
 class Event_admin(admin.ModelAdmin):
     inlines = [Event_workhands]
+#-----------------------------------#
+
 
 admin.site.register(profile_pics)
 admin.site.register(Workhand)
