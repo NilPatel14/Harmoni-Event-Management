@@ -26,7 +26,7 @@ class Workhand(models.Model):
     User_id = models.ForeignKey('auth.User',  on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.User_id.username
+        return f"{self.first_name} {self.last_name}"
     
 
 class Company(models.Model):

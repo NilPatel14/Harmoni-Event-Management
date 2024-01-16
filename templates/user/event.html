@@ -22,7 +22,7 @@
 								<!-- breadcrumb-list - start -->
 								<div class="breadcrumb-list">
 									<ul>
-										<li class="breadcrumb-item"><a href="index-1.html" class="breadcrumb-link">Home</a></li>
+										<li class="breadcrumb-item"><a href="{% url 'index' %}" class="breadcrumb-link">Home</a></li>
 										<li class="breadcrumb-item active" aria-current="page">event listing</li>
 									</ul>
 								</div>
@@ -141,7 +141,7 @@
 										<!-- event-image - start -->
 										<div class="event-image" style="padding-left:-10%;width: 250px;margin-right: -10;margin-right:-30;margin-right: -100px;">
 											
-											<img src="{{i.company_id.companyLogo_path.url}}" alt="Image_not_found" style="width:40%;height:40%">
+											<img src="{{i.company_id.companyLogo_path.url}}" alt="Image_not_found" style="width:40%;height:40%" loading="lazy">
 										</div>
 										<!-- event-image - end -->
 
