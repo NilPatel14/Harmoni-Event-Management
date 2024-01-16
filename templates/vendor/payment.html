@@ -17,7 +17,7 @@
 								<!-- breadcrumb-title - start -->
 								<div class="breadcrumb-title text-center mb-50">
 									<span class="sub-title">Harmoni</span>
-									<h2 class="big-title">Workhand <strong>Status</strong></h2>
+									<h2 class="big-title">Payment <strong>Status</strong></h2>
 								</div>
 								<!-- breadcrumb-title - end -->
 
@@ -120,9 +120,9 @@
 														<td>{{i.event_workhand_id}}</td>
 														<td>{{i.event_workhand_id.price}}₹</td>
 														{% if  i.payment_status %}
-														<td><img src="https://www.chicagocustomlabels.com/wp-content/uploads/2020/03/payment_success.png" alt="" style="max-width:14%;"></td>
+														<td><img src="{% static 'assets/images/success/payment_success.png' %}" alt="" style="max-width:14%;"></td>
 														{% else %}
-														<td><a id="rzp-button{{i.id}}" class="btn btn-success p-0" style="width:50px; height=40px;">Pay</a></td>
+														<td><a id="rzp-button{{i.id}}" class="btn btn-success p-0" style="width:50px; height=40px; color:white;">Pay</a></td>
 														{% endif %}
 						
 														{% if  i.payment_status %}
