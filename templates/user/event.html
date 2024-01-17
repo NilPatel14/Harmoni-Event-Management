@@ -134,83 +134,89 @@
 								<!-- event-item - start -->
 								{% if events %}
 									{% for i in events %}
-									<form action="/event-details/{{i.slug}}" method='POST'>
-									{% csrf_token %}
-									<div class="event-list-item clearfix1">
+										{% now "Y-m-d H:i:s" as today %}
+										{% with event_start_date=i.start_datetime|date:"Y-m-d H:i:s" %}
+											{% if event_start_date > today %}
+									
+											<form action="/event-details/{{i.slug}}" method='POST'>
+											{% csrf_token %}
+											<div class="event-list-item clearfix1">
 
-										<!-- event-image - start -->
-										<div class="event-image" style="padding-left:-10%;width: 250px;margin-right: -10;margin-right:-30;margin-right: -100px;">
-											
-											<img src="{{i.company_id.companyLogo_path.url}}" alt="Image_not_found" style="width:40%;height:40%" loading="lazy">
-										</div>
-										<!-- event-image - end -->
-
-										<!-- event-content - start -->
-										<div class="event-content">
-											<div class="event-title mb-15">
-												<h3 class="title">
-													{{i.company_id.name}}'s <br> <strong>{{i.event_name}}</strong>
-												</h3>
-												<i class="fas fa-map-marker-alt"></i>
-												<span class="ticket-price yellow-color">Location - {{i.city_id}} , {{i.state_id}}</span>
-												{% comment %} <span class="ticket-price yellow-color">Total Price Pool ₹{{i.total_price}}</span> {% endcomment %}
-											</div>
-											<p class="discription-text mb-20 info-content">
-												<h4><strong> Needed Category : </strong>
-												
-												{% for workhand in Event_Workhand %}	
-													{% if workhand.event_id.id == i.id %}
-														<small class="info-content">{{workhand.Workhand_category_id}}</small>
-														{% if not forloop.last %},{% endif %}
-													{% endif %}
-												{% endfor %}
+												<!-- event-image - start -->
+												<div class="event-image" style="padding-left:-10%;width: 250px;margin-right: -10;margin-right:-30;margin-right: -100px;">
 													
-												</h4>
-											</p>
-											<div class="event-info-list ul-li clearfix">
-												<ul>
-													<li>
-														<span class="icon">
-															<i class="far fa-clock"></i>
-														</span>
-														<div class="info-content">
-															<small>Date</small>
-															<h3>{{i.start_datetime | date}}</h3>
-														</div>
-													</li>
-													<li>
-														<span class="icon">
-															<svg xmlns="http://www.w3.org/2000/svg" width="20" height="42" fill="currentColor" class="bi bi-currency-rupee" viewBox="0 0 16 16" >
-																	<path d="M4 3.06h2.726c1.22 0 2.12.575 2.325 1.724H4v1.051h5.051C8.855 7.001 8 7.558 6.788 7.558H4v1.317L8.437 14h2.11L6.095 8.884h.855c2.316-.018 3.465-1.476 3.688-3.049H12V4.784h-1.345c-.08-.778-.357-1.335-.793-1.732H12V2H4z"/>
-															</svg>
-														</span>
-														<div class="info-content">
-															<small>Price Pool</small>
-															<h3>{{i.total_price}}</h3>
-														</div>
-													</li>
-													<li>
-														<span class="icon">
-															<i class="fas fa-ticket-alt"></i>
-														</span>
-														<div class="info-content">
-															<small>Max Seats</small>
-															<h3>{{i.total_workhand}} seats</h3>
-														</div>
-													</li>
-													<li>
-														<button href="" type="submit" class="tickets-details-btn">
-															Register & details
-														</button>
-													</li>
-												</ul>
-											</div>
-										</div>
-										<!-- event-content - end -->
+													<img src="{{i.company_id.companyLogo_path.url}}" alt="Image_not_found" style="width:40%;height:40%" loading="lazy">
+												</div>
+												<!-- event-image - end -->
 
-									</div>
-									</form>
+												<!-- event-content - start -->
+												<div class="event-content">
+													<div class="event-title mb-15">
+														<h3 class="title">
+															{{i.company_id.name}}'s <br> <strong>{{i.event_name}}</strong>
+														</h3>
+														<i class="fas fa-map-marker-alt"></i>
+														<span class="ticket-price yellow-color">Location - {{i.city_id}} , {{i.state_id}}</span>
+														{% comment %} <span class="ticket-price yellow-color">Total Price Pool ₹{{i.total_price}}</span> {% endcomment %}
+													</div>
+													<p class="discription-text mb-20 info-content">
+														<h4><strong> Needed Category : </strong>
+														
+														{% for workhand in Event_Workhand %}	
+															{% if workhand.event_id.id == i.id %}
+																<small class="info-content">{{workhand.Workhand_category_id}}</small>
+																{% if not forloop.last %},{% endif %}
+															{% endif %}
+														{% endfor %}
+															
+														</h4>
+													</p>
+													<div class="event-info-list ul-li clearfix">
+														<ul>
+															<li>
+																<span class="icon">
+																	<i class="far fa-clock"></i>
+																</span>
+																<div class="info-content">
+																	<small>Date</small>
+																	<h3>{{i.start_datetime | date}}</h3>
+																</div>
+															</li>
+															<li>
+																<span class="icon">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="42" fill="currentColor" class="bi bi-currency-rupee" viewBox="0 0 16 16" >
+																			<path d="M4 3.06h2.726c1.22 0 2.12.575 2.325 1.724H4v1.051h5.051C8.855 7.001 8 7.558 6.788 7.558H4v1.317L8.437 14h2.11L6.095 8.884h.855c2.316-.018 3.465-1.476 3.688-3.049H12V4.784h-1.345c-.08-.778-.357-1.335-.793-1.732H12V2H4z"/>
+																	</svg>
+																</span>
+																<div class="info-content">
+																	<small>Price Pool</small>
+																	<h3>{{i.total_price}}</h3>
+																</div>
+															</li>
+															<li>
+																<span class="icon">
+																	<i class="fas fa-ticket-alt"></i>
+																</span>
+																<div class="info-content">
+																	<small>Max Seats</small>
+																	<h3>{{i.total_workhand}} seats</h3>
+																</div>
+															</li>
+															<li>
+																<button href="" type="submit" class="tickets-details-btn">
+																	Register & details
+																</button>
+															</li>
+														</ul>
+													</div>
+												</div>
+												<!-- event-content - end -->
+
+											</div>
+											</form>
 									<!-- event-item - end -->
+											{% endif %}
+										{% endwith %}
 									{% endfor %}
 								{% else %}
 									<section id="error-section" class="error-section sec-ptb-100 bg-gray-light clearfix">

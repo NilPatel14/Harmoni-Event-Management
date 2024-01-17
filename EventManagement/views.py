@@ -23,7 +23,7 @@ def index(request):
 
 def event(request):
     active = "event"
-    events = Event.objects.all()
+    events = Event.objects.all().order_by("start_datetime")
     Event_subcategory_obj = Event_subcategory.objects.all().order_by()
     Event_workhand_obj = Event_workhand.objects.all()
     context={
