@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required , user_passes_test
 from django.contrib.auth.models import User
 import razorpay
 from django.views.decorators.csrf import csrf_protect
+from django.db.models import Avg
 # from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 @login_required(login_url="/accounts/login/")
@@ -131,12 +132,26 @@ def payment(request,slug):
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def success(request):
-    workhand_id = request.GET.get('workhand_id')
-    event_registration_info = Event_Registrations.objects.get(id=workhand_id)
-    event_registration_info.payment_status = True
-    event_slug=event_registration_info.event_id.slug #for getting slug
-    event_registration_info.save()
-    return redirect('payment', slug=event_slug)
+    try:
+        event_register_id = request.GET.get('workhand_id')
+        rate = request.GET.get('rating')
+        event_registration_info = Event_Registrations.objects.get(id=event_register_id)
+        event_registration_info.payment_status = True
+        event_registration_info.rating = rate
+        event_registration_info.save()
+        print(event_registration_info.workhand_id)
+        event_slug=event_registration_info.event_id.slug #for getting slug
+
+        #--------------- Find Average Rating ------------------#
+        workhand = event_registration_info.workhand_id #For getting workhand_id and it is used to change avg_rating in workhand model
+        average_rating = Event_Registrations.objects.filter(registration_status=True,workhand_id=workhand).aggregate(avg_rating=Avg('rating'))['avg_rating']
+        workhand_info = Workhand.objects.get(id=workhand.id) # Get object of Workhand model
+        workhand_info.avg_rating = average_rating
+        workhand_info.save()
+        return redirect('payment', slug=event_slug)
+    except:
+        messages.error(request , "Something went wrong!!")
+        return redirect('payment',slug=event_slug)
 
 def get_subcat(request):
     cat_id = request.GET['cat_id']
