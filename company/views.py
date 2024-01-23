@@ -13,6 +13,24 @@ from django.db.models import Avg
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def my_event(request):
+    #--------- For search -----------#
+    if request.method == "POST":
+        active="myevent"
+        search = request.POST.get('search')
+        if search == "all":
+            return redirect('myevent') 
+        else:
+            event = Event.objects.filter(event_subcategory_id=search) 
+
+        Event_workhand_obj = Event_workhand.objects.all()
+        context = {
+            'active' : active,
+            'events' : event,
+            'Event_Workhand' : Event_workhand_obj,
+        }
+
+        return render(request,'vendor/company_event.html',context)
+    #------------ Search end -----------#
     active="myevent"
     company_id = Company.objects.get(User_id=request.user)
     Events = Event.objects.filter(company_id=company_id)
@@ -102,12 +120,34 @@ def workhand_requests(request,slug):
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def request_approve(request):
-    workhand_id = request.GET.get('workhand_id')
-    event_registration_info = Event_Registrations.objects.get(id=workhand_id)
+    Registeration_id = request.GET.get('Registeration_id')
+    event_registration_info = Event_Registrations.objects.get(id=Registeration_id)
     event_registration_info.registration_status = True
     event_slug=event_registration_info.event_id.slug #for getting slug
     event_registration_info.save()
     return redirect('workhand_requests',slug=event_slug)
+
+
+
+@login_required(login_url="/accounts/login/")
+@user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
+def approved_requests(request,slug):
+    if request.method == "POST":
+        Registeration_id = request.POST.get("Registeration_id")
+        Event_Registrations_info = Event_Registrations.objects.get(id=Registeration_id)
+        Event_Registrations_info.registration_status = False
+        Event_Registrations_info.payment_status = False
+        Event_Registrations_info.save()
+        return redirect('approved_requests',slug=slug)
+
+    event = Event.objects.get(slug=slug)
+    workhands_Requests = Event_Registrations.objects.filter(event_id=event , registration_status=True)
+    context = {
+        'event' : event,
+        'workhands_Requests' : workhands_Requests,
+    }
+    return render(request,'vendor/approved_requests.html',context)
+
 
 
 

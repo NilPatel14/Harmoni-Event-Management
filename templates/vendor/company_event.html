@@ -45,7 +45,7 @@
 					<!-- section-title - start -->
 					<div class="col-lg-4 col-md-12 col-sm-12">
 						<div class="section-title">
-							<small class="sub-title">Find best event on Harmoni</small>
+							<small class="sub-title">Find Your Historical Event</small>
 							<h2 class="big-title">event <strong>Search</strong></h2>
 						</div>
 					</div>
@@ -54,20 +54,14 @@
 					<!-- search-form - start -->
 					<div class="col-lg-8 col-md-12 col-sm-12">
 						<div class="search-form form-wrapper">
-							<form action="{% url 'search_event' %}" method="POST">
+							<form action="{% url 'myevent' %}" method="POST">
 								{% csrf_token %}
 								<ul>
-									<li>
-										<span class="title">event keyword</span>
-										<div class="form-item">
-											<input type="search" name="keyword" placeholder="Search Event...">
-										</div>
-									</li>
-									<li>
+									<li style="margin-left:25%;">
 										<span class="title">event category</span>
 										<select id="event-category-select" name="search">
-										{% for i in Event_subcategory %}
-											<option value="{{i.id}}" selected>{{i.Event_subcategory_name}}</option>
+										{% for i in events %}
+											<option value="{{i.event_subcategory_id.id}}" selected>{{i.event_subcategory_id}}</option>
 										{% endfor %}
 										<option value="all" selected>All Events</option>
 										</select>
@@ -210,7 +204,7 @@
 													<h2>Oops!</h2>
 													<h3>Event Not Found!!</h3>
 													<p class="mb-30">something was wrong. The event you searched is not available at this point !!</p>
-													<a href="{% url "event" %}" class="custom-btn">go back to Event</a>
+													<a href="{% url "myevent" %}" class="custom-btn">go back to Event</a>
 												</div>
 											</div>
 											<!-- error-content - end -->
