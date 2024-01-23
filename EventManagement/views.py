@@ -39,7 +39,6 @@ def search_event(request):
         search_keyword = request.POST.get('keyword')
         search = request.POST.get('search')
         events = None
-        print(search_keyword)
         if not search_keyword == "":
             events = Event.objects.filter(event_name__icontains=search_keyword)
             

@@ -1,6 +1,6 @@
 {% extends 'user/base.html' %}
 {% load static %}
-{% block title %}Workahnds - Requests{% endblock title %}
+{% block title %}Approved - Requests{% endblock title %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% block content %}
@@ -18,7 +18,7 @@
 								<!-- breadcrumb-title - start -->
 								<div class="breadcrumb-title text-center mb-50">
 									<span class="sub-title">Harmoni</span>
-									<h2 class="big-title">Workhand's <strong>Requests</strong></h2>
+									<h2 class="big-title">Approved <strong>Requests</strong></h2>
 								</div>
 								<!-- breadcrumb-title - end -->
 
@@ -41,46 +41,6 @@
 		================================================== -->
 
 
-
-
-
-		<!-- booking-timeout-section - start
-		================================================== -->
-		{% comment %} <section id="booking-timeout-section" class="booking-timeout-section clearfix">
-			<div class="container">
-				<div class="row">
-
-					<!-- leftside-wrapper - start -->
-					<div class="col-lg-7 col-md-12 col-sm-12">
-						<div class="leftside-wrapper">
-							<h3>Please complete registration <strong class="yellow-color">within 12:00 hours.</strong></h3>
-							<p class="m-0">After 12:00 hours, the reservation we’re holding will be released to others.</p>
-						</div>
-					</div>
-					<!-- leftside-wrapper - end -->
-
-					<!-- rightside-wrapper - start -->
-					<div class="col-lg-5 col-md-12 col-sm-12">
-						<div class="rightside-wrapper">
-
-							<div class="clock-wrapper">
-								<ul class="countdown-list" data-countdown="2019/01/01"></ul>
-							</div>
-							
-						</div>
-					</div>
-					<!-- rightside-wrapper - end -->
-
-				</div>
-			</div>
-		</section> {% endcomment %}
-		<!-- booking-timeout-section - end
-		================================================== -->
-
-
-
-
-
 		<!-- booking-section - start
 		================================================== -->
 		<section id="booking-section" class="booking-section bg-gray-light sec-ptb-100 clearfix">
@@ -95,8 +55,7 @@
 							<div class="order-summary mb-50">
 								<!-- section-title - start -->
 								<div class="section-title mb-30">
-									<h2 class="big-title">Workhand <strong>Details</strong>
-									<a href="{% url 'approved_requests' slug=event.slug %}" class="custom-btn" style="margin-left:25%;">Approved Workhands</a></h2>
+									<h2 class="big-title">Workhand <strong>Details</strong></h2>
 								</div>
 {% comment %} 								
 								<div class="section-title" style="margin-right:200px;">
@@ -108,6 +67,8 @@
 									{% if event.company_id.User_id == request.user %}
                                     {% comment %} <form action="{% url 'request_approve'%}" method="POST">
                                     {% csrf_token %} {% endcomment %}
+                                    <form action="{% url 'approved_requests' slug=event.slug %}" method="POST">
+                                    {% csrf_token %}
 									<table class="table text-center">
 										<thead>
 											<tr>
@@ -133,17 +94,14 @@
 												</div>
                                                 <td>{{i.event_workhand_id}}
                                                 <td>
-                                                {% if i.registration_status %}
-                                                <button class="btn btn-secondary p-0" style="width:75px;" disabled>Approved</button>
-                                                {% else %}
                                                 <input name="Registeration_id" value="{{i.id}}" hidden />
-                                                <a href="/request-approve/?Registeration_id={{i.id}}" class="btn btn-success p-0" style="width:75px;">Approve</a>
-                                                {% endif %}   
+                                                <button type="submit" class="btn btn-danger p-0" style="width:75px;">Cancel</button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>	
 									</table>
+                                    </form>
                                     {% comment %} </form>	 {% endcomment %}
                                     {% endif %}
 								</div>
@@ -176,71 +134,7 @@
 							</div>
 							<!-- billing-info - end -->
 							</div>
-									<!-- ticket-buying-form - end -->
-
-									<!-- payment-form - start -->
-									<!--<div class="col-lg-6 col-md-6 col-sm-12">
-										<div class="payment-form form-wrapper">
-											<h3 class="form-title">payment</h3>
-
-											<form action="#">
-												<div class="form-item">
-													<select class="cradit-card-select">
-														<option selected="">Select Credit Card</option>
-														<option>option 1</option>
-														<option>option 2</option>
-														<option>option 3</option>
-														<option>option 4</option>
-														<option>option 5</option>
-													</select>
-												</div>
-												<div class="form-item">
-													<input type="text" placeholder="Card Numbers">
-												</div>
-
-												<div class="expired-date-form">
-													<h3 class="title-text">expired date</h3>
-													<ul>
-
-														<li>
-															<div class="form-item">
-																<select class="month-select">
-																	<option selected="">Month</option>
-																	<option>option 1</option>
-																	<option>option 2</option>
-																	<option>option 3</option>
-																	<option>option 4</option>
-																	<option>option 5</option>
-																</select>
-															</div>
-														</li>
-
-														<li>
-															<div class="form-item">
-																<select class="year-select">
-																	<option selected="">Year</option>
-																	<option>option 1</option>
-																	<option>option 2</option>
-																	<option>option 3</option>
-																	<option>option 4</option>
-																	<option>option 5</option>
-																</select>
-															</div>
-														</li>
-
-														<li>
-															<div class="form-item">
-																<input type="text" placeholder="CSC">
-															</div>
-														</li>
-
-													</ul>
-												</div>
-											</form>
-										</div>
-									</div> -->
-									<!-- payment-form - end -->
-
+						
 								</div>
 								<!-- row - end -->
 
@@ -252,95 +146,9 @@
 							<!-- billing-info - start -->
 							<div class="billing-info mb-50">
 
-								<!-- section-title - start -->
-								{% comment %} <div class="section-title mb-30">
-									<h2 class="big-title">Register <strong>information</strong></h2>
-								</div>
-								<!-- section-title - end --> {% endcomment %}
 								
-								
-
-								<!-- billing-form - start -->
 								<div class="billing-form form-wrapper">
-									{% comment %} <form action="#" method="POST" enctype="multipart/form-data">
-										<div class="form-item-group">
-											<ul>
-
-												<li>
-													<div class="form-item">
-														<input type="text" placeholder="First Name : {{workhand.first_name|safe}}" disabled>
-													</div>
-												</li>
-												<li>
-													<div class="form-item">
-														<input type="text" placeholder="Lase Name : {{workhand.last_name|safe}}" disabled>
-													</div>
-												</li>
-												<li>
-													<div class="form-item">
-														<input type="text" placeholder="Username : {{workhand.User_id.username}}" disabled>
-													</div>
-												</li>
-											
-											</ul>
-									</div>
-										<div class="form-item">
-											<select class="country-select" name="selected_category" required>
-												{% for i in event_workhand %}
-										 			{% if i.event_id.id == event.id %}
-														<option value="{{i.Workhand_category_id.id}}" selected>{{i.Workhand_category_id}}</option>
-													{% endif %}
-												{% endfor %}
-												<option selected="" name="">Select Category</option>
-											</select>
-										</div>
-										
-						<!-- form-item-group - end -->
-										<div class="form-item">
-											<input type="text" placeholder="Address : {{workhand.street_address}}" disabled>
-										</div>
-										<div class="form-item">
-											<input type="text" placeholder="Email Address : {{workhand.email}}" disabled>
-										</div>
-										
-											<input type="text" name="company_id" value={{event.company_id|safe}} hidden>
-										
-
-										<!-- form-item-group - start -->
-										<div class="form-item-group mb-50">
-											<ul>
-
-												<li>
-													<div class="form-item">
-														<select class="city-select">
-															<option selected="">{{workhand.city_id}}</option>
-														</select>
-													</div>
-												</li>
-												<li>
-													<div class="form-item">
-														<select class="state-select">
-															<option selected="">{{workhand.state_id}}</option>
-														</select>
-													</div>
-												</li>
-												<li>
-													<div class="form-item">
-														<input type="text" placeholder="Mobile No : {{workhand.contact_number}}" disabled>
-													</div>
-												</li>
-												
-											</ul>
-										</div>
-										<!-- form-item-group - end -->
-
-										<div class="text-center">
-											<button type="submit" class="custom-btn">
-												Register now
-											</button>
-										</div>
-
-									</form> {% endcomment %}
+								
 								</div>
 								<!-- billing-form - end -->
 
