@@ -108,7 +108,7 @@ def add_event(request):
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def workhand_requests(request,slug):
     event = Event.objects.get(slug=slug)
-    workhands_Requests = Event_Registrations.objects.filter(event_id=event)
+    workhands_Requests = Event_Registrations.objects.filter(event_id=event).order_by('-event_workhand_id')
     context = {
         'event' : event,
         'workhands_Requests' : workhands_Requests,
@@ -141,7 +141,7 @@ def approved_requests(request,slug):
         return redirect('approved_requests',slug=slug)
 
     event = Event.objects.get(slug=slug)
-    workhands_Requests = Event_Registrations.objects.filter(event_id=event , registration_status=True)
+    workhands_Requests = Event_Registrations.objects.filter(event_id=event , registration_status=True).order_by('event_workhand_id')
     context = {
         'event' : event,
         'workhands_Requests' : workhands_Requests,
