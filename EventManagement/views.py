@@ -54,7 +54,7 @@ def search_event(request):
 
             return render(request , 'user/event.html',context)
 
-        if search == "all":
+        if search == "all": 
             return redirect('event') 
         else:
             events = Event.objects.filter(event_subcategory_id=search) 
@@ -84,7 +84,6 @@ def event_details(request,slug):
 def event_register(request,slug):
     if request.method == "POST":
         selected_category = request.POST.get('selected_category')
-        print(selected_category)
         if selected_category is not None:
             Event_detail = Event.objects.get(slug=slug)
             workhand = Workhand.objects.get(User_id=request.user)
