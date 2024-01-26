@@ -109,26 +109,34 @@ def add_event(request):
 def workhand_requests(request,slug):
     event = Event.objects.get(slug=slug)
     workhands_Requests = Event_Registrations.objects.filter(event_id=event).order_by('-event_workhand_id')
+    event_workhand = Event_workhand.objects.all() 
     context = {
         'event' : event,
         'workhands_Requests' : workhands_Requests,
+        'event_workhand':event_workhand,
     }
     return render(request,'vendor/request_approve.html',context)
 
 
-
+# Only for redirect purpose
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def request_approve(request):
     Registeration_id = request.GET.get('Registeration_id')
     event_registration_info = Event_Registrations.objects.get(id=Registeration_id)
-    event_registration_info.registration_status = True
     event_slug=event_registration_info.event_id.slug #for getting slug
-    event_registration_info.save()
-    return redirect('workhand_requests',slug=event_slug)
+    Registered_workhands = len(Event_Registrations.objects.filter(registration_status=True,event_workhand_id=event_registration_info.event_workhand_id))
+    if (int(event_registration_info.event_workhand_id.number_of_workhand)-1) >= int(Registered_workhands):   
+        event_registration_info.registration_status = True
+        event_registration_info.save()
+        return redirect('workhand_requests',slug=event_slug)
+    else:
+        messages.error(request,f"You need only {event_registration_info.event_workhand_id.number_of_workhand} {event_registration_info.event_workhand_id}")
+        print("Error")
+        return redirect('workhand_requests',slug=event_slug)
 
 
-
+# Only for redirect purpose
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def approved_requests(request,slug):

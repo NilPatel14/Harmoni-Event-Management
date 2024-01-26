@@ -5,6 +5,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% block content %}
 
+{% if messages %}
+ {% for message in messages %}
+	<script>
+		alert('{{ message }}');
+	</script>
+ {% endfor %}
+{% endif %}
+
 	
 <!-- breadcrumb-section - start
 		================================================== -->
@@ -45,7 +53,7 @@
 		<section id="booking-section" class="booking-section bg-gray-light sec-ptb-100 clearfix">
 			<div class="container">
 				<div class="row">
-
+				
 					<!-- booking-content-wrapper - start -->
 					<div class="col-lg-8 col-md-12 col-sm-12">
 						<div class="booking-content-wrapper">
@@ -187,11 +195,16 @@
 								</div>
 								<div class="location-info-list ul-li-block clearfix">
 									<span class="area-name">{{event.company_id}}</span>
+									<p class="black-color mb-30">
+										<h5><b>Categories you need in Event</b></h5>
+									</p>
+									
 									<ul>
-										<li><i class="fas fa-arrow-circle-right"></i> Category : <strong>{{event.event_subcategory_id}}</strong></li>
-										<li><i class="fas fa-arrow-circle-right"></i> {{event.start_datetime | date}}</li>
-										<li><i class="fas fa-arrow-circle-right"></i> Total Seat : <strong>{{event.total_workhand}}</strong></li>
-										<li><i class="fas fa-arrow-circle-right"></i> From <strong>{{event.start_datetime | time}}</strong> to <strong>{{event.end_datetime | time}}</strong> (IND)</li>
+										{% for i in  event_workhand%}
+											{% if i.event_id.id == event.id %}
+												<li><i class="fas fa-arrow-circle-right"></i> {{i.Workhand_category_id}} : <strong>{{i.number_of_workhand}}</strong></li>	
+											{% endif %}
+										{% endfor %}
 									</ul>
 								</div>
 								{% comment %} <div class="button">
