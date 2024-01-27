@@ -15,7 +15,7 @@
 								<!-- breadcrumb-title - start -->
 								<div class="breadcrumb-title text-center mb-50">
 									<span class="sub-title">harmoni events</span>
-									<h2 class="big-title">harmoni <strong>event</strong></h2>
+									<h2 class="big-title">Clsoed <strong>event</strong></h2>
 								</div>
 								<!-- breadcrumb-title - end -->
 
@@ -23,7 +23,7 @@
 								<div class="breadcrumb-list">
 									<ul>
 										<li class="breadcrumb-item"><a href="{% url 'index' %}" class="breadcrumb-link">Home</a></li>
-										<li class="breadcrumb-item active" aria-current="page">event listing</li>
+										<li class="breadcrumb-item active"><a href="{% url 'event' %}" aria-current="page">event</a></li>
 									</ul>
 								</div>
 								<!-- breadcrumb-list - end -->
@@ -36,58 +36,6 @@
 		</section>
 		<!-- breadcrumb-section - end
 		================================================== -->
-		<section id="event-search-section" class="event-search-section clearfix" style="background-image: url('{% static 'assets/images/special-offer-bg.png' %}');">
-			<div class="container">
-				<div class="row">
-
-					<!-- section-title - start -->
-					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="section-title">
-							<small class="sub-title">Find best event on Harmoni</small>
-							<h2 class="big-title">event <strong>Search</strong></h2>
-						</div>
-					</div>
-					<!-- section-title - end -->
-
-					<!-- search-form - start -->
-					<div class="col-lg-8 col-md-12 col-sm-12">
-						<div class="search-form form-wrapper">
-							<form action="{% url 'search_event' %}" method="POST">
-								{% csrf_token %}
-								<ul>
-									<li>
-										<span class="title">event keyword</span>
-										<div class="form-item">
-											<input type="search" name="keyword" placeholder="Search Event...">
-										</div>
-									</li>
-									<li>
-										<span class="title">event category</span>
-										<select id="event-category-select" name="search">
-										{% for i in Event_subcategory %}
-											<option value="{{i.id}}" selected>{{i.Event_subcategory_name}}</option>
-										{% endfor %}
-										<option value="all" selected>All Events</option>
-										</select>
-									</li>
-									<li>
-										<button type="submit" class="submit-btn">search event now</button>
-									</li>
-								</ul>
-								
-							</form>
-						</div>
-					</div>
-					<!-- search-form - end -->
-					
-				</div>
-			</div>
-		</section>
-		<!-- event-search-section - end
-		================================================== -->
-
-
-
 
 
 		<!-- event-section - start
@@ -99,33 +47,9 @@
 					<!-- - start -->
 					<div class="col-lg-10 col-md-12 col-sm-12">
 
-						<div class="search-result-form">
-							<form action="#!">
-								<ul>
-
-									<li>
-										<span class="result-text">5 Search results from 20 events</span>
-									</li>
-									<li>
-										<label for="year-select">Years:</label>
-										<select id="year-select">
-											<option selected="">2018</option>
-											<option value="1">2019</option>
-											<option value="2">2020</option>
-											<option value="3">2021</option>
-										</select>
-									</li>
-									<li>
-										<label for="munth-select">Months:</label>
-										<select id="munth-select">
-											<option selected="">June</option>
-											<option value="1">July</option>
-											<option value="2">August</option>
-										</select>
-									</li>
-								</ul>
-							</form>
-						</div>
+						<div class="section-title mb-30">
+										<h2 class="big-title">Recently Closed <strong>Events</strong>
+									</div>
 						<div class="tab-content">
 							<div id="list-style" class="tab-pane fade in active show"> 	
 								<!-- event-item - start -->
@@ -133,7 +57,7 @@
 									{% for i in events %}
 										{% now "Y-m-d H:i:s" as today %}
 										{% with event_start_date=i.start_datetime|date:"Y-m-d H:i:s" %}
-											{% if event_start_date > today %}
+											{% if event_start_date < today %}
 									
 											<form action="/event-details/{{i.slug}}" method='POST'>
 											{% csrf_token %}
@@ -246,26 +170,6 @@
 									</div>
 								</section>
 								{% endif %}
-								
-								<div class="pagination ul-li clearfix">
-									<ul>
-										<li class="page-item prev-item">
-											<a class="page-link" href="#!">Prev</a>
-										</li>
-										<li class="page-item"><a class="page-link" href="#!">01</a></li>
-										<li class="page-item active"><a class="page-link" href="#!">02</a></li>
-										<li class="page-item"><a class="page-link" href="#!">03</a></li>
-										<li class="page-item"><a class="page-link" href="#!">04</a></li>
-										<li class="page-item"><a class="page-link" href="#!">05</a></li>
-										<li class="page-item next-item">
-											<a class="page-link" href="#!">Next</a>
-										</li>
-									</ul>
-								</div>
-								<br><br>
-								<div>
-									<center><a href="{% url 'closed_event' %}" type="submit" class="custom-btn">Recently Closed Event</a></center>
-									</div>
 							</div>
 
 						</div>

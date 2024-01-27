@@ -28,6 +28,7 @@ urlpatterns = [
     #--Header--#
     path('',views.index , name="index"),
     path('event/',views.event , name="event"),
+    path('event/closed-event/',views.closed_event,name="closed_event"),
     path('about-us/',views.about , name="about"),
     path('vendor/',views.vendor,name="vendor"),
     path('contact-us/',views.contact , name="contact"),

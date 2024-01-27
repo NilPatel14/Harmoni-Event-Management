@@ -34,6 +34,19 @@ def event(request):
     }
     return render(request , 'user/event.html',context)
 
+def closed_event(request):
+    active = "event"
+    events = Event.objects.all().order_by("start_datetime")
+    Event_subcategory_obj = Event_subcategory.objects.all().order_by()
+    Event_workhand_obj = Event_workhand.objects.all()
+    context={
+        'active' : active,
+        'events' : events,
+        'Event_subcategory' : Event_subcategory_obj,
+        'Event_Workhand' : Event_workhand_obj,
+    }
+    return render(request , 'user/close-event.html',context)
+
 def search_event(request):
     if request.method == "POST":
         search_keyword = request.POST.get('keyword')
