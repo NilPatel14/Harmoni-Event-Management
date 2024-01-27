@@ -303,20 +303,23 @@
 										<strong class="yellow-color">{{event.event_subcategory_id}}</strong>
 									</h2>
 
-									{% now "Y-m-d H:i:s" as today %}
 									{% if not user.is_staff %}
-										{% with event_start_date=event.start_datetime|date:"Y-m-d H:i:s" %}
-											{% if event_start_date > today %}
-												<a href="/event-register/{{event.slug}}" class="custom-btn">Register Now</a>
-											{% elif event_start_date <= today %}
-												<button class="btn btn-secondary" style="color: #FFBE30;" disabled>Registration Ended</button>
-											{% else %}
-												<p>Error: Invalid date comparison</p>
-											{% endif %}
-										{% endwith %}
+										{% if already_registered %}
+											<button class="btn btn-success" style="color: white;" disabled>Already Registered</button>
+										{% else %}
+											{% now "Y-m-d H:i:s" as today %}
+											
+												{% with event_start_date=event.start_datetime|date:"Y-m-d H:i:s" %}
+													{% if event_start_date > today %}
+														<a href="/event-register/{{event.slug}}" class="custom-btn">Register Now</a>
+													{% elif event_start_date <= today %}
+														<button class="btn btn-secondary" style="color: #FFBE30;" disabled>Registration Ended</button>
+													{% else %}
+														<p>Error: Invalid date comparison</p>
+													{% endif %}
+												{% endwith %}
+										{% endif %}
 									{% endif %}
-
-									
 								</div>
 							</div>
 

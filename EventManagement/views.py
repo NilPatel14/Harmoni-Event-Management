@@ -88,10 +88,19 @@ def search_event(request):
 def event_details(request,slug):
     if request.method == 'POST':
         event_details = Event.objects.get(slug=slug)
-        contaxt = {
-            'event' : event_details,
-        }
+        if not request.user.is_staff:
+            workhand_detail = Workhand.objects.get(User_id=request.user)
+            already_registered = Event_Registrations.objects.filter(registration_status=True , workhand_id=workhand_detail , event_id=event_details)
+            contaxt = {
+                'event' : event_details,
+                'already_registered' : already_registered,
+            }
+        else:
+             contaxt = {
+                'event' : event_details,
+            }
         return render(request , 'user/event-details.html',contaxt)
+
 
 @login_required
 def event_register(request,slug):
