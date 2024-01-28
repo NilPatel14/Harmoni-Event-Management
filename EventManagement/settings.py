@@ -151,7 +151,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'projecttime93@gmail.com'
-EMAIL_HOST_PASSWORD = 'heei gddo skyv udvc'
+EMAIL_HOST_PASSWORD = 'ukuc givh jdfx dayh'
 
 #Razorpay key_id and key_secret
 KEY_ID = 'rzp_test_RjLu5zAhhznWnh'
