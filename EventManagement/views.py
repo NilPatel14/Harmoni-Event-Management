@@ -15,11 +15,14 @@ from django.utils import timezone
 from company.views import *
 
 def index(request):
+    return redirect('home')
+
+def home(request):
     active = "home"
     context={
         'active' : active
     }
-    return render(request , 'user/index.html',context)
+    return render(request , 'user/home.html',context)
 
 def event(request):
     active = "event"
