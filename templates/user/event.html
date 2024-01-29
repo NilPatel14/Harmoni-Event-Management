@@ -247,19 +247,28 @@
 								</section>
 								{% endif %}
 								
+
 								<div class="pagination ul-li clearfix">
 									<ul>
+										{% if events.has_previous %}
 										<li class="page-item prev-item">
-											<a class="page-link" href="#!">Prev</a>
+											<a class="page-link" href="/event/?page={{events.previous_page_number}}">Prev</a>
 										</li>
-										<li class="page-item"><a class="page-link" href="#!">01</a></li>
-										<li class="page-item active"><a class="page-link" href="#!">02</a></li>
-										<li class="page-item"><a class="page-link" href="#!">03</a></li>
-										<li class="page-item"><a class="page-link" href="#!">04</a></li>
-										<li class="page-item"><a class="page-link" href="#!">05</a></li>
+										{% endif %}
+
+										{% for n in totalPageList %}
+											{% if n == currentPage %}
+												<li class="page-item active"><a class="page-link" href="/event/?page={{n}}">{{n}}</a></li>
+											{% else %}
+												<li class="page-item"><a class="page-link" href="/event/?page={{n}}">{{n}}</a></li>
+											{% endif %}
+										{% endfor %}
+										
+										{% if events.has_next %}
 										<li class="page-item next-item">
-											<a class="page-link" href="#!">Next</a>
+											<a class="page-link" href="/event/?page={{events.next_page_number}}">Next</a>
 										</li>
+										{% endif %}
 									</ul>
 								</div>
 								<br><br>

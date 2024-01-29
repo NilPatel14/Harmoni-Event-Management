@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 import razorpay
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Avg
+from django.core.paginator import Paginator
 # from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 @login_required(login_url="/accounts/login/")
@@ -35,9 +36,18 @@ def my_event(request):
     company_id = Company.objects.get(User_id=request.user)
     Events = Event.objects.filter(company_id=company_id)
     Event_workhand_obj = Event_workhand.objects.all()
+
+    #---- For pagination ---#
+    paginator = Paginator(Events,2)
+    page_number = request.GET.get('page')
+    EventDataFinal = paginator.get_page(page_number)
+    totalPage = EventDataFinal.paginator.num_pages
+
     contaxt={
         'active' : active,
-        'events' : Events,
+        'events' : EventDataFinal,
+        'totalPageList' : [n+1 for n in range(totalPage)],
+        'currentPage': EventDataFinal.number,  # Pass current page number to template
         'Event_Workhand' : Event_workhand_obj,
     }
     return render(request,'vendor/company_event.html',contaxt)

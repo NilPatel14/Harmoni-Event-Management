@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from event_data.models import *
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
@@ -26,12 +27,22 @@ def home(request):
 
 def event(request):
     active = "event"
-    events = Event.objects.all().order_by("start_datetime")
+    current_datetime = timezone.now()
+    events = Event.objects.filter(start_datetime__gt=current_datetime)
     Event_subcategory_obj = Event_subcategory.objects.all().order_by()
     Event_workhand_obj = Event_workhand.objects.all()
+
+    #---- For pagination ---#
+    paginator = Paginator(events,2)
+    page_number = request.GET.get('page')
+    EventDataFinal = paginator.get_page(page_number)
+    totalPage = EventDataFinal.paginator.num_pages
+
     context={
         'active' : active,
-        'events' : events,
+        'events' : EventDataFinal,
+        'totalPageList' : [n+1 for n in range(totalPage)],
+        'currentPage': EventDataFinal.number,  # Pass current page number to template
         'Event_subcategory' : Event_subcategory_obj,
         'Event_Workhand' : Event_workhand_obj,
     }
@@ -146,10 +157,18 @@ def history(request):
     workhand = Workhand.objects.get(User_id=request.user)
     registration = Event_Registrations.objects.filter(registration_status=True , workhand_id=workhand)
     Event_workhand_obj = Event_workhand.objects.all()
+
+    #---- For pagination ---#
+    paginator = Paginator(registration,2)
+    page_number = request.GET.get('page')
+    RegistrationDataFinal = paginator.get_page(page_number)
+    totalPage = RegistrationDataFinal.paginator.num_pages
     context={
         'active':active,
-        'registration':registration,
-        'Event_Workhand' : Event_workhand_obj
+        'registration':RegistrationDataFinal,
+        'Event_Workhand' : Event_workhand_obj,
+        'totalPageList' : [n+1 for n in range(totalPage)],
+        'currentPage': RegistrationDataFinal.number,  # Pass current page number to template
     }
     return render(request,'user/history.html',context)
 
