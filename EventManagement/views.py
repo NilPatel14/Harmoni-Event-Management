@@ -25,6 +25,23 @@ def home(request):
     }
     return render(request , 'user/home.html',context)
 
+def home_search(request):
+    search_keyword = request.POST.get('keyword')
+    if search_keyword:
+            events = Event.objects.filter(event_name__icontains=search_keyword)
+            
+            active = "event"
+            Event_subcategory_obj = Event_subcategory.objects.all()
+            Event_workhand_obj = Event_workhand.objects.all()
+            context={
+                'active' : active,
+                'events' : events,
+                'Event_subcategory' : Event_subcategory_obj,
+                'Event_Workhand' : Event_workhand_obj,
+            }
+    else:
+        return redirect('event')
+
 def event(request):
     active = "event"
     current_datetime = timezone.now()
