@@ -222,8 +222,9 @@
 													<!-- search-body - start -->
 													<div class="search-body">
 														<div class="search-form">
-															<form action="#">
-																<input class="search-input" type="search" placeholder="Search Here">
+															<form action="{% url 'home_search' %}">
+															{% csrf_token %}
+																<input class="search-input" type="search" name="keyword" placeholder="Search Here">
 																<div class="outer-close toggle-overlay">
 																	<button type="button" class="search-close">
 																		<i class="fas fa-times"></i>
