@@ -69,19 +69,20 @@
 
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="">
-                  <select name="cat" id="cat" class="form-item " style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                      {% for i in Event_category %}
-                      <option value="{{i.id}}">{{i.event_category}}</option>
-                      {% endfor %}
-                      <option value="" disable selected>Choose Event Category</option>
-                  </select>
+                    <select name="cat" id="cat" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;" required>
+                     <option value="" disabled selected>Choose Event Category</option>
+                        {% for i in Event_category %}
+                            <option value="{{i.id}}">{{i.event_category}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
               </div>
 
+
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="">
-                  <select name="subcat" id="subcat" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                    <option value=0>Choose Event Subcategory</option>
+                  <select name="subcat" id="subcat" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;" required>
+                    <option value="" disabled selected>Choose Event Subcategory</option>
                   </select>
                 </div>
               </div>
