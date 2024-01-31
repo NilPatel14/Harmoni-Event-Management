@@ -347,7 +347,7 @@ def logIn(request):
                 return redirect(request.GET['next'])
             return redirect('index')
         else:
-            messages.error(request , "Password doen's match")
+            messages.error(request , "Username or Password doesn't match")
             return redirect('login')
 
 

@@ -9,6 +9,7 @@ import razorpay
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Avg
 from django.core.paginator import Paginator
+from django.utils import timezone
 # from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 @login_required(login_url="/accounts/login/")
@@ -67,7 +68,17 @@ def add_event(request):
         city_id = request.POST.get('city')
         description = request.POST.get('description')
 
-        Workhand_categorie = request.POST.getlist('Workhand_categorie')
+        # For datetime field
+        current_datetime = timezone.now()
+        if not start_datetime > current_datetime:
+            messages.error(request,"Start datetime should be greater than today")
+            return redirect("addevent")
+        elif start_datetime > end_datetime:
+                messages.error(request,"Start datetime should be greater than end datetime")
+                return redirect("addevent")
+
+
+        Workhand_categories = request.POST.getlist('Workhand_categories')
         price = request.POST.getlist('price')
         workhand_number = request.POST.getlist('workhand_number')
         total_workhand = sum(map(int ,workhand_number))
@@ -86,8 +97,8 @@ def add_event(request):
         Event_info.save()
 
         # Save data in Event_workhand Table
-        if len(Workhand_categorie) == len(workhand_number) == len(price):
-            for Workhand_category_id, numbers_of_workhand , workhand_price in zip(Workhand_categorie, workhand_number,price):
+        if len(Workhand_categories) == len(workhand_number) == len(price):
+            for Workhand_category_id, numbers_of_workhand , workhand_price in zip(Workhand_categories, workhand_number,price):
                 Workhand_category_obj = None
                 Workhand_category_obj = Workhand_category.objects.get(id=Workhand_category_id)
                 Event_workhand_info = Event_workhand(Workhand_category_id = Workhand_category_obj , number_of_workhand=numbers_of_workhand , price = workhand_price , event_id=Event_info )
