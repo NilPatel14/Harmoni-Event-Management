@@ -109,7 +109,7 @@
 
               <div class="col-lg-12 col-md-12 col-sm-12">
 								<div class="form-item">
-									<input type="number" id="workhand_category" min="1" onchange="createDropdown()" placeholder="How many categories you need in event"required>
+									<input type="number" id="workhand_category" min="1" onchange="createDropdown()" placeholder="How many categories you need in event" required>
 								</div>
 							</div>
 
@@ -131,19 +131,19 @@
               </div>
 
               <div class="col-lg-6 col-md-6 col-sm-12">
-                  <div class="">
-                    <select name="state" id="state" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
-                      {% for i in States %}
-                          <option value="{{i.id}}" selected>{{i.state_name}}</option>
-                      {% endfor %}
-                      <option disable selected>Choose State</option>
-                    </select>
-                  </div>
-              </div>
+							<div class="">
+								<select name="state" id="state" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;" required>
+									<option value="" disabled selected>Choose State</option>
+									{% for i in States %}
+										<option value="{{i.id}}">{{i.state_name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
               
               <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="">
-                  <select name="city" id="city" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
+                  <select name="city" id="city" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;" required>
                       <option value=0>Choose City</option>
                   </select>
                 </div>
@@ -152,7 +152,7 @@
               <div class="col-lg-12 col-md-12 col-sm-12">
               <h5><strong>Write about event description</strong></h5>
 								<div class="form-item">
-									<textarea name="description" class="ckeditor" placeholder="Enter your description here..." required></textarea>
+									<textarea name="description" id="description_box" class="ckeditor" placeholder="Enter your description here..." required></textarea>
 								</div>
 							</div>
 
@@ -189,8 +189,9 @@
                             var dropdown = document.createElement("select");
                             dropdown.id = "catDropdown" + i;
                             dropdown.className = "form-item";
-                            dropdown.name = "Workhand_categorie";
+                            dropdown.name = "Workhand_categories";
                             dropdown.style = "max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px; ";
+                            dropdown.required = true;
                     
                             var textboxDiv = document.createElement("div");
                             textboxDiv.className = "col-lg-4 col-md-4 col-sm-4"; // Adjust classes as needed
