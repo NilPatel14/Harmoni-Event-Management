@@ -61,22 +61,24 @@ def add_event(request):
         Event_Category_id = request.POST.get('cat')
         Event_Subcategory_id = request.POST.get('subcat')
         event_name = request.POST.get('event_name')
-        start_datetime = request.POST.get('start_datetime')
-        end_datetime = request.POST.get('end_datetime')
+        start_datetime_str = request.POST.get('start_datetime')
+        end_datetime_str = request.POST.get('end_datetime')
         street_address = request.POST.get('street_address')
         state_id = request.POST.get('state')
         city_id = request.POST.get('city')
         description = request.POST.get('description')
 
-        # For datetime field
-        current_datetime = timezone.now()
-        if not start_datetime > current_datetime:
-            messages.error(request,"Start datetime should be greater than today")
+        start_datetime = datetime.strptime(start_datetime_str, "%Y-%m-%dT%H:%M")
+        end_datetime = datetime.strptime(end_datetime_str, "%Y-%m-%dT%H:%M")
+        current_date = timezone.now().date()
+
+        # Now perform the comparison considering only dates
+        if start_datetime.date() <= current_date:
+            messages.error(request, "Start date should be greater than today")
             return redirect("addevent")
         elif start_datetime > end_datetime:
-                messages.error(request,"Start datetime should be greater than end datetime")
-                return redirect("addevent")
-
+            messages.error(request, "Start date should be less than end date")
+            return redirect("addevent")
 
         Workhand_categories = request.POST.getlist('Workhand_categories')
         price = request.POST.getlist('price')

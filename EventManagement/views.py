@@ -140,7 +140,7 @@ def event_register(request,slug):
         if selected_category is not None:
             Event_detail = Event.objects.get(slug=slug)
             workhand = Workhand.objects.get(User_id=request.user)
-            event_workhand =  Event_workhand.objects.get(id=selected_category)
+            event_workhand =  Event_workhand.objects.get(id=selected_category)  
             registration = Event_Registrations(event_workhand_id=event_workhand , workhand_id = workhand , event_id = Event_detail , company_id = Event_detail.company_id)
             registration.save()
             return redirect('register_success')
