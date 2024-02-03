@@ -121,7 +121,7 @@ def event_details(request,slug):
         event_details = Event.objects.get(slug=slug)
         if not request.user.is_staff:
             workhand_detail = Workhand.objects.get(User_id=request.user)
-            already_registered = Event_Registrations.objects.filter(registration_status=True , workhand_id=workhand_detail , event_id=event_details)
+            already_registered = Event_Registrations.objects.filter( workhand_id=workhand_detail , event_id=event_details)
             contaxt = {
                 'event' : event_details,
                 'already_registered' : already_registered,
@@ -172,11 +172,12 @@ def about(request):
 def history(request):
     active = 'history'
     workhand = Workhand.objects.get(User_id=request.user)
-    registration = Event_Registrations.objects.filter(registration_status=True , workhand_id=workhand)
+    registration = Event_Registrations.objects.filter(workhand_id=workhand)
+    # Approved_workhand = Event_Registrations.objects.filter(registration_status=True , workhand_id=workhand)
     Event_workhand_obj = Event_workhand.objects.all()
 
     #---- For pagination ---#
-    paginator = Paginator(registration,2)
+    paginator = Paginator(registration,3)
     page_number = request.GET.get('page')
     RegistrationDataFinal = paginator.get_page(page_number)
     totalPage = RegistrationDataFinal.paginator.num_pages
@@ -198,9 +199,39 @@ def vendor(request):
 
 @login_required(login_url="/accounts/login/")
 def contact(request):
+    if request.method == 'POST':
+        try:
+            name = request.POST.get('name')
+            mail = request.POST.get('email')
+            city = request.POST.get('city')
+            number = request.POST.get('number')
+            message = request.POST.get('message')
+
+            #Email code 
+            subject = "We Recieved Your E-mail!"
+            msg = f"Your email has succesfully sent to us. you message is <h>'{message}'</h>. <br> Now we work on your problem/suggestion and fix it as soon as if possible. <br>Thank You!!"
+            from_email = settings.EMAIL_HOST_USER
+            msg = EmailMultiAlternatives(subject , msg , from_email , [mail])
+            msg.content_subtype = 'html'
+            msg.send()
+            #--------------------#
+
+            messages.success(request,f"your message has been Succesfully Sent!")
+            return redirect('contact')
+        except e:
+            messages.error(request,"Something went wrong!!")
+            return redirect('contact')
+            
+
     active="contact"
+    User = None
+    if not request.user.is_staff:
+        User = Workhand.objects.get(User_id=request.user)
+    else:
+        User = Company.objects.get(User_id=request.user)
     contaxt={
-        'active' : active
+        'active' : active,
+        'User' : User,
     }
     return render(request , 'user/contact.html',contaxt)
 
