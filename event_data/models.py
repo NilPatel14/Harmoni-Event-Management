@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
-from .utils import generate_slug
+from .utils import generate_slug , generate_slug_comapny
 from ckeditor.fields import RichTextField
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -41,6 +41,11 @@ class Company(models.Model):
     companyLogo_path = models.ImageField(default='default.jpg' , upload_to = 'company_img/')
     description = models.TextField(default=None)
     User_id = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    slug = models.SlugField(unique = True , null=True , blank=True , max_length=100)
+
+    def save(self , *args , **kwargs):
+        self.slug = generate_slug_comapny(self.name)
+        super(Company , self).save(*args , **kwargs)
 
     def __str__(self):
         return self.name

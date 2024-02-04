@@ -150,7 +150,7 @@
 				  
 						<div class="col-lg-12 col-md-12 col-sm-12" id="special-skill" style="display: block;">
 							<div class="">
-								<select name="workhand_category" id="workhand_category" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;" required>
+								<select name="workhand_category" id="workhand_category" class="form-item" style="max-width:100%; background-color: #f7f7f7; border-color: #f0f0f0; padding: 0px 25px;">
 									<option value="" disabled selected>Choose Your Special Category</option>
 									{% for i in Workhand_category %}
 										<option value="{{i.id}}">{{i.workhand_category_name}}</option>
