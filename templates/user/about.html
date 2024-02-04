@@ -5,7 +5,7 @@
 
 <style type="text/css">
 body{
-scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 </style>
 
@@ -449,10 +449,6 @@ scroll-behavior: smooth;
 		<!-- testimonial5-section - end
 		================================================== -->
 
-
-
-
-
 		<!-- absolute-sponsor-section - start
 		================================================== -->
 		<div id="absolute-sponsor-section" class="absolute-sponsor-section sr-fade1 clearfix">
@@ -483,10 +479,6 @@ scroll-behavior: smooth;
 		</div>
 		<!-- absolute-sponsor-section - end
 		================================================== -->
-
-
-
-
 
 		<!-- speaker-section - start
 		================================================== -->
@@ -735,12 +727,22 @@ scroll-behavior: smooth;
 		<!-- special-offer-section - end
 		================================================== -->
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- JavaScript for smooth scrolling -->
 <script>
-    document.querySelector('.custom-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        targetElement.scrollIntoView({ behavior: 'smooth' });
+    $(document).ready(function(){
+        $(".custom-btn").on('click', function(event) {
+            if (this.hash !== "") {
+                event.preventDefault();
+                var hash = this.hash;
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top - 100 // Adjusted scroll position
+                }, 800, function(){
+                    window.location.hash = hash;
+                });
+            }
+        });
     });
 </script>
 

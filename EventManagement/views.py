@@ -190,12 +190,25 @@ def history(request):
     }
     return render(request,'user/history.html',context)
 
-def vendor(request):
+def company(request):
     active = "vendor"
+    company_obj = Company.objects.all()
     contaxt={
-        'active' : active
+        'active' : active,
+        'company' : company_obj
     }
-    return render(request , 'user/vendor.html',contaxt)
+    return render(request , 'user/company.html',contaxt)
+
+def company_profile(request,slug):
+    active = "company"
+    Company_obj = Company.objects.get(slug=slug)
+    events = Event.objects.filter(company_id = Company_obj)
+    context={
+        'active' : active,
+        'company' : Company_obj,
+        'events' : events,
+    }
+    return render(request , 'user/company_profile.html',context)
 
 @login_required(login_url="/accounts/login/")
 def contact(request):
