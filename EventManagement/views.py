@@ -45,7 +45,7 @@ def home_search(request):
 def event(request):
     active = "event"
     current_datetime = timezone.now()
-    events = Event.objects.filter(start_datetime__gt=current_datetime)
+    events = Event.objects.filter(start_datetime__gt=current_datetime).order_by('start_datetime')
     Event_subcategory_obj = Event_subcategory.objects.all().order_by()
     Event_workhand_obj = Event_workhand.objects.all()
 

@@ -219,6 +219,8 @@
                             var option = document.createElement("option");
                             option.value = "";
                             option.text = "Choose Workhand Category";
+                            option.disabled = true;
+                            option.selected = true;
                             dropdown.appendChild(option);
                     
                             {% for i in Workhand_category %}
