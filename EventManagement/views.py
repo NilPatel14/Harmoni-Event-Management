@@ -20,8 +20,10 @@ def index(request):
 
 def home(request):
     active = "home"
+    events = Event.objects.order_by('start_datetime')[:6]
     context={
-        'active' : active
+        'active' : active,
+        'events' : events
     }
     return render(request , 'user/home.html',context)
 
@@ -360,7 +362,9 @@ def register(request):
         else:
             messages.error(request , "Please select role")
 
-
+    # Register page #
+    if request.user.is_authenticated:
+        return redirect('home')
     else:
         States = State.objects.all().order_by('-state_name')
         Workhand_categories = Workhand_category.objects.all().order_by('workhand_category_name')
@@ -394,8 +398,10 @@ def logIn(request):
             messages.error(request , "Username or Password doesn't match")
             return redirect('login')
 
-
-    return render(request , 'accounts/login.html')
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        return render(request , 'accounts/login.html')
 
 def logout(request):
     try:
