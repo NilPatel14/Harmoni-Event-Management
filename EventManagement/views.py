@@ -13,6 +13,7 @@ from django.core.mail import EmailMessage
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.utils import timezone
+from django.http import HttpResponse
 from company.views import *
 
 def index(request):
@@ -134,6 +135,14 @@ def event_details(request,slug):
             }
         return render(request , 'user/event-details.html',contaxt)
 
+    if slug is not None:
+        event_details = Event.objects.get(slug=slug)
+        contaxt = {
+                'event' : event_details,
+            }
+        return render(request , 'user/event-details.html',contaxt)
+    else:
+        return HttpResponse("Method not allowed", status=405)
 
 @login_required
 def event_register(request,slug):
@@ -252,115 +261,131 @@ def contact(request):
 
 def register(request):
     if request.method == "POST":
-        role = request.POST.get('role')
+        try:
+            role = request.POST.get('role')
 
-        if role == "workhand":
-            username = request.POST.get('username')
-            first_name = request.POST.get('first_name')
-            last_name = request.POST.get('last_name')
-            password = request.POST.get('password')
-            confirm_password = request.POST.get('confirm_password')
-            email = request.POST.get('email')
-            contact_number = request.POST.get('contact_number')
-            street_address = request.POST.get('street_address')
-            state = request.POST.get('state')
-            city = request.POST.get('city')
-            workhand_category = request.POST.get('workhand_category')
-            profile_image = request.FILES.get('profile_image')
-            
-            #Object Instances--->
-            city_obj = City.objects.get(id=city)
-            state_obj = State.objects.get(id=state)
-            workhand_category_obj = Workhand_category.objects.get(id=workhand_category)
-            # ------------------>
+            if role == "workhand":
+                username = request.POST.get('username')
+                first_name = request.POST.get('first_name')
+                last_name = request.POST.get('last_name')
+                password = request.POST.get('password')
+                confirm_password = request.POST.get('confirm_password')
+                email = request.POST.get('email')
+                contact_number = request.POST.get('contact_number')
+                street_address = request.POST.get('street_address')
+                state = request.POST.get('state')
+                city = request.POST.get('city')
+                workhand_category = request.POST.get('workhand_category')
+                profile_image = request.FILES.get('profile_image')
+                
+                #Object Instances--->
+                city_obj = City.objects.get(id=city)
+                state_obj = State.objects.get(id=state)
+                workhand_category_obj = Workhand_category.objects.get(id=workhand_category)
+                # ------------------>
 
-            if password and confirm_password:
-                if password != confirm_password:
-                    messages.error(request , "Password doen's match")
-                    return redirect('register')
-                else:
-                    #save user model
-                    user_info = User.objects.create_user(username = username , first_name = first_name , last_name = last_name ,password = password , email = email)
-                    user_info.save()
+                if password and confirm_password:
+                    if password != confirm_password:
+                        messages.error(request , "Password doen's match")
+                        return redirect('register')
+                    else:
+                        #save user model
+                        user_info = User.objects.create_user(username = username , first_name = first_name , last_name = last_name ,password = password , email = email)
+                        user_info.save()
 
-                    #save workhand model
-                    Workhand_info = Workhand(first_name=first_name , last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state_obj , city_id=city_obj , profilePic_path=profile_image , Workhand_category_id=workhand_category_obj , User_id=user_info)
-                    Workhand_info.save()
+                        if profile_image:
+                            #save workhand model
+                            Workhand_info = Workhand(first_name=first_name , last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state_obj , city_id=city_obj , profilePic_path=profile_image , Workhand_category_id=workhand_category_obj , User_id=user_info)
+                            Workhand_info.save()
 
-                    #save in Porfile model
-                    user_profile = profile_pics(User=user_info , image = profile_image)
-                    user_profile.save()
+                            #save in Porfile model
+                            user_profile = profile_pics(User=user_info , image = profile_image)
+                            user_profile.save()
+                        else:
+                            #save workhand model
+                            Workhand_info = Workhand(first_name=first_name , last_name=last_name , email=email , contact_number=contact_number , street_address=street_address ,state_id=state_obj , city_id=city_obj , Workhand_category_id=workhand_category_obj , User_id=user_info)
+                            Workhand_info.save()
 
-                    #user login and redirect
-                    auth_login(request,user_info)
+                            #save in Porfile model
+                            user_profile = profile_pics(User=user_info)
+                            user_profile.save()
 
-                    #Email code 
-                    subject = "Sucessfully logedIn!!"
-                    msg = f"<p>Hello {first_name} {last_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
-                    from_email = settings.EMAIL_HOST_USER
-                    msg = EmailMultiAlternatives(subject , msg , from_email , [email])
-                    msg.content_subtype = 'html'
-                    msg.send()
-                    #--------------------#
+                        #user login and redirect
+                        auth_login(request,user_info)
 
-                    #redirected on index page
-                    return redirect('index')
-                    #--------------------#
+                        #Email code 
+                        subject = "Sucessfully logedIn!!"
+                        msg = f"<p>Hello {first_name} {last_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                        from_email = settings.EMAIL_HOST_USER
+                        msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+                        msg.content_subtype = 'html'
+                        msg.send()
+                        #--------------------#
 
-        elif role == "vendor":
-            username = request.POST.get('username')
-            company_name = request.POST.get('company_name')
-            password = request.POST.get('password')
-            confirm_password = request.POST.get('confirm_password')
-            email = request.POST.get('email')
-            contact_number = request.POST.get('contact_number')
-            street_address = request.POST.get('street_address')
-            state = request.POST.get('state')
-            city = request.POST.get('city')
-            discription = request.POST.get('discription')
-            company_logo = request.FILES.get('company_logo')
+                        #redirected on index page
+                        return redirect('index')
+                        #--------------------#
 
-            #Object Instances--->
-            city_obj = City.objects.get(id=city)
-            state_obj = State.objects.get(id=state)
-            # ------------------>
+            elif role == "vendor":
+                username = request.POST.get('username')
+                company_name = request.POST.get('company_name')
+                password = request.POST.get('password')
+                confirm_password = request.POST.get('confirm_password')
+                email = request.POST.get('email')
+                contact_number = request.POST.get('contact_number')
+                street_address = request.POST.get('street_address')
+                state = request.POST.get('state')
+                city = request.POST.get('city')
+                discription = request.POST.get('discription')
+                company_logo = request.FILES.get('company_logo')
 
-            if password and confirm_password:
-                if password != confirm_password:
-                    messages.error(request , "Password doen's match")
-                    return redirect('register')
-                else:
-                    #save user model
-                    user_info = User.objects.create_user(username = username , first_name = company_name ,password = password , email = email ,is_staff = True)
-                    user_info.save()
+                #Object Instances--->
+                city_obj = City.objects.get(id=city)
+                state_obj = State.objects.get(id=state)
+                # ------------------>
 
-                    #save company model
-                    Company_info = Company(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city_obj , state_id=state_obj , companyLogo_path = company_logo, description=discription ,User_id=user_info)
-                    Company_info.save()
-                    
-                    # Save in profile table
-                    user_profile = profile_pics(User=user_info , image = company_logo)
-                    user_profile.save()
+                if password and confirm_password:
+                    if password != confirm_password:
+                        messages.error(request , "Password doen's match")
+                        return redirect('register')
+                    else:
+                        #save user model
+                        user_info = User.objects.create_user(username = username , first_name = company_name ,password = password , email = email ,is_staff = True)
+                        user_info.save()
 
-                    #user login and redirect
-                    auth_login(request,user_info)
+                        if company_logo:
+                            #save company model
+                            Company_info = Company(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city_obj , state_id=state_obj , companyLogo_path = company_logo, description=discription ,User_id=user_info)
+                            Company_info.save()
+                            
+                            # Save in profile table
+                            user_profile = profile_pics(User=user_info , image = company_logo)
+                            user_profile.save()
+                        else:
+                            Company_info = Company(name=company_name , email=email , contact_number=contact_number , street_address=street_address , city_id = city_obj , state_id=state_obj , description=discription ,User_id=user_info)
+                            Company_info.save()
+                            
+                            # Save in profile table
+                            user_profile = profile_pics(User=user_info)
+                            user_profile.save()
+                        #user login and redirect
+                        auth_login(request,user_info)
 
-                    #Email code 
-                    subject = "Sucessfully logedIn!!"
-                    msg = f"<p>Hello {company_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
-                    from_email = settings.EMAIL_HOST_USER
-                    msg = EmailMultiAlternatives(subject , msg , from_email , [email])
-                    msg.content_subtype = 'html'
-                    msg.send()
-                    #--------------------#
+                        #Email code 
+                        subject = "Sucessfully logedIn!!"
+                        msg = f"<p>Hello {company_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                        from_email = settings.EMAIL_HOST_USER
+                        msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+                        msg.content_subtype = 'html'
+                        msg.send()
+                        #--------------------#
 
-                    #redirected on index page
-                    return redirect('index')
-                    #--------------------#
-
-
-        else:
-            messages.error(request , "Please select role")
+                        #redirected on index page
+                        return redirect('index')
+                        #--------------------#
+        except:
+            messages.error(request , "Something went wrong . please try again !")
+            return redirect('register')
 
     # Register page #
     if request.user.is_authenticated:
