@@ -16,6 +16,8 @@ function toggleAdditionalImagesField() {
 
     var descriptionField = document.getElementById("descriptionField");
     var companyNameField = document.getElementById("companyNameField");
+
+    var CompanyImageField = document.getElementById("additional-images");
     
     if (eventCategorySelect.value === "vendor") {
         Discriotion_field.style.display = "block";
@@ -28,6 +30,7 @@ function toggleAdditionalImagesField() {
         firstNameField.required = false;
         lastNameField.required = false;
         workhand_category.required = false;
+        CompanyImageField.required = true;
         descriptionField.required = true;
         companyNameField.required = true;
     } else {
