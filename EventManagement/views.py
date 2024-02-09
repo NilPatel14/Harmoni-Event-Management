@@ -147,16 +147,22 @@ def event_details(request,slug):
 @login_required
 def event_register(request,slug):
     if request.method == "POST":
-        selected_category = request.POST.get('selected_category')
-        if selected_category is not None:
-            Event_detail = Event.objects.get(slug=slug)
-            workhand = Workhand.objects.get(User_id=request.user)
-            event_workhand =  Event_workhand.objects.get(id=selected_category)  
-            registration = Event_Registrations(event_workhand_id=event_workhand , workhand_id = workhand , event_id = Event_detail , company_id = Event_detail.company_id)
-            registration.save()
-            return redirect('register_success')
+        Event_detail = Event.objects.get(slug=slug)
+        workhand = Workhand.objects.get(User_id=request.user)
+        #Check that wokrhand is already registerd in this event or not
+        already_registered = Event_Registrations.objects.filter(workhand_id=workhand , event_id=Event_detail)
+        if already_registered:
+            messages.error(request,f"You are already registered in this event!!")
+            return redirect('event')
         else:
-            pass
+            selected_category = request.POST.get('selected_category')
+            if selected_category is not None:
+                event_workhand =  Event_workhand.objects.get(id=selected_category)  
+                registration = Event_Registrations(event_workhand_id=event_workhand , workhand_id = workhand , event_id = Event_detail , company_id = Event_detail.company_id)
+                registration.save()
+                return redirect('register_success')
+            else:
+                pass
 
     event_details = Event.objects.get(slug=slug)
     event_workhand = Event_workhand.objects.all()   
@@ -289,9 +295,13 @@ def register(request):
                         messages.error(request , "Password doen's match")
                         return redirect('register')
                     else:
+                        try:
                         #save user model
-                        user_info = User.objects.create_user(username = username , first_name = first_name , last_name = last_name ,password = password , email = email)
-                        user_info.save()
+                            user_info = User.objects.create_user(username = username , first_name = first_name , last_name = last_name ,password = password , email = email)
+                            user_info.save()
+                        except:
+                            messages.error(request,"Username is already taken!")
+                            return redirect('register')
 
                         if profile_image:
                             #save workhand model
@@ -349,9 +359,13 @@ def register(request):
                         messages.error(request , "Password doen's match")
                         return redirect('register')
                     else:
-                        #save user model
-                        user_info = User.objects.create_user(username = username , first_name = company_name ,password = password , email = email ,is_staff = True)
-                        user_info.save()
+                        try:
+                            #save user model
+                            user_info = User.objects.create_user(username = username , first_name = company_name ,password = password , email = email ,is_staff = True)
+                            user_info.save()
+                        except:
+                            messages.error(request,"Username is already taken!")
+                            return redirect('register')
 
                         if company_logo:
                             #save company model

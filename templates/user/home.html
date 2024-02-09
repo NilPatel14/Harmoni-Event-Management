@@ -501,10 +501,10 @@
 							<!-- event-item - start -->
 							<div class="col-lg-6 col-md-12 col-sm-12">
 								<div class="event-item clearfix">
-									<form action="/event-details/{{i.slug}}" method='POST'>
+									<form action="/event-details/{{i.slug}}" method='POST' style="height:262.4px;">
 									{% csrf_token %}
 									<!-- event-image - start -->
-									<div class="event-image" style="width:152px; height:149px;">
+									<div class="event-image" style="width:140px; height:140px;">
 										{% comment %} <div class="post-date">
 											<span class="date">26</span>
 											<small class="month">june</small>
@@ -517,7 +517,7 @@
 									<div class="event-content">
 										<div class="event-title mb-15">
 											<h3 class="title">
-												{{i.event_name}}
+												{{i.event_name | truncatechars:100}}
 											</h3>
 											<span class="ticket-price yellow-color icon">
 											<i class="fas fa-map-marker-alt"></i> {{i.city_id}},{{i.state_id}}</span>
