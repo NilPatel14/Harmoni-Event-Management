@@ -86,7 +86,7 @@
 											{% for i in workhands %}										
 												<tbody>
 														<tr class="bg-gray-light">
-														<th scope="row">{{i.workhand_id}}</th>
+														<td><a href="/workhands-requests/workhand-profile/{{i.workhand_id.slug}}">{{i.workhand_id}}</a></td>
 														<td>{{i.event_workhand_id}}</td>
 														<td>{{i.event_workhand_id.price}}₹</td>
 														{% if  i.payment_status %}

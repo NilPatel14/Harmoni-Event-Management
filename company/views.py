@@ -119,7 +119,7 @@ def add_event(request):
     Event_category = Event_Category.objects.all()
     States = State.objects.all().order_by('-state_name')
     Workhand_categories = Workhand_category.objects.all().order_by('workhand_category_name')
-    active = "add_event"
+    active = "myevent"
     context={
         'active' : active,
         'States' : States,
@@ -127,6 +127,22 @@ def add_event(request):
         'Event_category' : Event_category
     }
     return render(request , 'vendor/addevent.html',context)
+
+
+
+@login_required(login_url="/accounts/login/")
+@user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
+def workhand_profile(request,slug):
+    active = "myevent"
+    workhand_info = Workhand.objects.get(slug=slug)
+    workhand_events = Event_Registrations.objects.filter(workhand_id=workhand_info,registration_status=True)
+    context={
+        'active' : active,
+        'workhand' : workhand_info,
+        'workhand_events' : workhand_events,
+    }
+    return render(request,'vendor/workhand_profile.html',context)
+
 
 
 

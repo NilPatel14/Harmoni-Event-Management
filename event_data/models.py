@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
-from .utils import generate_slug , generate_slug_comapny
+from .utils import generate_slug , generate_slug_comapny , generate_slug_workhand
 from ckeditor.fields import RichTextField
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -24,8 +24,14 @@ class Workhand(models.Model):
     state_id = models.ForeignKey('State' , on_delete=models.CASCADE)
     profilePic_path = models.ImageField(default = 'default.jpg' , upload_to = 'workhand_img/')
     Workhand_category_id = models.ForeignKey('Workhand_category' , on_delete=models.CASCADE)
-    avg_rating = models.IntegerField(default=0, validators=[MaxValueValidator(5),MinValueValidator(1)])
+    avg_rating = models.IntegerField(default=1, validators=[MaxValueValidator(5),MinValueValidator(1)])
     User_id = models.ForeignKey('auth.User',  on_delete=models.CASCADE)
+
+    slug = models.SlugField(unique = True , null=True , blank=True , max_length=100)
+
+    def save(self , *args , **kwargs):
+        self.slug = generate_slug_workhand(self.first_name)
+        super(Workhand , self).save(*args , **kwargs)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
