@@ -149,10 +149,12 @@ def workhand_profile(request,slug):
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def workhand_requests(request,slug):
+    active = "myevent"
     event = Event.objects.get(slug=slug)
     workhands_Requests = Event_Registrations.objects.filter(event_id=event).order_by('-event_workhand_id')
     event_workhand = Event_workhand.objects.all() 
     context = {
+        'active' : active,
         'event' : event,
         'workhands_Requests' : workhands_Requests,
         'event_workhand':event_workhand,
@@ -190,9 +192,11 @@ def approved_requests(request,slug):
         Event_Registrations_info.save()
         return redirect('approved_requests',slug=slug)
 
+    active = "myevent"
     event = Event.objects.get(slug=slug)
     workhands_Requests = Event_Registrations.objects.filter(event_id=event , registration_status=True).order_by('event_workhand_id')
     context = {
+        'active' : active,
         'event' : event,
         'workhands_Requests' : workhands_Requests,
     }
@@ -204,12 +208,14 @@ def approved_requests(request,slug):
 @login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def payment(request,slug):
+    active = "myevent"
     event = Event.objects.get(slug=slug)
     Registered_workhand = Event_Registrations.objects.filter(event_id=event , registration_status=True)
     total_price = 0
     for i in Registered_workhand:
         total_price += i.event_workhand_id.price
     context = {
+        'active' : active,
         'event' : event,
         'workhands' : Registered_workhand,
         'total_price' : total_price,

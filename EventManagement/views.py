@@ -217,7 +217,7 @@ def company(request):
     return render(request , 'user/company.html',contaxt)
 
 def company_profile(request,slug):
-    active = "company"
+    active = "vendor"
     Company_obj = Company.objects.get(slug=slug)
     events = Event.objects.filter(company_id = Company_obj)
     context={
