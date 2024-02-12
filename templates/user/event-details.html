@@ -2,6 +2,15 @@
 {% load static %}
 {% block title %}Event-details{% endblock title %}
 {% block content %}
+
+{% if messages %}
+ {% for message in messages %}
+	<script>
+		alert('{{ message }}');
+	</script>
+ {% endfor %}
+{% endif %}
+
     		<!-- breadcrumb-section - start
 		================================================== -->
 		<section id="breadcrumb-section" class="breadcrumb-section clearfix">
@@ -113,132 +122,98 @@
 						</div>
 						<!-- event-details - end -->
 
-						<!-- reviewer-comment-wrapper - start -->
-						<div class="reviewer-comment-wrapper mb-30 clearfix">
+						{% if workhands_feedback %}
+							{% for i in workhands_feedback %}
+								{% now "Y-m-d H:i:s" as today %}
+								{% with event_end_date=event.end_datetime|date:"Y-m-d H:i:s" %}
+									{% if event_end_date < today %}
+									<!-- reviewer-comment-wrapper - start -->
+									<div class="reviewer-comment-wrapper mb-30 clearfix">
 
-							<div class="section-title text-left mb-50">
-								<h2 class="big-title">Event <strong>reviews</strong></h2>
-							</div>
-
-							<div class="comment-bar clearfix">
-								<div class="admin-image">
-									<img src="{% static 'assets/images/admin.png' %}" alt="Image_not_found">
-								</div>
-								<div class="comment-content">
-									<div class="admin-name mb-15">
-										<div class="rateing-star ul-li clearfix">
-											<ul>
-												<li class="rated"><i class="fas fa-star"></i></li>
-												<li class="rated"><i class="fas fa-star"></i></li>
-												<li class="rated"><i class="fas fa-star"></i></li>
-												<li class="rated"><i class="fas fa-star"></i></li>
-												<li class="rated"><i class="fas fa-star"></i></li>
-											</ul>
+										<div class="section-title text-left mb-50">
+											<h2 class="big-title">Event <strong>Feedbacks</strong></h2>
 										</div>
-										<div class="name">
-											<a href="#!">john doe</a>
-										</div>
-									</div>
-									<div class="comment-text">
-										<p class="mb-30">
-											Brilliant production.  Enjoyed this as it captured so many emotions and being Irish some bits resonated with Irish families, the craic, singing.  Fantastic acting and so many surprises.
-										</p>
 
-										<div class="meta-wrapper">
-											<div class="btn-group-left float-left">
-												<span class="title"><i class="fas fa-heart"></i> Helpful?</span>
-												<ul>
-													<li><button type="button">Yes</button></li>
-													<li><button type="button">No</button></li>
-												</ul>
+										<div class="comment-bar clearfix">
+											<div class="admin-image">
+												<img src="{{ i.workhand_id.profilePic_path.url }}" alt="Image_not_found" style="height:100%; width:100%;">
 											</div>
-											<div class="btn-group-right float-right">
-												<ul>
-													<li><button type="button"><i class="fas fa-reply-all"></i> Replay</button></li>
-													<li><button type="button"><i class="fas fa-share-square"></i> Share</button></li>
-												</ul>
+											<div class="comment-content">
+												<div class="admin-name mb-15">
+													<div class="rateing-star ul-li clearfix">
+														<ul>
+														{% for workhands in Event_Registration_info %}
+															{% if workhands.workhand_id == i.workhand_id %}
+																{% for star in '12345' %}
+																	{% if workhands.rating >= forloop.counter0|add:1 %}
+																		<li class="rated"><i class="fas fa-star"></i></li>
+																	{% else %}
+																		<li class=""><i class="fas fa-star"></i></li>
+																	{% endif %}
+																{% endfor %}
+															{% endif %}
+														{% endfor %}
+														</ul>
+													</div>
+													<div class="name">
+														<a href="#!">{{ i.workhand_id.User_id }}</a>
+													</div>
+												</div>
+												<div class="comment-text">
+													<p class="mb-30">
+														{{i.feedback}}
+													</p>
+												</div>
 											</div>
 										</div>
+
 									</div>
-								</div>
-							</div>
+									<!-- reviewer-comment-wrapper - end -->
+										{% endif %}
+									{% endwith %}
+							{% endfor %}
+						{% endif %}
 
-						</div>
-						<!-- reviewer-comment-wrapper - end -->
-
-						<div class="pagination ul-li clearfix mb-80">
-							<ul>
-								<li class="page-item prev-item">
-									<a class="page-link" href="#">Prev</a>
-								</li>
-								<li class="page-item"><a class="page-link" href="#">01</a></li>
-								<li class="page-item active"><a class="page-link" href="#">02</a></li>
-								<li class="page-item"><a class="page-link" href="#">03</a></li>
-								<li class="page-item"><a class="page-link" href="#">04</a></li>
-								<li class="page-item"><a class="page-link" href="#">05</a></li>
-								<li class="page-item next-item">
-									<a class="page-link" href="#">Next</a>
-								</li>
-							</ul>
-						</div>
 
 						<!-- comment-form - start -->
-						<div class="comment-form clearfix">
-
+						<div class="comment-form clearfix">		
+						{% if not already_feedback %}				
+						{% if feedback %}
+							{% now "Y-m-d H:i:s" as today %}
+								{% with event_end_date=event.end_datetime|date:"Y-m-d H:i:s" %}
+									{% if event_end_date < today %}
 							<div class="section-title text-left mb-50">
-								<h2 class="big-title">write a <strong>comment</strong></h2>
-
-								<div class="rateing-star-wrapper">
-									<span class="rating-title float-left">Your Rating:</span>
-									<div class="rateing-star-form float-right">
-										<form action="#">
-
-											<div class="form-check clearfix">
-												<input type="checkbox">
-											</div>
-											<div class="form-check clearfix">
-												<input type="checkbox">
-											</div>
-											<div class="form-check clearfix">
-												<input type="checkbox">
-											</div>
-											<div class="form-check clearfix">
-												<input type="checkbox">
-											</div>
-											<div class="form-check clearfix">
-												<input type="checkbox">
-											</div>
-
-										</form>
-									</div>
-								</div>
-
+								<h2 class="big-title">write Your <strong>feedback</strong></h2>
 							</div>
-
 							<div class="form-wrapper">
-								<form action="https://jthemes.net/themes/html/harmony-event/contact.php">
+								<form action="{% url 'feedback' %}" method="POST">
 									<div class="row">
-
+										{% csrf_token %}
 										<!-- form-item - start -->
 										<div class="col-lg-4 col-md-6 col-sm-12">
+										<label for="" style="color:#FFBE30"><strong>User Name:</strong></label>
 											<div class="form-item mb-30">
-												<input type="text" name="name" placeholder="Your Name" required>
+												<input type="text" name="name" placeholder="Your Name"  value="{{workhand.User_id}}" disabled>
 											</div>
 										</div>
 										<!-- form-item - end -->
 
 										<!-- form-item - start -->
 										<div class="col-lg-4 col-md-6 col-sm-12">
+										<label for="" style="color:#FFBE30"><strong>E-mail Address:</strong></label>
 											<div class="form-item mb-30">
-												<input type="email" name="email" placeholder="Your Email Address" required>
+												<input type="email" name="email" placeholder="Your Email Address" value="{{workhand.email}}" disabled>
+												<input type="number" value={{event.id}} name="event_id" hidden>
 											</div>
 										</div>
 										<!-- form-item - end -->
 
 										<!-- form-item - start -->
 										<div class="col-lg-4 col-md-12 col-sm-12">
+										<label for="" style="color:#FFBE30"><strong>Phone Number:</strong></label>
 											<div class="form-item mb-30">
-												<input type="tel" name="phone" placeholder="Your Phone" required>
+												<input type="tel" name="phone" placeholder="Your Phone" value="{{workhand.contact_number}}" disabled>
+												<input type="number" value={{workhand.id}} name="workhand_id" hidden>
 											</div>
 										</div>
 										<!-- form-item - end -->
@@ -246,16 +221,18 @@
 										<!-- form-item - start -->
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<div class="mb-30">
-												<textarea name="message" placeholder="Your Comment" required></textarea>
+												<textarea name="feedback" placeholder="Your Comment" required></textarea>
 											</div>
 											<button type="submit" class="custom-btn">SUBMIT NOW</button>
 										</div>
 										<!-- form-item - end -->
-
 									</div>
 								</form>
 							</div>
-
+								{% endif %}
+							{% endwith %}
+						{% endif %}
+						{% endif %}	
 						</div>
 						<!-- comment-form - end -->
 

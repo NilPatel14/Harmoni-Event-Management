@@ -57,6 +57,7 @@ def event(request):
     page_number = request.GET.get('page')
     EventDataFinal = paginator.get_page(page_number)
     totalPage = EventDataFinal.paginator.num_pages
+    #------------------------#
 
     context={
         'active' : active,
@@ -122,27 +123,55 @@ def search_event(request):
 def event_details(request,slug):
     if request.method == 'POST':
         event_details = Event.objects.get(slug=slug)
+        workhands_feedback = Feedback.objects.filter(event_id=event_details)
         if not request.user.is_staff:
             workhand_detail = Workhand.objects.get(User_id=request.user)
             already_registered = Event_Registrations.objects.filter( workhand_id=workhand_detail , event_id=event_details)
+             #------ Feedback ---------#
+            workhand_info = Workhand.objects.get(User_id = request.user)
+            feedback = Event_Registrations.objects.filter(workhand_id=workhand_info,registration_status=True,event_id=event_details)
+            already_feedback = Feedback.objects.filter(event_id=event_details , workhand_id=Workhand.objects.get(User_id=request.user))
+            #-------------------------#
             contaxt = {
                 'event' : event_details,
                 'already_registered' : already_registered,
+                'feedback' : feedback,
+                'workhand' : workhand_info,
+                'workhands_feedback' : workhands_feedback,
+                'already_feedback' : already_feedback
             }
         else:
              contaxt = {
                 'event' : event_details,
+                'workhands_feedback' : workhands_feedback,
             }
         return render(request , 'user/event-details.html',contaxt)
 
     if slug is not None:
-        event_details = Event.objects.get(slug=slug)
-        contaxt = {
-                'event' : event_details,
-            }
-        return render(request , 'user/event-details.html',contaxt)
-    else:
-        return HttpResponse("Method not allowed", status=405)
+            event_details = Event.objects.get(slug=slug)
+            workhands_feedback = Feedback.objects.filter(event_id=event_details)
+            Event_Registration_info = Event_Registrations.objects.filter(event_id=event_details) # For getting rating in event-detail page
+            if not request.user.is_staff: 
+                # Check workhand already does feedback or not
+                already_feedback = Feedback.objects.filter(event_id=event_details , workhand_id = Workhand.objects.get(User_id=request.user))
+                contaxt = {
+                        'event' : event_details,
+                        'workhands_feedback' : workhands_feedback,
+                        'Event_Registration_info' : Event_Registration_info,
+                        'already_feedback' : already_feedback,
+                    }
+                return render(request , 'user/event-details.html',contaxt)
+
+            elif request.user.is_staff:
+                contaxt = {
+                        'event' : event_details,
+                        'workhands_feedback' : workhands_feedback,
+                        'Event_Registration_info' : Event_Registration_info,
+                    }
+                return render(request , 'user/event-details.html',contaxt)
+
+            else:
+                return HttpResponse("Method not allowed", status=405)
 
 @login_required
 def event_register(request,slug):
@@ -529,3 +558,19 @@ def update_profile(request):
 
 def error_404(request):
     return render(request, 'login/404-error.html')
+
+
+def feedback(request):
+    if request.method == "POST":
+        workhand_info = request.POST.get('workhand_id')
+        event_info = request.POST.get('event_id')
+        feedback = request.POST.get('feedback')
+
+        event_obj = Event.objects.get(id=event_info)
+        workhand_obj = Workhand.objects.get(id=workhand_info)
+
+        Feedback_info = Feedback(feedback=feedback,event_id=event_obj,workhand_id=workhand_obj)
+        Feedback_info.save()
+
+        messages.success(request , "Thank You For Your Feedback !")
+        return redirect('event_details', slug=event_obj.slug)
