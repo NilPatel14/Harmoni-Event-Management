@@ -182,7 +182,7 @@
 							{% now "Y-m-d H:i:s" as today %}
 								{% with event_end_date=event.end_datetime|date:"Y-m-d H:i:s" %}
 									{% if event_end_date < today %}
-							<div class="section-title text-left mb-50">
+							<div class="section-title text-left mb-50" id="feedback">
 								<h2 class="big-title">write Your <strong>feedback</strong></h2>
 							</div>
 							<div class="form-wrapper">
