@@ -219,8 +219,10 @@ def history(request):
     active = 'history'
     workhand = Workhand.objects.get(User_id=request.user)
     registration = Event_Registrations.objects.filter(workhand_id=workhand)
-    # Approved_workhand = Event_Registrations.objects.filter(registration_status=True , workhand_id=workhand)
     Event_workhand_obj = Event_workhand.objects.all()
+
+    #-- For Feedback -->
+    feedback = Feedback.objects.filter(workhand_id=workhand)
 
     #---- For pagination ---#
     paginator = Paginator(registration,3)
@@ -233,6 +235,7 @@ def history(request):
         'Event_Workhand' : Event_workhand_obj,
         'totalPageList' : [n+1 for n in range(totalPage)],
         'currentPage': RegistrationDataFinal.number,  # Pass current page number to template
+        'feedback' : feedback,
     }
     return render(request,'user/history.html',context)
 
