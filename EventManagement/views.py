@@ -53,7 +53,7 @@ def event(request):
     Event_workhand_obj = Event_workhand.objects.all()
 
     #---- For pagination ---#
-    paginator = Paginator(events,2)
+    paginator = Paginator(events,5)
     page_number = request.GET.get('page')
     EventDataFinal = paginator.get_page(page_number)
     totalPage = EventDataFinal.paginator.num_pages
@@ -418,12 +418,12 @@ def register(request):
                         auth_login(request,user_info)
 
                         #Email code 
-                        subject = "Sucessfully logedIn!!"
-                        msg = f"<p>Hello {company_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
-                        from_email = settings.EMAIL_HOST_USER
-                        msg = EmailMultiAlternatives(subject , msg , from_email , [email])
-                        msg.content_subtype = 'html'
-                        msg.send()
+                        # subject = "Sucessfully logedIn!!"
+                        # msg = f"<p>Hello {company_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                        # from_email = settings.EMAIL_HOST_USER
+                        # msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+                        # msg.content_subtype = 'html'
+                        # msg.send()
                         #--------------------#
 
                         #redirected on index page

@@ -204,8 +204,6 @@ def approved_requests(request,slug):
 
 
 
-
-@login_required(login_url="/accounts/login/")
 @user_passes_test(lambda u: u.is_staff, login_url='/404-error/')
 def payment(request,slug):
     active = "myevent"
