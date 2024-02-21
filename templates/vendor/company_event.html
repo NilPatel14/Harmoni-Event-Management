@@ -125,7 +125,7 @@
 										<div class="event-content">
 											<div class="event-title mb-15">
 												<h3 class="title">
-													{{i.company_id.name}}'s <br> <strong><a href="/event-details/{{i.slug}}" style="color:black;">{{i.event_name}}</a></strong>
+													{{i.company_id.name}}'s <br> <strong><a href="/event-details/{{i.slug}}" >{{i.event_name}}</a></strong>
 												</h3>
 												<i class="fas fa-map-marker-alt"></i>
 												<span class="ticket-price yellow-color">Location - {{i.city_id}} , {{i.state_id}}</span>
@@ -145,7 +145,7 @@
 											</p>
 											<div class="event-info-list ul-li clearfix">
 												<ul>
-													<li>
+													<li style="margin-right:75px;">
 														<span class="icon">
 															<i class="far fa-clock"></i>
 														</span>
@@ -163,7 +163,12 @@
 															<h3>{{i.total_workhand}} seats</h3>
 														</div>
 													</li>
-													<li>
+												</ul>
+											</div>
+											<br>
+											<div class="event-info-list ul-li clearfix">
+												<ul>
+													<li style="margin-right:75px;">
 														<button onclick="window.location.href='/workhands-requests/{{i.slug}}'" class="tickets-details-btn">
 															Workhand Requests
 														</button>
