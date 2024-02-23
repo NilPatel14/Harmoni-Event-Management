@@ -40,6 +40,7 @@ urlpatterns = [
     path('register-successful/',views.register_success,name="register_success"),
     path('history/',views.history,name="history"),
     path('feedback/',views.feedback,name="feedback"),
+    path('FAQ/',views.FAQ,name="FAQ"),
     
 
     #--Login ,  Logout & js AJAX finctions--#
