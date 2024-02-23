@@ -356,8 +356,8 @@ def register(request):
                         auth_login(request,user_info)
 
                         #Email code 
-                        subject = "Sucessfully logedIn!!"
-                        msg = f"<p>Hello {first_name} {last_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                        subject = "Sucessfully loggedIn!!"
+                        msg = f"Welcome {username} to Harmoni Event Management!<br>We are thrilled to welcome you to the community! Thank you for choosing us as your partner.<br>As a newly registered user, you now have access to a wide range of events.<br>Here are a few things you can do now to get started:<br>Explore Our Features- Take some time to explore all the features and functionalities available to you and Stay Connected- Connect with us on social media platforms to stay updated on the latest events and updates.<br>We are committed to providing you with the best possible experience, and we value your feedback.<br>Please feel free to share your thoughts, suggestions, or concerns with us at any time.<br>Once again, welcome to the Harmoni family! We're excited to embark on this journey with you.<br><br>Best regards,<br>Harmoni Event Management,<br>6354981001"
                         from_email = settings.EMAIL_HOST_USER
                         msg = EmailMultiAlternatives(subject , msg , from_email , [email])
                         msg.content_subtype = 'html'
@@ -418,8 +418,8 @@ def register(request):
                         auth_login(request,user_info)
 
                         #Email code 
-                        subject = "Sucessfully logedIn!!"
-                        msg = f"<p>Hello {company_name} !! <br> You are successfully  loge-in into our Harmoni Event Management Website ... we are very greatfull to you..<br> Thank You!!</p>"
+                        subject = "Sucessfully loggedIn!!"
+                        msg = f"Welcome {username} to Harmoni Event Management!<br>We are thrilled to welcome you to the community! Thank you for choosing us as your partner.<br>As a newly registered user, you now have access to a wide range of events.<br>Here are a few things you can do now to get started:<br>Explore Our Features- Take some time to explore all the features and functionalities available to you and Stay Connected- Connect with us on social media platforms to stay updated on the latest events and updates.<br>We are committed to providing you with the best possible experience, and we value your feedback.<br>Please feel free to share your thoughts, suggestions, or concerns with us at any time.<br>Once again, welcome to the Harmoni family! We're excited to embark on this journey with you.<br><br>Best regards,<br>Harmoni Event Management,<br>6354981001"
                         from_email = settings.EMAIL_HOST_USER
                         msg = EmailMultiAlternatives(subject , msg , from_email , [email])
                         msg.content_subtype = 'html'
@@ -577,3 +577,6 @@ def feedback(request):
 
         messages.success(request , "Thank You For Your Feedback !")
         return redirect('event_details', slug=event_obj.slug)
+
+def FAQ(request):
+    return render(request, "user/faq.html")
