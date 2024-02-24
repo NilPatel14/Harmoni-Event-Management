@@ -36,11 +36,15 @@ def home_search(request):
             active = "event"
             Event_subcategory_obj = Event_subcategory.objects.all()
             Event_workhand_obj = Event_workhand.objects.all()
+            total_event = Event.objects.count()
+            event_count = events.count()
             context={
                 'active' : active,
                 'events' : events,
                 'Event_subcategory' : Event_subcategory_obj,
                 'Event_Workhand' : Event_workhand_obj,
+                'total_event': total_event,
+                'event_count': event_count
             }
     else:
         return redirect('event')
@@ -52,6 +56,8 @@ def event(request):
     Event_subcategory_obj = Event_subcategory.objects.all().order_by()
     Event_workhand_obj = Event_workhand.objects.all()
 
+    total_event = Event.objects.count()
+    event_count = events.count()
     #---- For pagination ---#
     paginator = Paginator(events,5)
     page_number = request.GET.get('page')
@@ -66,6 +72,8 @@ def event(request):
         'currentPage': EventDataFinal.number,  # Pass current page number to template
         'Event_subcategory' : Event_subcategory_obj,
         'Event_Workhand' : Event_workhand_obj,
+        'event_count' : event_count,
+        'total_event' : total_event,
     }
     return render(request , 'user/event.html',context)
 
@@ -93,11 +101,16 @@ def search_event(request):
             active = "event"
             Event_subcategory_obj = Event_subcategory.objects.all()
             Event_workhand_obj = Event_workhand.objects.all()
+            total_event = Event.objects.count()
+            event_count = events.count()
+            
             context={
             'active' : active,
             'events' : events,
             'Event_subcategory' : Event_subcategory_obj,
             'Event_Workhand' : Event_workhand_obj,
+            'total_event' : total_event,
+            'event_count' :  event_count,
             }
 
             return render(request , 'user/event.html',context)
@@ -110,12 +123,16 @@ def search_event(request):
         active = "event"
         Event_subcategory_obj = Event_subcategory.objects.all()
         Event_workhand_obj = Event_workhand.objects.all()
+        total_event = Event.objects.count()
+        event_count = events.count()
 
         context={
         'active' : active,
         'events' : events,
         'Event_subcategory' : Event_subcategory_obj,
         'Event_Workhand' : Event_workhand_obj,
+        'total_event' : total_event,
+        'event_count' :  event_count,
         }
         return render(request , 'user/event.html',context)
 
@@ -324,7 +341,7 @@ def register(request):
 
                 if password and confirm_password:
                     if password != confirm_password:
-                        messages.error(request , "Password doen's match")
+                        messages.error(request , "Password does not  match")
                         return redirect('register')
                     else:
                         try:
@@ -559,7 +576,7 @@ def update_profile(request):
             messages.success(request , "Profile Successfully Updated!!")
             return redirect('profile')
 
-def error_404(request):
+def error_404(request,exception):
     return render(request, 'login/404-error.html')
 
 
