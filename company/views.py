@@ -10,6 +10,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.db.models import Avg
 from django.core.paginator import Paginator
 from django.utils import timezone
+from django.core.mail import EmailMultiAlternatives
+
 # from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 @login_required(login_url="/accounts/login/")
@@ -233,8 +235,18 @@ def success(request):
         event_registration_info.payment_status = True
         event_registration_info.rating = rate
         event_registration_info.save()
-        print(event_registration_info.workhand_id)
         event_slug=event_registration_info.event_id.slug #for getting slug
+
+        #--------For Email-----#
+        email = event_registration_info.workhand_id.email
+
+        subject = "Payment Successful"
+        msg = "Your payment have been successully done. <br>Thank you so much for registering in event.We hope you visit us again!.<br>HAVE A NICE DAY."
+        from_email = settings.EMAIL_HOST_USER
+        msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+        msg.content_subtype = 'html'
+        msg.send()
+        #----------------------------------#
 
         #--------------- Find Average Rating ------------------#
         workhand = event_registration_info.workhand_id #For getting workhand_id and it is used to change avg_rating in workhand model
