@@ -310,7 +310,7 @@
 									</span>
 									<div class="title-content">
 										<small>contact information</small>
-										<h3>{{event.company_id}} staff</h3>
+										<h3><a href="{% url 'company_profile' event.company_id.slug %}">{{event.company_id}} staff</a></h3>
 									</div>
 								</div>
 								<div class="contact-links ul-li-block clearfix">

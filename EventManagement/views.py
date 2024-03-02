@@ -206,6 +206,15 @@ def event_register(request,slug):
                 event_workhand =  Event_workhand.objects.get(id=selected_category)  
                 registration = Event_Registrations(event_workhand_id=event_workhand , workhand_id = workhand , event_id = Event_detail , company_id = Event_detail.company_id)
                 registration.save()
+
+                #---------Email code-------------# 
+                subject = "Event Registration Successfully!!"
+                msg = f"Your event registration is successful"
+                from_email = settings.EMAIL_HOST_USER
+                msg = EmailMultiAlternatives(subject , msg , from_email , [workhand.email])
+                msg.content_subtype = 'html'
+                msg.send()
+                #--------------------#
                 return redirect('register_success')
             else:
                 pass

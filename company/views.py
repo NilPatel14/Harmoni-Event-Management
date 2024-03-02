@@ -238,14 +238,14 @@ def success(request):
         event_slug=event_registration_info.event_id.slug #for getting slug
 
         #--------For Email-----#
-        email = event_registration_info.workhand_id.email
+        # email = event_registration_info.workhand_id.email
 
-        subject = "Payment Successful"
-        msg = "Your payment have been successully done. <br>Thank you so much for registering in event.We hope you visit us again!.<br>HAVE A NICE DAY."
-        from_email = settings.EMAIL_HOST_USER
-        msg = EmailMultiAlternatives(subject , msg , from_email , [email])
-        msg.content_subtype = 'html'
-        msg.send()
+        # subject = "Payment Successful"
+        # msg = "Your payment have been successully done. <br>Thank you so much for registering in event.We hope you visit us again!.<br>HAVE A NICE DAY."
+        # from_email = settings.EMAIL_HOST_USER
+        # msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+        # msg.content_subtype = 'html'
+        # msg.send()
         #----------------------------------#
 
         #--------------- Find Average Rating ------------------#
