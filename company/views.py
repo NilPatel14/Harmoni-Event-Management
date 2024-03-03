@@ -24,7 +24,8 @@ def my_event(request):
         if search == "all":
             return redirect('myevent') 
         else:
-            event = Event.objects.filter(event_subcategory_id=search) 
+            Company_id = Company.objects.get(User_id=request.user)
+            event = Event.objects.filter(event_subcategory_id=search,company_id=Company_id).order_by("start_datetime") 
 
         Event_workhand_obj = Event_workhand.objects.all()
         context = {
@@ -37,7 +38,7 @@ def my_event(request):
     #------------ Search end -----------#
     active="myevent"
     company_id = Company.objects.get(User_id=request.user)
-    Events = Event.objects.filter(company_id=company_id)
+    Events = Event.objects.filter(company_id=company_id).order_by("-start_datetime")
     Event_workhand_obj = Event_workhand.objects.all()
 
     #---- For pagination ---#
@@ -137,7 +138,7 @@ def add_event(request):
 def workhand_profile(request,slug):
     active = "myevent"
     workhand_info = Workhand.objects.get(slug=slug)
-    workhand_events = Event_Registrations.objects.filter(workhand_id=workhand_info,registration_status=True)
+    workhand_events = Event_Registrations.objects.filter(workhand_id=workhand_info,payment_status=True)
     context={
         'active' : active,
         'workhand' : workhand_info,
@@ -210,7 +211,7 @@ def approved_requests(request,slug):
 def payment(request,slug):
     active = "myevent"
     event = Event.objects.get(slug=slug)
-    Registered_workhand = Event_Registrations.objects.filter(event_id=event , registration_status=True)
+    Registered_workhand = Event_Registrations.objects.filter(event_id=event , registration_status=True).order_by("-registration_date")
     total_price = 0
     for i in Registered_workhand:
         total_price += i.event_workhand_id.price
@@ -238,14 +239,14 @@ def success(request):
         event_slug=event_registration_info.event_id.slug #for getting slug
 
         #--------For Email-----#
-        # email = event_registration_info.workhand_id.email
+        email = event_registration_info.workhand_id.email
 
-        # subject = "Payment Successful"
-        # msg = "Your payment have been successully done. <br>Thank you so much for registering in event.We hope you visit us again!.<br>HAVE A NICE DAY."
-        # from_email = settings.EMAIL_HOST_USER
-        # msg = EmailMultiAlternatives(subject , msg , from_email , [email])
-        # msg.content_subtype = 'html'
-        # msg.send()
+        subject = "Payment Successful"
+        msg = "Your payment have been successully done. <br>Thank you so much for registering in event.We hope you visit us again!.<br>HAVE A NICE DAY."
+        from_email = settings.EMAIL_HOST_USER
+        msg = EmailMultiAlternatives(subject , msg , from_email , [email])
+        msg.content_subtype = 'html'
+        msg.send()
         #----------------------------------#
 
         #--------------- Find Average Rating ------------------#
