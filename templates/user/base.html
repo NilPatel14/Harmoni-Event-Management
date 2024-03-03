@@ -311,6 +311,12 @@
 						<h2 class="menu-title">all single pages</h2>
 						<ul>
 							<li>
+								<a href="{% url 'home' %}">
+									<span class="icon"><i class="fas fa-home"></i></span>
+									Home
+								</a>
+							</li>
+							<li>
 								<a href="{% url 'about' %}">
 									<span class="icon"><i class="fas fa-home"></i></span>
 									About Us
@@ -319,21 +325,32 @@
 							<li>
 								<a href="{% url 'event' %}">
 									<span class="icon"><i class="fas fa-home"></i></span>
-									event list
+									Events
 								</a>
 							</li>
 							<li>
 								<a href="{% url 'company' %}">
 									<span class="icon"><i class="fas fa-home"></i></span>
-									vendors
+									Company
 								</a>
 							</li>
+							
+							{% if user.is_staff %}
 							<li>
-								<a href="{% url 'contact' %}">
+								<a href="{% url 'myevent' %}">
 									<span class="icon"><i class="fas fa-home"></i></span>
-									contact us
+									My Events
 								</a>
 							</li>
+							{% else %}
+							<li>
+								<a href="{% url 'history' %}">
+									<span class="icon"><i class="fas fa-home"></i></span>
+									History
+								</a>
+							</li>
+							{% endif %}
+
 						</ul>
 					</div>
 					<!-- other-pages-links - end -->
@@ -344,7 +361,7 @@
 
 							<li>
 								{% if user.is_authenticated %}
-								<a href="#">
+								<a href="{% url 'profile' %}">
 									<i class="fas fa-user"></i>
 									{{user.username}}
 								</a>
