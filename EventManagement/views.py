@@ -15,6 +15,7 @@ from django.core.files.base import ContentFile
 from django.utils import timezone
 from django.http import HttpResponse
 from company.views import *
+from django.db.models import Q
 
 def index(request):
     return redirect('home')
@@ -94,9 +95,14 @@ def search_event(request):
     if request.method == "POST":
         search_keyword = request.POST.get('keyword')
         search = request.POST.get('search')
-        events = None
+        events = Event.objects.all()
         if not search_keyword == "":
-            events = Event.objects.filter(event_name__icontains=search_keyword)
+            events = events.filter(
+                Q(event_name__icontains = search_keyword) |
+                Q(company_id__name__icontains = search_keyword) |
+                Q(city_id__city_name__icontains = search_keyword) |
+                Q(state_id__state_name__icontains = search_keyword)
+                )
             
             active = "event"
             Event_subcategory_obj = Event_subcategory.objects.all()
