@@ -26,12 +26,15 @@ def my_event(request):
         else:
             Company_id = Company.objects.get(User_id=request.user)
             event = Event.objects.filter(event_subcategory_id=search,company_id=Company_id).order_by("start_datetime") 
-
+        Event_Category = Event.objects.filter(company_id=Company_id)
         Event_workhand_obj = Event_workhand.objects.all()
         context = {
             'active' : active,
             'events' : event,
+            'event_count' : event.count(),
             'Event_Workhand' : Event_workhand_obj,
+            'total_event' : Event.objects.filter(company_id=Company_id).count(),
+            'Event_Category' : Event_Category,
         }
 
         return render(request,'vendor/company_event.html',context)
@@ -39,7 +42,19 @@ def my_event(request):
     active="myevent"
     company_id = Company.objects.get(User_id=request.user)
     Events = Event.objects.filter(company_id=company_id).order_by("-start_datetime")
+    Event_Category = Event.objects.filter(company_id=company_id)
     Event_workhand_obj = Event_workhand.objects.all()
+
+    #---- Search GET -----#
+    if request.GET.get('year-search'):
+        year = request.GET.get('year-search')
+        Events = Event.objects.filter(company_id=company_id,start_datetime__year=year)
+
+    if request.GET.get('month-search'):
+        month = request.GET.get('month-search')
+        Events = Event.objects.filter(company_id=company_id,start_datetime__month=month)
+    #-----------------------------#
+
 
     #---- For pagination ---#
     paginator = Paginator(Events,2)
@@ -51,8 +66,11 @@ def my_event(request):
         'active' : active,
         'events' : EventDataFinal,
         'totalPageList' : [n+1 for n in range(totalPage)],
+        'event_count' : Events.count(),
+        'total_event' : Event.objects.filter(company_id=company_id).count(),
         'currentPage': EventDataFinal.number,  # Pass current page number to template
         'Event_Workhand' : Event_workhand_obj,
+        'Event_Category' : Event_Category,
     }
     return render(request,'vendor/company_event.html',contaxt)
 
@@ -265,3 +283,4 @@ def get_subcat(request):
     get_cat = Event_Category.objects.get(id = cat_id)
     subcat = Event_subcategory.objects.filter(Event_Category_id = get_cat)
     return render(request , 'vendor/get-subcat.html',locals())
+
