@@ -17,6 +17,10 @@ urlpatterns = [
 
     #------- Users Url's path-------#
     # path('',include("EventManagement.urls")),
+
+    #---------- For Admin ---------------#
+    # path('admin/report/',views.report,name="report"),
+    #------------------------------------#
 ]
 
 handler404 = 'EventManagement.views.error_404'
