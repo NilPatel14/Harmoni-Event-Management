@@ -295,10 +295,10 @@
 										{% endif %}
 									</ul>
 								</div>
-								{% comment %} <br><br>
+								<br><br>
 								<div>
 								<center><a class="custom-btn" onclick="printPage();">Print</a></center>
-								</div> {% endcomment %}
+								</div>
 							</div>
 
 						</div>
@@ -311,7 +311,7 @@
 		<!-- event-section - end
 		================================================== -->
 
-		{% comment %} <script type="text/javascript">
+		<script type="text/javascript">
 			function printPage(){
 				var body = document.getElementById('body').innerHTML;
 				var event = document.getElementById('list-style').innerHTML;
@@ -319,6 +319,6 @@
 				window.print();
 				document.getElementById('body').innerHTML = body;
 			}
-		</script> {% endcomment %}
+		</script>
 {% endblock content %}
 
