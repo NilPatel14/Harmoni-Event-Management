@@ -124,7 +124,8 @@ def search_event(request):
         if search == "all": 
             return redirect('event') 
         else:
-            events = Event.objects.filter(event_subcategory_id=search) 
+            current_datetime = timezone.now()
+            events = Event.objects.filter(event_subcategory_id=search,start_datetime__gt=current_datetime) 
 
         active = "event"
         Event_subcategory_obj = Event_subcategory.objects.all()
