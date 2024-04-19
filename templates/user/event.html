@@ -114,6 +114,17 @@
 									<li>
 										<span class="result-text">{{event_count}} Search results from {{total_event}} events</span>
 									</li>
+									{% comment %} <li>
+										<label for="munth-select">Workhand Category:</label>
+										<select id="munth-select" name="month" onChange="search_workhand();">
+											{% for i in Event_Workhand %}
+												<option value="{{i.id}}" selected>{{i.Workhand_category_id.workhand_category_name}}</option>
+											{% endfor %}
+											<option selected="">Select Workhand Category</option>
+											
+										</select>
+									</li> {% endcomment %}
+
 								</ul>
 							</form>
 						</div>
