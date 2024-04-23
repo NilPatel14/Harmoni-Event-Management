@@ -154,5 +154,5 @@ EMAIL_HOST_USER = 'projecttime93@gmail.com'
 EMAIL_HOST_PASSWORD = 'ukuc givh jdfx dayh'
 
 #Razorpay key_id and key_secret
-KEY_ID = 'rzp_test_eOPcv2ArFOOuHu'
-KEY_SECRET = 'yLigDfV3aEQ0TMoexOn9O6kD'
+KEY_ID = 'rzp_test_G9p4MFUDDSqSON'
+KEY_SECRET = 'RswUAGixy7upL6mpUZ1v32fb'
