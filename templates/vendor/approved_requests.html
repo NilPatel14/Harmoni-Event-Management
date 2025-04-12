@@ -67,8 +67,6 @@
 									{% if event.company_id.User_id == request.user %}
                                     {% comment %} <form action="{% url 'request_approve'%}" method="POST">
                                     {% csrf_token %} {% endcomment %}
-                                    <form action="{% url 'approved_requests' slug=event.slug %}" method="POST">
-                                    {% csrf_token %}
 									<table class="table text-center">
 										<thead>
 											<tr>
@@ -79,6 +77,8 @@
 											</tr>
 										</thead>										
                                         <tbody>
+                                    <form action="{% url 'approved_requests' slug=event.slug %}" method="POST">
+                                    {% csrf_token %}
                                         {% for i in  workhands_Requests %}
                                             <tr class="bg-gray-light">
                                                 <td><a href="/workhands-requests/workhand-profile/{{i.workhand_id.slug}}">{{i.workhand_id}}</a></td>
@@ -99,9 +99,9 @@
                                                 </td>
                                             </tr>
                                         {% endfor %}
+                                    </form>
                                         </tbody>	
 									</table>
-                                    </form>
                                     {% comment %} </form>	 {% endcomment %}
                                     {% endif %}
 								</div>
